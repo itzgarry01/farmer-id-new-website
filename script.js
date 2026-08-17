@@ -589,14 +589,14 @@ function simulateRazorpayCheckout() {
 
   if (payBtn) {
     payBtn.disabled = true;
-    payBtn.innerHTML = '<span>⏳ Connecting Razorpay...</span>';
+    payBtn.innerHTML = '<span>⏳ Connecting Secure Gateway...</span>';
   }
 
   if (statusBox) {
     statusBox.style.display = 'block';
     statusBox.style.background = '#FEF3C7';
     statusBox.style.color = '#92400E';
-    statusBox.innerHTML = '⚡ <em>Opening Razorpay Gateway Checkout Session...</em>';
+    statusBox.innerHTML = '⚡ <em>Opening Secure Checkout Session...</em>';
   }
 
   setTimeout(() => {
