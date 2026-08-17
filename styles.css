@@ -11,6 +11,8 @@
   --primary-bg: #F0FDF4;
   --primary-border: #BBF7D0;
   --accent-gold: #F59E0B;
+  --accent-gold-bg: #FEF3C7;
+  --accent-gold-border: #FDE68A;
   --accent-blue: #0284C7;
   --accent-blue-bg: #E0F2FE;
 
@@ -32,7 +34,8 @@
   --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
   --shadow-lg: 0 10px 25px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.04);
   --shadow-xl: 0 20px 30px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
-  --shadow-glow: 0 0 25px rgba(31, 133, 71, 0.2);
+  --shadow-glow: 0 0 25px rgba(31, 133, 71, 0.25);
+  --shadow-glow-selected: 0 0 0 3px rgba(31, 133, 71, 0.35), 0 12px 28px rgba(31, 133, 71, 0.2);
 
   --radius-sm: 6px;
   --radius-md: 10px;
@@ -65,6 +68,11 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
+}
+
+/* Smooth Section Scroll Margin to prevent sticky header clipping */
+section, div[id], aside[id] {
+  scroll-margin-top: 88px;
 }
 
 a {
@@ -104,7 +112,7 @@ button, input, textarea, select {
   background: linear-gradient(90deg, #0F172A 0%, #1E293B 100%);
   color: #E2E8F0;
   font-size: 13px;
-  padding: 8px 16px;
+  padding: 9px 16px;
   text-align: center;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   display: flex;
@@ -160,6 +168,7 @@ button, input, textarea, select {
   justify-content: center;
   box-shadow: 0 4px 10px rgba(31, 133, 71, 0.25);
   overflow: hidden;
+  flex-shrink: 0;
 }
 
 .logo-icon-wrapper img {
@@ -281,6 +290,17 @@ button, input, textarea, select {
   border-color: var(--text-secondary);
   color: var(--text-primary);
   transform: translateY(-2px);
+}
+
+.btn-success {
+  background: #166536;
+  color: #FFFFFF;
+  border-color: #166536;
+}
+
+.btn-success:hover {
+  background: #114D29;
+  color: #FFFFFF;
 }
 
 .btn-sm {
@@ -578,7 +598,7 @@ button, input, textarea, select {
 .section-header {
   text-align: center;
   max-width: 760px;
-  margin: 0 auto 50px;
+  margin: 0 auto 40px;
 }
 
 .section-tag {
@@ -704,7 +724,44 @@ button, input, textarea, select {
   color: var(--text-secondary);
 }
 
-/* Pricing Section */
+/* Plan Filter Switcher */
+.plan-tabs-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 36px;
+}
+
+.plan-filter-bar {
+  display: inline-flex;
+  background: #E2E8F0;
+  padding: 5px;
+  border-radius: var(--radius-full);
+  gap: 4px;
+}
+
+.plan-filter-btn {
+  background: transparent;
+  border: none;
+  padding: 8px 18px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-secondary);
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.plan-filter-btn:hover {
+  color: var(--text-primary);
+}
+
+.plan-filter-btn.active {
+  background: #FFFFFF;
+  color: var(--primary-dark);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Pricing Section & Interactive Cards */
 .pricing-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
@@ -714,7 +771,7 @@ button, input, textarea, select {
 
 .pricing-card {
   background: var(--surface);
-  border: 1px solid var(--border);
+  border: 2px solid var(--border);
   border-radius: var(--radius-xl);
   padding: 36px 30px;
   display: flex;
@@ -723,17 +780,58 @@ button, input, textarea, select {
   box-shadow: var(--shadow-sm);
   transition: var(--transition);
   position: relative;
+  cursor: pointer;
+  user-select: none;
 }
 
 .pricing-card:hover {
   transform: translateY(-5px);
-  box-shadow: var(--shadow-xl);
+  border-color: var(--primary-border);
+  box-shadow: var(--shadow-lg);
 }
 
 .pricing-card.featured {
-  border: 2px solid var(--primary);
-  box-shadow: var(--shadow-glow), var(--shadow-lg);
+  border-color: #CBD5E1;
   background: #FFFFFF;
+}
+
+/* Active Selected Plan State */
+.pricing-card.selected {
+  border-color: var(--primary) !important;
+  box-shadow: var(--shadow-glow-selected) !important;
+  background: #FFFFFF;
+  transform: translateY(-6px);
+}
+
+.plan-selection-indicator {
+  position: absolute;
+  top: 16px;
+  right: 18px;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 2px solid #CBD5E1;
+  background: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition);
+}
+
+.pricing-card.selected .plan-selection-indicator {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #FFFFFF;
+}
+
+.plan-selection-indicator svg {
+  display: none;
+  width: 14px;
+  height: 14px;
+}
+
+.pricing-card.selected .plan-selection-indicator svg {
+  display: block;
 }
 
 .featured-ribbon {
@@ -753,6 +851,7 @@ button, input, textarea, select {
 
 .plan-header {
   margin-bottom: 20px;
+  padding-right: 32px;
 }
 
 .plan-name {
@@ -768,7 +867,7 @@ button, input, textarea, select {
 }
 
 .plan-price-box {
-  margin: 20px 0;
+  margin: 18px 0;
   display: flex;
   align-items: baseline;
   gap: 4px;
@@ -797,7 +896,7 @@ button, input, textarea, select {
   display: flex;
   flex-direction: column;
   gap: 12px;
-  margin: 24px 0 30px;
+  margin: 20px 0 28px;
   border-top: 1px solid var(--border);
   padding-top: 20px;
 }
@@ -815,6 +914,16 @@ button, input, textarea, select {
   flex-shrink: 0;
   width: 18px;
   height: 18px;
+}
+
+.plan-action-btn {
+  pointer-events: auto;
+}
+
+.pricing-card.selected .btn-secondary {
+  background: var(--primary);
+  color: #FFFFFF;
+  border-color: var(--primary);
 }
 
 .pricing-disclaimer {
@@ -986,10 +1095,10 @@ button, input, textarea, select {
   margin-bottom: 6px;
 }
 
-/* Contact Us Section */
+/* Contact Us & Order Inquiry Section */
 .contact-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1.15fr;
   gap: 40px;
   align-items: start;
 }
@@ -1087,6 +1196,47 @@ button, input, textarea, select {
   color: var(--text-primary);
 }
 
+/* Dynamic Order Summary Box */
+.selected-plan-banner {
+  background: #F0FDF4;
+  border: 1px solid #BBF7D0;
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.selected-plan-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.selected-plan-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #166536;
+  letter-spacing: 0.5px;
+}
+
+.selected-plan-title {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.selected-plan-price-tag {
+  font-size: 18px;
+  font-weight: 900;
+  color: var(--primary-dark);
+  background: #DCFCE7;
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+}
+
 .form-group {
   margin-bottom: 18px;
 }
@@ -1116,20 +1266,36 @@ button, input, textarea, select {
   box-shadow: 0 0 0 3px rgba(31, 133, 71, 0.15);
 }
 
+select.form-control {
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23475569' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 36px;
+  appearance: none;
+}
+
 textarea.form-control {
   resize: vertical;
-  min-height: 100px;
+  min-height: 90px;
 }
 
 /* Toast Message */
 .toast-msg {
   display: none;
-  padding: 12px 16px;
+  padding: 14px 16px;
   border-radius: var(--radius-md);
   font-size: 13px;
   font-weight: 600;
-  margin-top: 12px;
+  margin-top: 14px;
   text-align: center;
+  line-height: 1.5;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .toast-success {
@@ -1285,12 +1451,12 @@ textarea.form-control {
   gap: 16px;
 }
 
-/* Policy Modal Overlay */
+/* Policy & Checkout Modal Overlays */
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(15, 23, 42, 0.7);
-  backdrop-filter: blur(4px);
+  background: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(5px);
   z-index: 2000;
   display: none;
   align-items: center;
@@ -1306,7 +1472,7 @@ textarea.form-control {
   background: #FFFFFF;
   border-radius: var(--radius-xl);
   width: 100%;
-  max-width: 700px;
+  max-width: 650px;
   max-height: 85vh;
   display: flex;
   flex-direction: column;
@@ -1321,7 +1487,7 @@ textarea.form-control {
 }
 
 .modal-header {
-  padding: 20px 24px;
+  padding: 18px 24px;
   border-bottom: 1px solid var(--border);
   display: flex;
   align-items: center;
@@ -1342,10 +1508,13 @@ textarea.form-control {
   line-height: 1;
   color: var(--text-muted);
   cursor: pointer;
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
 }
 
 .modal-close-btn:hover {
   color: var(--text-primary);
+  background: #E2E8F0;
 }
 
 .modal-body {
@@ -1374,6 +1543,7 @@ textarea.form-control {
   border-top: 1px solid var(--border);
   display: flex;
   justify-content: flex-end;
+  gap: 12px;
   background: var(--bg);
 }
 
@@ -1417,12 +1587,16 @@ textarea.form-control {
     display: block;
   }
   .hero-title {
-    font-size: 32px;
+    font-size: 30px;
   }
   .section-title {
-    font-size: 26px;
+    font-size: 24px;
   }
   .footer-grid {
     grid-template-columns: 1fr;
+  }
+  .plan-filter-bar {
+    flex-wrap: wrap;
+    border-radius: var(--radius-md);
   }
 }

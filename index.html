@@ -25,13 +25,13 @@
 <body>
 
   <!-- Top Compliance & Security Banner -->
-  <aside class="compliance-banner" aria-label="Official Compliance Notice">
+  <aside class="compliance-banner" id="topComplianceBanner" aria-label="Official Compliance Notice">
     <span class="compliance-badge-tag">⚡ VERIFIED SOFTWARE</span>
     <span>Official Razorpay Payment Gateway Integration &bull; 256-Bit SSL Encrypted &bull; 100% Client-Side Private Processing</span>
   </aside>
 
   <!-- Sticky Header Navigation -->
-  <header class="site-header">
+  <header class="site-header" id="siteHeader">
     <div class="container nav-container">
       <a href="#hero" class="brand-logo" id="logoLink">
         <div class="logo-icon-wrapper">
@@ -46,13 +46,13 @@
       <nav class="nav-menu" id="navMenu">
         <a href="#features" class="nav-link" id="navFeatures">Features</a>
         <a href="#how-it-works" class="nav-link" id="navHow">How It Works</a>
-        <a href="#pricing" class="nav-link" id="navPricing">Pricing</a>
+        <a href="#pricing" class="nav-link" id="navPricing">Pricing Plans</a>
         <a href="#compliance" class="nav-link" id="navCompliance">Policies & Legal</a>
-        <a href="#contact" class="nav-link" id="navContact">Contact Us</a>
+        <a href="#contact" class="nav-link" id="navContact">Contact & Order</a>
       </nav>
 
       <div class="nav-actions">
-        <a href="#pricing" class="btn btn-primary btn-sm" id="headerCtaBtn">Get License</a>
+        <a href="#pricing" class="btn btn-primary btn-sm" id="headerCtaBtn">Select Plan</a>
         <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle Navigation Menu">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
         </button>
@@ -76,7 +76,7 @@
 
           <div class="hero-cta-group">
             <a href="#pricing" class="btn btn-primary btn-lg" id="heroBuyBtn">
-              <span>⚡ View Pricing Plans</span>
+              <span>⚡ View & Select Plans</span>
             </a>
             <a href="#how-it-works" class="btn btn-secondary btn-lg" id="heroDemoBtn">
               <span>📖 See How It Works</span>
@@ -243,113 +243,144 @@
       </div>
     </section>
 
-    <!-- Transparent Pricing Section -->
+    <!-- Transparent Pricing Section (Interactive & Selectable Plans) -->
     <section class="section section-alt" id="pricing">
       <div class="container">
         <div class="section-header">
-          <span class="section-tag">Transparent Pricing</span>
+          <span class="section-tag">Select Your License Plan</span>
           <h2 class="section-title">Simple & Affordable Software Plans</h2>
           <p class="section-desc">
-            All prices in Indian Rupees (INR ₹). Instant software license activation upon payment confirmation. No hidden charges.
+            Click any plan below to select it and proceed with instant digital licensing. All prices in Indian Rupees (INR ₹) with zero hidden fees.
           </p>
         </div>
 
+        <!-- Plan Category Switcher / Filter Tabs -->
+        <div class="plan-tabs-wrapper">
+          <div class="plan-filter-bar" role="tablist">
+            <button class="plan-filter-btn active" data-filter="all" role="tab" aria-selected="true">All Plans</button>
+            <button class="plan-filter-btn" data-filter="pay-per-card" role="tab" aria-selected="false">Pay-Per-Card (₹10)</button>
+            <button class="plan-filter-btn" data-filter="monthly-pro" role="tab" aria-selected="false">Monthly Pro (₹99)</button>
+            <button class="plan-filter-btn" data-filter="lifetime" role="tab" aria-selected="false">Lifetime (₹499)</button>
+          </div>
+        </div>
+
         <div class="pricing-grid">
-          <!-- Single Card / Pay-as-you-go -->
-          <div class="pricing-card" id="planSingle">
-            <div class="plan-header">
-              <h3 class="plan-name">Pay-Per-Card</h3>
-              <p class="plan-desc">For occasional operators & individual farmers.</p>
+          <!-- 1. Single Card / Pay-as-you-go Plan -->
+          <div class="pricing-card" id="planSingle" data-plan-id="pay-per-card" data-plan-name="Pay-Per-Card" data-price="10" data-billing="/ card" tabindex="0" role="button" aria-label="Select Pay-Per-Card Plan at 10 Rupees per card">
+            <div class="plan-selection-indicator" title="Selection Status">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
             </div>
-            <div class="plan-price-box">
-              <span class="currency-sym">₹</span>
-              <span class="price-val">10</span>
-              <span class="price-cycle">/ card</span>
+            <div>
+              <div class="plan-header">
+                <h3 class="plan-name">Pay-Per-Card</h3>
+                <p class="plan-desc">For occasional operators & individual farmers.</p>
+              </div>
+              <div class="plan-price-box">
+                <span class="currency-sym">₹</span>
+                <span class="price-val">10</span>
+                <span class="price-cycle">/ card</span>
+              </div>
+              <ul class="plan-features-list">
+                <li class="plan-feature">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span>1 Official ID Card PDF Generation</span>
+                </li>
+                <li class="plan-feature">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span>Full 300 DPI Front & Back Layout</span>
+                </li>
+                <li class="plan-feature">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span>Denso Wave QR Code Included</span>
+                </li>
+                <li class="plan-feature">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span>Instant Browser Download</span>
+                </li>
+              </ul>
             </div>
-            <ul class="plan-features-list">
-              <li class="plan-feature">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-                <span>1 Official ID Card PDF Generation</span>
-              </li>
-              <li class="plan-feature">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-                <span>Full 300 DPI Front & Back Layout</span>
-              </li>
-              <li class="plan-feature">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-                <span>Denso Wave QR Code Included</span>
-              </li>
-              <li class="plan-feature">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-                <span>Instant Browser Download</span>
-              </li>
-            </ul>
-            <a href="#contact" class="btn btn-secondary btn-block">Generate Single Card</a>
+            <button type="button" class="btn btn-secondary btn-block plan-action-btn">
+              <span>Select Pay-Per-Card</span>
+            </button>
           </div>
 
-          <!-- Monthly Pro (Featured) -->
-          <div class="pricing-card featured" id="planMonthly">
+          <!-- 2. Monthly Pro (Featured & Selected by Default) -->
+          <div class="pricing-card featured selected" id="planMonthly" data-plan-id="monthly-pro" data-plan-name="Monthly Pro" data-price="99" data-billing="/ month" tabindex="0" role="button" aria-label="Select Monthly Pro Plan at 99 Rupees per month">
             <div class="featured-ribbon">Most Popular for CSCs</div>
-            <div class="plan-header">
-              <h3 class="plan-name">Monthly Pro</h3>
-              <p class="plan-desc">High volume CSC / VLE centers & cyber cafes.</p>
+            <div class="plan-selection-indicator" title="Selection Status">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
             </div>
-            <div class="plan-price-box">
-              <span class="currency-sym">₹</span>
-              <span class="price-val">99</span>
-              <span class="price-cycle">/ month</span>
+            <div>
+              <div class="plan-header">
+                <h3 class="plan-name">Monthly Pro</h3>
+                <p class="plan-desc">High volume CSC / VLE centers & cyber cafes.</p>
+              </div>
+              <div class="plan-price-box">
+                <span class="currency-sym">₹</span>
+                <span class="price-val">99</span>
+                <span class="price-cycle">/ month</span>
+              </div>
+              <ul class="plan-features-list">
+                <li class="plan-feature">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span><strong>Unlimited</strong> Card Generations</span>
+                </li>
+                <li class="plan-feature">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span>Batch PDF Export Support</span>
+                </li>
+                <li class="plan-feature">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span>Priority Email & WhatsApp Support</span>
+                </li>
+                <li class="plan-feature">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span>Free Extension Version Updates</span>
+                </li>
+              </ul>
             </div>
-            <ul class="plan-features-list">
-              <li class="plan-feature">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-                <span><strong>Unlimited</strong> Card Generations</span>
-              </li>
-              <li class="plan-feature">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-                <span>Batch PDF Export Support</span>
-              </li>
-              <li class="plan-feature">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-                <span>Priority Email & WhatsApp Support</span>
-              </li>
-              <li class="plan-feature">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-                <span>Free Extension Version Updates</span>
-              </li>
-            </ul>
-            <a href="#contact" class="btn btn-primary btn-block">Get Monthly Pro License</a>
+            <button type="button" class="btn btn-primary btn-block plan-action-btn">
+              <span>✓ Selected Plan (Proceed)</span>
+            </button>
           </div>
 
-          <!-- Lifetime License -->
-          <div class="pricing-card" id="planLifetime">
-            <div class="plan-header">
-              <h3 class="plan-name">Lifetime License</h3>
-              <p class="plan-desc">One-time payment for permanent unlimited access.</p>
+          <!-- 3. Lifetime License Plan -->
+          <div class="pricing-card" id="planLifetime" data-plan-id="lifetime" data-plan-name="Lifetime License" data-price="499" data-billing="one-time" tabindex="0" role="button" aria-label="Select Lifetime License at 499 Rupees one-time">
+            <div class="plan-selection-indicator" title="Selection Status">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
             </div>
-            <div class="plan-price-box">
-              <span class="currency-sym">₹</span>
-              <span class="price-val">499</span>
-              <span class="price-cycle">one-time</span>
+            <div>
+              <div class="plan-header">
+                <h3 class="plan-name">Lifetime License</h3>
+                <p class="plan-desc">One-time payment for permanent unlimited access.</p>
+              </div>
+              <div class="plan-price-box">
+                <span class="currency-sym">₹</span>
+                <span class="price-val">499</span>
+                <span class="price-cycle">one-time</span>
+              </div>
+              <ul class="plan-features-list">
+                <li class="plan-feature">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span><strong>Lifetime Unlimited</strong> Generations</span>
+                </li>
+                <li class="plan-feature">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span>All Future State Registry Formats</span>
+                </li>
+                <li class="plan-feature">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span>Direct Developer Remote Assistance</span>
+                </li>
+                <li class="plan-feature">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span>No Renewal or Maintenance Fees</span>
+                </li>
+              </ul>
             </div>
-            <ul class="plan-features-list">
-              <li class="plan-feature">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-                <span><strong>Lifetime Unlimited</strong> Generations</span>
-              </li>
-              <li class="plan-feature">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-                <span>All Future State Registry Formats</span>
-              </li>
-              <li class="plan-feature">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-                <span>Direct Developer Remote Assistance</span>
-              </li>
-              <li class="plan-feature">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-                <span>No Renewal or Maintenance Fees</span>
-              </li>
-            </ul>
-            <a href="#contact" class="btn btn-secondary btn-block">Get Lifetime License</a>
+            <button type="button" class="btn btn-secondary btn-block plan-action-btn">
+              <span>Select Lifetime License</span>
+            </button>
           </div>
         </div>
 
@@ -380,7 +411,7 @@
               </div>
               <p>Users purchase a digital software license/subscription to use the browser extension for formatting farmer registry records.</p>
             </div>
-            <button class="legal-read-btn" data-policy="terms">Read Full Terms &rarr;</button>
+            <button type="button" class="legal-read-btn" data-policy="terms">Read Full Terms &rarr;</button>
           </div>
 
           <div class="legal-summary-card">
@@ -391,7 +422,7 @@
               </div>
               <p>Farmer registry data is processed 100% locally on your machine. Payment transactions are secured by Razorpay PCI-DSS Level 1.</p>
             </div>
-            <button class="legal-read-btn" data-policy="privacy">Read Privacy Policy &rarr;</button>
+            <button type="button" class="legal-read-btn" data-policy="privacy">Read Privacy Policy &rarr;</button>
           </div>
 
           <div class="legal-summary-card">
@@ -402,7 +433,7 @@
               </div>
               <p>7-day refund guarantee for technical failures. Raise refund requests by emailing support with your transaction ID.</p>
             </div>
-            <button class="legal-read-btn" data-policy="refund">Read Refund Policy &rarr;</button>
+            <button type="button" class="legal-read-btn" data-policy="refund">Read Refund Policy &rarr;</button>
           </div>
 
           <div class="legal-summary-card">
@@ -413,7 +444,7 @@
               </div>
               <p><strong>Digital Product:</strong> License/access is delivered instantly via browser/email upon successful payment confirmation.</p>
             </div>
-            <button class="legal-read-btn" data-policy="shipping">Read Delivery Policy &rarr;</button>
+            <button type="button" class="legal-read-btn" data-policy="shipping">Read Delivery Policy &rarr;</button>
           </div>
         </div>
 
@@ -519,22 +550,22 @@
       </div>
     </section>
 
-    <!-- Mandatory Contact Us Section -->
+    <!-- Mandatory Contact Us & Order Inquiry Section -->
     <section class="section" id="contact">
       <div class="container">
         <div class="section-header">
-          <span class="section-tag">Support & Inquiry</span>
-          <h2 class="section-title">Contact Us</h2>
+          <span class="section-tag">Order & Support</span>
+          <h2 class="section-title">Contact & Licensing Inquiries</h2>
           <p class="section-desc">
-            Have questions about the extension, pricing, or need technical assistance with your farmer card formatting? We are here to assist you.
+            Select your plan or reach out directly for custom operator licensing, technical setup assistance, and queries.
           </p>
         </div>
 
         <div class="contact-grid">
           <!-- Contact Details Card (Mandatory for Razorpay) -->
           <div class="contact-info-card">
-            <h3>Merchant & Support Information</h3>
-            <p class="intro">Reach out directly via email, phone, or our official operating address below.</p>
+            <h3>Merchant & Support Details</h3>
+            <p class="intro">Reach out directly via email, phone, or visit our operating office below.</p>
 
             <div class="contact-detail-items">
               <div class="contact-item">
@@ -545,7 +576,7 @@
                   <span class="contact-label">Official Support Email</span>
                   <span class="contact-val">
                     <a href="mailto:itzgarry01@gmail.com" id="supportEmailLink">itzgarry01@gmail.com</a>
-                    <button class="copy-btn" onclick="navigator.clipboard.writeText('itzgarry01@gmail.com'); alert('Email copied!');">Copy</button>
+                    <button type="button" class="copy-btn" data-copy="itzgarry01@gmail.com">Copy</button>
                   </span>
                 </div>
               </div>
@@ -558,7 +589,7 @@
                   <span class="contact-label">Phone & WhatsApp Support</span>
                   <span class="contact-val">
                     <a href="tel:+919876543210">+91 98765 43210</a>
-                    <button class="copy-btn" onclick="navigator.clipboard.writeText('+91 98765 43210'); alert('Phone number copied!');">Copy</button>
+                    <button type="button" class="copy-btn" data-copy="+91 98765 43210">Copy</button>
                   </span>
                 </div>
               </div>
@@ -586,19 +617,38 @@
             </div>
           </div>
 
-          <!-- Quick Message Form -->
+          <!-- Order & Inquiry Form with 2-Way Plan Sync -->
           <div class="contact-form-card">
-            <h3>Send an Instant Inquiry</h3>
-            <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 18px;">Fill in your details below and our team will get in touch with you.</p>
+            <h3>License Order & Inquiry Form</h3>
+            <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 16px;">Fill in your details below to activate your digital license key or send an inquiry.</p>
+
+            <!-- Dynamic Selected Plan Indicator Banner -->
+            <div class="selected-plan-banner" id="selectedPlanBanner">
+              <div class="selected-plan-info">
+                <span class="selected-plan-label">Chosen License Plan:</span>
+                <span class="selected-plan-title" id="selectedPlanDisplayTitle">Monthly Pro (Unlimited)</span>
+              </div>
+              <div class="selected-plan-price-tag" id="selectedPlanDisplayPrice">₹99 / mo</div>
+            </div>
 
             <form id="contactForm" onsubmit="event.preventDefault(); handleContactSubmit();">
+              <div class="form-group">
+                <label class="form-label" for="selectedPlan">Select License Plan *</label>
+                <select id="selectedPlan" class="form-control" required>
+                  <option value="pay-per-card">Pay-Per-Card (₹10 / card generation)</option>
+                  <option value="monthly-pro" selected>Monthly Pro (₹99 / month - Unlimited)</option>
+                  <option value="lifetime">Lifetime License (₹499 one-time)</option>
+                  <option value="custom">Custom Bulk CSC Center Pack</option>
+                </select>
+              </div>
+
               <div class="form-group">
                 <label class="form-label" for="senderName">Your Full Name / CSC Center Name *</label>
                 <input type="text" id="senderName" class="form-control" placeholder="e.g. Gurpreet Singh (VLE Center)" required>
               </div>
 
               <div class="form-group">
-                <label class="form-label" for="senderEmail">Email Address *</label>
+                <label class="form-label" for="senderEmail">Email Address (For License & Invoices) *</label>
                 <input type="email" id="senderEmail" class="form-control" placeholder="e.g. gurpreet@example.com" required>
               </div>
 
@@ -608,16 +658,21 @@
               </div>
 
               <div class="form-group">
-                <label class="form-label" for="senderMessage">Message / Licensing Inquiry *</label>
-                <textarea id="senderMessage" class="form-control" placeholder="I would like to activate bulk card licensing for my CSC center..." required></textarea>
+                <label class="form-label" for="senderMessage">Message / Specific Requirements</label>
+                <textarea id="senderMessage" class="form-control" placeholder="Please activate my license for Monthly Pro..."></textarea>
               </div>
 
-              <button type="submit" class="btn btn-primary btn-block" id="sendBtn">
-                <span>Send Message to Support</span>
-              </button>
+              <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+                <button type="button" class="btn btn-primary" id="openCheckoutModalBtn" style="flex: 1;">
+                  <span>🔒 Instant Razorpay Checkout</span>
+                </button>
+                <button type="submit" class="btn btn-secondary" id="sendInquiryBtn">
+                  <span>Send Inquiry</span>
+                </button>
+              </div>
 
               <div id="toastMessage" class="toast-msg toast-success">
-                ✅ Thank you! Your inquiry has been sent to itzgarry01@gmail.com. We will respond within 24 hours.
+                ✅ <strong>Success!</strong> Your inquiry and license request for <span id="toastPlanName">Monthly Pro</span> has been submitted to <code>itzgarry01@gmail.com</code>. We will contact you within 24 hours.
               </div>
             </form>
           </div>
@@ -636,7 +691,17 @@
 
         <div class="faq-grid">
           <div class="faq-item">
-            <button class="faq-question">
+            <button type="button" class="faq-question">
+              <span>How do I select and switch plans?</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="faq-answer">
+              You can simply click on any pricing card in the Pricing section or select it from the dropdown in the order form. The pricing card will light up with a green selection badge and update your order summary immediately.
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button type="button" class="faq-question">
               <span>Is this extension official for Punjab Farmer Registry?</span>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
             </button>
@@ -646,7 +711,7 @@
           </div>
 
           <div class="faq-item">
-            <button class="faq-question">
+            <button type="button" class="faq-question">
               <span>How are card PDFs delivered after payment?</span>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
             </button>
@@ -656,7 +721,7 @@
           </div>
 
           <div class="faq-item">
-            <button class="faq-question">
+            <button type="button" class="faq-question">
               <span>What payment methods are supported?</span>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
             </button>
@@ -666,7 +731,7 @@
           </div>
 
           <div class="faq-item">
-            <button class="faq-question">
+            <button type="button" class="faq-question">
               <span>What if a card fails to download?</span>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
             </button>
@@ -680,7 +745,7 @@
   </main>
 
   <!-- Razorpay Compliance Footer -->
-  <footer class="site-footer">
+  <footer class="site-footer" id="siteFooter">
     <div class="container">
       <div class="footer-compliance-box">
         <div class="compliance-gateway-info">
@@ -719,10 +784,10 @@
         <div class="footer-col">
           <h5>Mandatory Legal</h5>
           <div class="footer-links">
-            <a href="#terms" onclick="openPolicyModal('terms')">Terms & Conditions</a>
-            <a href="#privacy" onclick="openPolicyModal('privacy')">Privacy Policy</a>
-            <a href="#refund" onclick="openPolicyModal('refund')">Refund & Cancellation</a>
-            <a href="#shipping" onclick="openPolicyModal('shipping')">Shipping & Delivery</a>
+            <a href="#terms" onclick="openPolicyModal('terms'); return false;">Terms & Conditions</a>
+            <a href="#privacy" onclick="openPolicyModal('privacy'); return false;">Privacy Policy</a>
+            <a href="#refund" onclick="openPolicyModal('refund'); return false;">Refund & Cancellation</a>
+            <a href="#shipping" onclick="openPolicyModal('shipping'); return false;">Shipping & Delivery</a>
             <a href="#contact">Contact Support</a>
           </div>
         </div>
@@ -749,17 +814,59 @@
   </footer>
 
   <!-- Interactive Policy Modal Reader -->
-  <div class="modal-overlay" id="policyModal" aria-hidden="true">
+  <div class="modal-overlay" id="policyModal" aria-hidden="true" role="dialog" aria-modal="true">
     <div class="modal-box">
       <div class="modal-header">
         <h3 id="modalTitle">Policy Document</h3>
-        <button class="modal-close-btn" id="modalCloseBtn" aria-label="Close modal">&times;</button>
+        <button type="button" class="modal-close-btn" id="modalCloseBtn" aria-label="Close modal">&times;</button>
       </div>
       <div class="modal-body" id="modalBody">
         <!-- Injected via JavaScript -->
       </div>
       <div class="modal-footer">
-        <button class="btn btn-secondary btn-sm" onclick="closePolicyModal()">Close</button>
+        <button type="button" class="btn btn-secondary btn-sm" onclick="closePolicyModal()">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Interactive Instant Checkout Modal -->
+  <div class="modal-overlay" id="checkoutModal" aria-hidden="true" role="dialog" aria-modal="true">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3>🔒 Razorpay Secure Checkout</h3>
+        <button type="button" class="modal-close-btn" id="checkoutModalCloseBtn" aria-label="Close modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div style="background: #F0FDF4; border: 1px solid #BBF7D0; border-radius: 8px; padding: 14px; margin-bottom: 16px;">
+          <div style="display: flex; justify-content: space-between; align-items: baseline;">
+            <div>
+              <div style="font-size: 11px; font-weight: 700; color: #166536; text-transform: uppercase;">Selected License</div>
+              <div style="font-size: 16px; font-weight: 800; color: #0F172A;" id="modalCheckoutPlanName">Monthly Pro (Unlimited)</div>
+            </div>
+            <div style="font-size: 20px; font-weight: 900; color: #166536;" id="modalCheckoutPlanPrice">₹99</div>
+          </div>
+        </div>
+
+        <div style="font-size: 13px; color: #475569; margin-bottom: 14px; line-height: 1.5;">
+          ⚡ <strong>Instant Access:</strong> Your license key will be activated immediately upon completing UPI/Card payment in Razorpay.
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="modalCustEmail">Email Address for License Receipt *</label>
+          <input type="email" id="modalCustEmail" class="form-control" placeholder="your-email@example.com" required>
+        </div>
+
+        <div style="padding: 12px; background: #FEF3C7; border: 1px solid #FDE68A; border-radius: 6px; font-size: 12px; color: #92400E; margin-bottom: 12px;">
+          <strong>Official Razorpay Gateway:</strong> Test & Live payments via UPI (Google Pay / PhonePe / Paytm), QR Code, Debit/Credit Card, and Netbanking.
+        </div>
+
+        <div id="checkoutSimStatus" style="display: none; padding: 12px; border-radius: 6px; font-size: 13px; text-align: center; font-weight: 600; margin-top: 10px;"></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary btn-sm" onclick="closeCheckoutModal()">Cancel</button>
+        <button type="button" class="btn btn-primary btn-sm" id="payRazorpaySimBtn" onclick="simulateRazorpayCheckout()">
+          <span>🔒 Open Razorpay Gateway</span>
+        </button>
       </div>
     </div>
   </div>

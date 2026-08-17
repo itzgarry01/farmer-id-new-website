@@ -1,6 +1,52 @@
 /* ==========================================================================
-   AgriStack Card Helper - Interactive Landing Page Scripts
+   AgriStack Card Helper - Interactive Landing Page & Plan Selection Scripts
    ========================================================================== */
+
+// Global Plan Definition
+const PLANS = {
+  'pay-per-card': {
+    id: 'pay-per-card',
+    cardElementId: 'planSingle',
+    name: 'Pay-Per-Card',
+    displayTitle: 'Pay-Per-Card (Single Generation)',
+    price: '₹10',
+    priceDisplay: '₹10 / card',
+    numericPrice: 10,
+    buttonText: 'Select Pay-Per-Card'
+  },
+  'monthly-pro': {
+    id: 'monthly-pro',
+    cardElementId: 'planMonthly',
+    name: 'Monthly Pro',
+    displayTitle: 'Monthly Pro (Unlimited Access)',
+    price: '₹99',
+    priceDisplay: '₹99 / month',
+    numericPrice: 99,
+    buttonText: 'Select Monthly Pro'
+  },
+  'lifetime': {
+    id: 'lifetime',
+    cardElementId: 'planLifetime',
+    name: 'Lifetime License',
+    displayTitle: 'Lifetime License (Permanent Access)',
+    price: '₹499',
+    priceDisplay: '₹499 one-time',
+    numericPrice: 499,
+    buttonText: 'Select Lifetime License'
+  },
+  'custom': {
+    id: 'custom',
+    cardElementId: 'planMonthly',
+    name: 'Custom Bulk Pack',
+    displayTitle: 'Custom Bulk Pack (Multi-Center)',
+    price: 'Custom',
+    priceDisplay: 'Contact Us',
+    numericPrice: 0,
+    buttonText: 'Inquire Custom Pack'
+  }
+};
+
+let currentSelectedPlanId = 'monthly-pro';
 
 document.addEventListener('DOMContentLoaded', () => {
   // 1. Dynamic Year
@@ -24,16 +70,28 @@ document.addEventListener('DOMContentLoaded', () => {
         navMenu.classList.remove('open');
       });
     });
+
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!navMenu.contains(e.target) && !mobileToggle.contains(e.target) && navMenu.classList.contains('open')) {
+        navMenu.classList.remove('open');
+      }
+    });
   }
 
-  // 3. FAQ Accordion
+  // 3. Plan Selection System
+  initPlanSelection();
+
+  // 4. Plan Category Filter Tabs
+  initPlanFilterTabs();
+
+  // 5. FAQ Accordion
   const faqItems = document.querySelectorAll('.faq-item');
   faqItems.forEach(item => {
     const questionBtn = item.querySelector('.faq-question');
     if (questionBtn) {
       questionBtn.addEventListener('click', () => {
         const isActive = item.classList.contains('active');
-        // Close other FAQs
         faqItems.forEach(i => i.classList.remove('active'));
         if (!isActive) {
           item.classList.add('active');
@@ -42,7 +100,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // 4. Legal Policies Accordion
+  // 6. Legal Policies Accordion
   const legalItems = document.querySelectorAll('.legal-accordion-item');
   legalItems.forEach(item => {
     const trigger = item.querySelector('.legal-accordion-trigger');
@@ -69,37 +127,60 @@ document.addEventListener('DOMContentLoaded', () => {
     if (firstTrigger) firstTrigger.setAttribute('aria-expanded', 'true');
   }
 
-  // 5. Read Full Policy Buttons (Modals)
+  // 7. Policy Read Buttons (Modals)
   const readPolicyBtns = document.querySelectorAll('.legal-read-btn');
   readPolicyBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
       const policyId = btn.getAttribute('data-policy');
       openPolicyModal(policyId);
     });
   });
 
-  // 6. Modal Close Button & Backdrop Click
-  const modal = document.getElementById('policyModal');
-  const modalCloseBtn = document.getElementById('modalCloseBtn');
-  if (modalCloseBtn) {
-    modalCloseBtn.addEventListener('click', closePolicyModal);
-  }
-  if (modal) {
-    modal.addEventListener('click', (e) => {
-      if (e.target === modal) {
-        closePolicyModal();
-      }
+  // 8. Modal Close Handlers
+  const policyModal = document.getElementById('policyModal');
+  const policyCloseBtn = document.getElementById('modalCloseBtn');
+  if (policyCloseBtn) policyCloseBtn.addEventListener('click', closePolicyModal);
+  if (policyModal) {
+    policyModal.addEventListener('click', (e) => {
+      if (e.target === policyModal) closePolicyModal();
     });
   }
 
-  // Handle ESC key for modal
+  const checkoutModal = document.getElementById('checkoutModal');
+  const checkoutCloseBtn = document.getElementById('checkoutModalCloseBtn');
+  if (checkoutCloseBtn) checkoutCloseBtn.addEventListener('click', closeCheckoutModal);
+  if (checkoutModal) {
+    checkoutModal.addEventListener('click', (e) => {
+      if (e.target === checkoutModal) closeCheckoutModal();
+    });
+  }
+
+  const openCheckoutBtn = document.getElementById('openCheckoutModalBtn');
+  if (openCheckoutBtn) {
+    openCheckoutBtn.addEventListener('click', openCheckoutModal);
+  }
+
+  // Handle ESC key for all modals
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
       closePolicyModal();
+      closeCheckoutModal();
     }
   });
 
-  // 7. Active Nav Link Highlighting on Scroll
+  // 9. Copy to Clipboard Buttons
+  const copyButtons = document.querySelectorAll('.copy-btn');
+  copyButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const textToCopy = btn.getAttribute('data-copy');
+      if (textToCopy) {
+        copyToClipboard(textToCopy, btn);
+      }
+    });
+  });
+
+  // 10. Active Nav Link Highlighting on Scroll
   const sections = document.querySelectorAll('section[id]');
   const navLinks = document.querySelectorAll('.nav-link');
 
@@ -124,10 +205,231 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-// Policy Modal Data & Open Handler
+/* ==========================================================================
+   Plan Selection & 2-Way Synchronization Logic
+   ========================================================================== */
+function initPlanSelection() {
+  const pricingCards = document.querySelectorAll('.pricing-card');
+  const formPlanSelect = document.getElementById('selectedPlan');
+
+  // Click on Pricing Card or its Button
+  pricingCards.forEach(card => {
+    card.addEventListener('click', (e) => {
+      const planId = card.getAttribute('data-plan-id');
+      if (planId) {
+        selectPlan(planId);
+
+        // If clicked on the button or card, smoothly scroll to contact section
+        if (e.target.closest('.plan-action-btn') || e.target.closest('.pricing-card')) {
+          const contactSec = document.getElementById('contact');
+          if (contactSec) {
+            contactSec.scrollIntoView({ behavior: 'smooth' });
+          }
+        }
+      }
+    });
+
+    // Keyboard accessibility for selecting plans via Enter / Space
+    card.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        const planId = card.getAttribute('data-plan-id');
+        if (planId) {
+          selectPlan(planId);
+          const contactSec = document.getElementById('contact');
+          if (contactSec) contactSec.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+    });
+  });
+
+  // Form Select Dropdown Change -> Sync with Pricing Cards
+  if (formPlanSelect) {
+    formPlanSelect.addEventListener('change', (e) => {
+      selectPlan(e.target.value, false);
+    });
+  }
+
+  // Initialize with default plan
+  selectPlan(currentSelectedPlanId, true);
+}
+
+function selectPlan(planId, updateDropdown = true) {
+  if (!PLANS[planId]) planId = 'monthly-pro';
+  currentSelectedPlanId = planId;
+  const planData = PLANS[planId];
+
+  // 1. Update Pricing Cards UI
+  const pricingCards = document.querySelectorAll('.pricing-card');
+  pricingCards.forEach(card => {
+    const cardPlanId = card.getAttribute('data-plan-id');
+    const actionBtn = card.querySelector('.plan-action-btn span');
+
+    if (cardPlanId === planId) {
+      card.classList.add('selected');
+      card.setAttribute('aria-selected', 'true');
+      if (actionBtn) {
+        actionBtn.textContent = '✓ Selected Plan (Proceed)';
+      }
+    } else {
+      card.classList.remove('selected');
+      card.setAttribute('aria-selected', 'false');
+      if (actionBtn) {
+        const fallbackText = cardPlanId === 'pay-per-card' ? 'Select Pay-Per-Card' :
+                             cardPlanId === 'lifetime' ? 'Select Lifetime License' : 'Select Monthly Pro';
+        actionBtn.textContent = fallbackText;
+      }
+    }
+  });
+
+  // 2. Update Dynamic Order Summary Banner in Form
+  const displayTitle = document.getElementById('selectedPlanDisplayTitle');
+  const displayPrice = document.getElementById('selectedPlanDisplayPrice');
+  const toastPlanName = document.getElementById('toastPlanName');
+  const messageBox = document.getElementById('senderMessage');
+
+  if (displayTitle) displayTitle.textContent = planData.displayTitle;
+  if (displayPrice) displayPrice.textContent = planData.priceDisplay;
+  if (toastPlanName) toastPlanName.textContent = planData.name;
+
+  if (messageBox && (!messageBox.value || messageBox.value.startsWith('I would like to activate'))) {
+    messageBox.value = `I would like to activate ${planData.name} (${planData.priceDisplay}) for my center.`;
+  }
+
+  // 3. Update Dropdown if triggered from card click
+  const formPlanSelect = document.getElementById('selectedPlan');
+  if (updateDropdown && formPlanSelect && formPlanSelect.value !== planId) {
+    formPlanSelect.value = planId;
+  }
+
+  // 4. Update Modal Info
+  const modalName = document.getElementById('modalCheckoutPlanName');
+  const modalPrice = document.getElementById('modalCheckoutPlanPrice');
+  if (modalName) modalName.textContent = planData.displayTitle;
+  if (modalPrice) modalPrice.textContent = planData.price;
+}
+
+/* ==========================================================================
+   Plan Filter Tabs
+   ========================================================================== */
+function initPlanFilterTabs() {
+  const filterBtns = document.querySelectorAll('.plan-filter-btn');
+  const pricingCards = document.querySelectorAll('.pricing-card');
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => {
+        b.classList.remove('active');
+        b.setAttribute('aria-selected', 'false');
+      });
+      btn.classList.add('active');
+      btn.setAttribute('aria-selected', 'true');
+
+      const filter = btn.getAttribute('data-filter');
+
+      pricingCards.forEach(card => {
+        const cardPlanId = card.getAttribute('data-plan-id');
+        if (filter === 'all' || cardPlanId === filter) {
+          card.style.display = 'flex';
+          if (filter !== 'all') {
+            selectPlan(filter);
+          }
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    });
+  });
+}
+
+/* ==========================================================================
+   Clipboard Copy Helper
+   ========================================================================== */
+function copyToClipboard(text, btnElement) {
+  if (navigator.clipboard && window.isSecureContext) {
+    navigator.clipboard.writeText(text).then(() => {
+      showCopyFeedback(btnElement);
+    }).catch(() => {
+      fallbackCopy(text, btnElement);
+    });
+  } else {
+    fallbackCopy(text, btnElement);
+  }
+}
+
+function fallbackCopy(text, btnElement) {
+  const textArea = document.createElement('textarea');
+  textArea.value = text;
+  textArea.style.position = 'fixed';
+  textArea.style.opacity = '0';
+  document.body.appendChild(textArea);
+  textArea.focus();
+  textArea.select();
+  try {
+    document.execCommand('copy');
+    showCopyFeedback(btnElement);
+  } catch (err) {
+    alert('Copied: ' + text);
+  }
+  document.body.removeChild(textArea);
+}
+
+function showCopyFeedback(btnElement) {
+  if (!btnElement) return;
+  const originalText = btnElement.textContent;
+  btnElement.textContent = 'Copied!';
+  btnElement.style.color = '#166536';
+  setTimeout(() => {
+    btnElement.textContent = originalText;
+    btnElement.style.color = '';
+  }, 2000);
+}
+
+/* ==========================================================================
+   Contact Form Submission Handler
+   ========================================================================== */
+function handleContactSubmit() {
+  const name = document.getElementById('senderName').value.trim();
+  const email = document.getElementById('senderEmail').value.trim();
+  const phone = document.getElementById('senderPhone').value.trim();
+  const plan = document.getElementById('selectedPlan').value;
+  const message = document.getElementById('senderMessage').value.trim();
+  const toast = document.getElementById('toastMessage');
+  const sendBtn = document.getElementById('sendInquiryBtn');
+
+  if (!name || !email) {
+    alert('Please provide your name and email.');
+    return;
+  }
+
+  if (sendBtn) {
+    sendBtn.disabled = true;
+    sendBtn.textContent = 'Submitting...';
+  }
+
+  setTimeout(() => {
+    if (sendBtn) {
+      sendBtn.disabled = false;
+      sendBtn.textContent = 'Send Inquiry';
+    }
+    if (toast) {
+      toast.style.display = 'block';
+      toast.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      setTimeout(() => {
+        toast.style.display = 'none';
+      }, 7000);
+    }
+    document.getElementById('contactForm').reset();
+    selectPlan(currentSelectedPlanId, true);
+  }, 600);
+}
+
+/* ==========================================================================
+   Policy Modal Overlay Reader
+   ========================================================================== */
 const policyContents = {
   terms: {
-    title: 'Terms & Conditions (Digital Software License)',
+    title: 'Terms & Conditions (Digital Software License Agreement)',
     content: `
       <h4>1. Overview & Agreement</h4>
       <p>By purchasing a subscription, single-use token, or downloading <strong>AgriStack Card Generator Helper</strong> ("Software"), you agree to abide by these Terms and Conditions. This software is operated independently to provide productivity formatting tools for operators and farmers.</p>
@@ -150,7 +452,7 @@ const policyContents = {
     `
   },
   privacy: {
-    title: 'Privacy Policy (100% Client-Side Privacy)',
+    title: 'Privacy Policy (100% Client-Side Private Processing)',
     content: `
       <h4>1. Local Client-Side Processing</h4>
       <p>Your privacy and the security of citizen records are paramount. All registry scraping, image extraction, and PDF compilation are executed <strong>100% inside your local browser sandbox</strong>. No farmer identity data or photo is uploaded, stored, or sold to our servers or any third-party brokers.</p>
@@ -238,29 +540,77 @@ function closePolicyModal() {
   }
 }
 
-// Contact Form Handler
-function handleContactSubmit() {
-  const name = document.getElementById('senderName').value;
-  const email = document.getElementById('senderEmail').value;
-  const phone = document.getElementById('senderPhone').value;
-  const message = document.getElementById('senderMessage').value;
-  const toast = document.getElementById('toastMessage');
-  const sendBtn = document.getElementById('sendBtn');
+/* ==========================================================================
+   Checkout Modal & Razorpay Simulation
+   ========================================================================== */
+function openCheckoutModal() {
+  const planData = PLANS[currentSelectedPlanId] || PLANS['monthly-pro'];
+  const modal = document.getElementById('checkoutModal');
+  const modalName = document.getElementById('modalCheckoutPlanName');
+  const modalPrice = document.getElementById('modalCheckoutPlanPrice');
+  const statusBox = document.getElementById('checkoutSimStatus');
+  const emailInput = document.getElementById('modalCustEmail');
+  const formEmail = document.getElementById('senderEmail');
 
-  if (!name || !email || !message) return;
+  if (modalName) modalName.textContent = planData.displayTitle;
+  if (modalPrice) modalPrice.textContent = planData.price;
+  if (statusBox) statusBox.style.display = 'none';
 
-  sendBtn.disabled = true;
-  sendBtn.textContent = 'Sending inquiry...';
+  if (emailInput && formEmail && formEmail.value) {
+    emailInput.value = formEmail.value;
+  }
+
+  if (modal) {
+    modal.classList.add('active');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+}
+
+function closeCheckoutModal() {
+  const modal = document.getElementById('checkoutModal');
+  if (modal) {
+    modal.classList.remove('active');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+}
+
+function simulateRazorpayCheckout() {
+  const emailInput = document.getElementById('modalCustEmail');
+  const statusBox = document.getElementById('checkoutSimStatus');
+  const payBtn = document.getElementById('payRazorpaySimBtn');
+
+  if (emailInput && !emailInput.value) {
+    alert('Please enter your email to receive your license confirmation.');
+    emailInput.focus();
+    return;
+  }
+
+  if (payBtn) {
+    payBtn.disabled = true;
+    payBtn.innerHTML = '<span>⏳ Connecting Razorpay...</span>';
+  }
+
+  if (statusBox) {
+    statusBox.style.display = 'block';
+    statusBox.style.background = '#FEF3C7';
+    statusBox.style.color = '#92400E';
+    statusBox.innerHTML = '⚡ <em>Opening Razorpay Gateway Checkout Session...</em>';
+  }
 
   setTimeout(() => {
-    sendBtn.disabled = false;
-    sendBtn.innerHTML = '<span>Send Message to Support</span>';
-    if (toast) {
-      toast.style.display = 'block';
-      setTimeout(() => {
-        toast.style.display = 'none';
-      }, 6000);
+    if (statusBox) {
+      statusBox.style.background = '#DCFCE7';
+      statusBox.style.color = '#166536';
+      statusBox.innerHTML = '✅ <strong>Payment Successful!</strong> License key has been issued and sent to <u>' + (emailInput ? emailInput.value : 'your email') + '</u>.';
     }
-    document.getElementById('contactForm').reset();
-  }, 700);
+    if (payBtn) {
+      payBtn.disabled = false;
+      payBtn.innerHTML = '<span>✅ License Activated</span>';
+    }
+    setTimeout(() => {
+      closeCheckoutModal();
+    }, 2800);
+  }, 1400);
 }
