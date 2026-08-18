@@ -423,33 +423,29 @@
         <div class="plan-tabs-wrapper">
           <div class="plan-filter-bar" role="tablist">
             <button class="plan-filter-btn" data-filter="all" role="tab" aria-selected="false">All Plans</button>
-            <button class="plan-filter-btn active" data-filter="lifetime" role="tab" aria-selected="true">🔥 Buy Extension (₹599)</button>
-            <button class="plan-filter-btn" data-filter="monthly-pro" role="tab" aria-selected="false">Monthly Pro (₹99)</button>
-            <button class="plan-filter-btn" data-filter="pay-per-card" role="tab" aria-selected="false">Pay-Per-Card (₹20)</button>
+            <button class="plan-filter-btn active" data-filter="lifetime" role="tab" aria-selected="true">🔥 Buy Extension (₹599) — Available</button>
+            <button class="plan-filter-btn" data-filter="monthly-pro" role="tab" aria-selected="false">Monthly Pro (Unavailable)</button>
+            <button class="plan-filter-btn" data-filter="pay-per-card" role="tab" aria-selected="false">Pay-Per-Card (Unavailable)</button>
           </div>
         </div>
 
         <div class="pricing-grid">
-          <!-- 1. Single Card / Pay-as-you-go Plan -->
-          <div class="pricing-card" id="planSingle" data-plan-id="pay-per-card" data-plan-name="Pay-Per-Card"
-            data-price="20" data-billing="/ card" tabindex="0" role="button"
-            aria-label="Select Pay-Per-Card Plan at 20 Rupees per card">
-            <div class="plan-selection-indicator" title="Selection Status">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
-                <polyline points="20 6 9 17 4 12" />
-              </svg>
-            </div>
+          <!-- 1. Single Card / Pay-as-you-go Plan (Unavailable) -->
+          <div class="pricing-card unavailable" id="planSingle" data-plan-id="pay-per-card" data-plan-name="Pay-Per-Card"
+            data-price="20" data-billing="/ card" tabindex="-1" role="button" aria-disabled="true"
+            aria-label="Pay-Per-Card Plan currently not available">
             <div>
+              <div class="unavailable-badge-banner">❌ Not Available Right Now</div>
               <div class="plan-header">
-                <h3 class="plan-name">Pay-Per-Card</h3>
+                <h3 class="plan-name" style="color: var(--text-muted);">Pay-Per-Card</h3>
                 <p class="plan-desc">For occasional operators & individual farmers.</p>
               </div>
-              <div class="plan-price-box">
+              <div class="plan-price-box" style="opacity: 0.6;">
                 <span class="currency-sym">₹</span>
                 <span class="price-val">20</span>
                 <span class="price-cycle">/ card</span>
               </div>
-              <ul class="plan-features-list">
+              <ul class="plan-features-list" style="opacity: 0.6;">
                 <li class="plan-feature">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <polyline points="20 6 9 17 4 12" />
@@ -476,31 +472,27 @@
                 </li>
               </ul>
             </div>
-            <button type="button" class="btn btn-secondary btn-block plan-action-btn">
-              <span>Select Pay-Per-Card</span>
+            <button type="button" class="btn btn-unavailable btn-block plan-action-btn" disabled>
+              <span>❌ Not Available Right Now</span>
             </button>
           </div>
 
-          <!-- 2. Monthly Pro Plan -->
-          <div class="pricing-card" id="planMonthly" data-plan-id="monthly-pro"
-            data-plan-name="Monthly Pro" data-price="99" data-billing="/ month" tabindex="0" role="button"
-            aria-label="Select Monthly Pro Plan at 99 Rupees per month">
-            <div class="plan-selection-indicator" title="Selection Status">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
-                <polyline points="20 6 9 17 4 12" />
-              </svg>
-            </div>
+          <!-- 2. Monthly Pro Plan (Unavailable) -->
+          <div class="pricing-card unavailable" id="planMonthly" data-plan-id="monthly-pro"
+            data-plan-name="Monthly Pro" data-price="99" data-billing="/ month" tabindex="-1" role="button" aria-disabled="true"
+            aria-label="Monthly Pro Plan currently not available">
             <div>
+              <div class="unavailable-badge-banner">❌ Not Available Right Now</div>
               <div class="plan-header">
-                <h3 class="plan-name">Monthly Pro</h3>
+                <h3 class="plan-name" style="color: var(--text-muted);">Monthly Pro</h3>
                 <p class="plan-desc">High volume CSC / VLE centers & cyber cafes.</p>
               </div>
-              <div class="plan-price-box">
+              <div class="plan-price-box" style="opacity: 0.6;">
                 <span class="currency-sym">₹</span>
                 <span class="price-val">99</span>
                 <span class="price-cycle">/ month</span>
               </div>
-              <ul class="plan-features-list">
+              <ul class="plan-features-list" style="opacity: 0.6;">
                 <li class="plan-feature">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <polyline points="20 6 9 17 4 12" />
@@ -527,12 +519,12 @@
                 </li>
               </ul>
             </div>
-            <button type="button" class="btn btn-secondary btn-block plan-action-btn">
-              <span>Select Monthly Pro</span>
+            <button type="button" class="btn btn-unavailable btn-block plan-action-btn" disabled>
+              <span>❌ Not Available Right Now</span>
             </button>
           </div>
 
-          <!-- 3. Full Extension Lifetime License (Flagship & Selected by Default) -->
+          <!-- 3. Full Extension Lifetime License (Flagship & ONLY Available Plan) -->
           <div class="pricing-card featured selected" id="planLifetime" data-plan-id="lifetime" data-plan-name="Lifetime License"
             data-price="599" data-billing="one-time" tabindex="0" role="button"
             aria-label="Buy AgriStack Extension Lifetime License for 599 Rupees one-time">
@@ -546,7 +538,7 @@
               <div class="plan-header">
                 <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px;">
                   <h3 class="plan-name">Full Extension License</h3>
-                  <span class="promo-badge-tag">LIFETIME</span>
+                  <span class="promo-badge-tag">AVAILABLE NOW</span>
                 </div>
                 <p class="plan-desc">One-time payment for full Chrome extension package & permanent unlimited access.</p>
               </div>
@@ -912,10 +904,10 @@
               <div class="form-group">
                 <label class="form-label" for="selectedPlan">Select License Plan *</label>
                 <select id="selectedPlan" class="form-control" required>
-                  <option value="lifetime" selected>🔥 Full Extension Lifetime License (₹599 one-time)</option>
-                  <option value="monthly-pro">Monthly Pro (₹99 / month - Unlimited)</option>
-                  <option value="pay-per-card">Pay-Per-Card (₹20 / card generation)</option>
-                  <option value="custom">Custom Bulk CSC Center Pack</option>
+                  <option value="lifetime" selected>🔥 Full Extension Lifetime License (₹599 one-time) — AVAILABLE NOW</option>
+                  <option value="monthly-pro" disabled>Monthly Pro (₹99 / month) — ❌ Not Available Right Now</option>
+                  <option value="pay-per-card" disabled>Pay-Per-Card (₹20 / card) — ❌ Not Available Right Now</option>
+                  <option value="custom" disabled>Custom Bulk CSC Pack — ❌ Not Available Right Now</option>
                 </select>
               </div>
 

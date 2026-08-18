@@ -246,6 +246,12 @@ function initPlanSelection() {
   pricingCards.forEach(card => {
     card.addEventListener('click', (e) => {
       const planId = card.getAttribute('data-plan-id');
+      if (card.classList.contains('unavailable')) {
+        alert('This plan is temporarily unavailable. The Full Extension Lifetime License (₹599) is the only active plan.');
+        selectPlan('lifetime');
+        return;
+      }
+
       if (planId) {
         selectPlan(planId);
 
@@ -260,6 +266,7 @@ function initPlanSelection() {
     card.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
+        if (card.classList.contains('unavailable')) return;
         const planId = card.getAttribute('data-plan-id');
         if (planId) {
           selectPlan(planId);
@@ -272,18 +279,23 @@ function initPlanSelection() {
   // Form Select Dropdown Change -> Sync with Pricing Cards
   if (formPlanSelect) {
     formPlanSelect.addEventListener('change', (e) => {
-      selectPlan(e.target.value, false);
+      if (e.target.value !== 'lifetime') {
+        alert('This plan is temporarily unavailable. Only the Full Extension Lifetime License (₹599) is currently available.');
+        e.target.value = 'lifetime';
+      }
+      selectPlan('lifetime', false);
     });
   }
 
   // Initialize with default plan
-  selectPlan(currentSelectedPlanId, true);
+  selectPlan('lifetime', true);
 }
 
 function selectPlan(planId, updateDropdown = true) {
-  if (!PLANS[planId]) planId = 'lifetime';
-  currentSelectedPlanId = planId;
-  const planData = PLANS[planId];
+  // Lock to lifetime plan as the only active product
+  planId = 'lifetime';
+  currentSelectedPlanId = 'lifetime';
+  const planData = PLANS['lifetime'];
 
   // 1. Update Pricing Cards UI
   const pricingCards = document.querySelectorAll('.pricing-card');
@@ -291,21 +303,17 @@ function selectPlan(planId, updateDropdown = true) {
     const cardPlanId = card.getAttribute('data-plan-id');
     const actionBtn = card.querySelector('.plan-action-btn span');
 
-    if (cardPlanId === planId) {
+    if (cardPlanId === 'lifetime') {
       card.classList.add('selected');
       card.setAttribute('aria-selected', 'true');
-      if (actionBtn && cardPlanId === 'lifetime') {
+      if (actionBtn) {
         actionBtn.textContent = '⚡ Buy Extension — ₹599 (Auto-Download)';
-      } else if (actionBtn) {
-        actionBtn.textContent = '✓ Selected Plan (Proceed)';
       }
     } else {
       card.classList.remove('selected');
       card.setAttribute('aria-selected', 'false');
       if (actionBtn) {
-        const fallbackText = cardPlanId === 'pay-per-card' ? 'Select Pay-Per-Card' :
-                             cardPlanId === 'lifetime' ? 'Buy Extension — ₹599' : 'Select Monthly Pro';
-        actionBtn.textContent = fallbackText;
+        actionBtn.textContent = '❌ Not Available Right Now';
       }
     }
   });
@@ -326,17 +334,19 @@ function selectPlan(planId, updateDropdown = true) {
 
   // 3. Update Dropdown if triggered from card click
   const formPlanSelect = document.getElementById('selectedPlan');
-  if (updateDropdown && formPlanSelect && formPlanSelect.value !== planId) {
-    formPlanSelect.value = planId;
+  if (updateDropdown && formPlanSelect && formPlanSelect.value !== 'lifetime') {
+    formPlanSelect.value = 'lifetime';
   }
 
   // 4. Update Modal Info
   const modalName = document.getElementById('modalCheckoutPlanName');
   const modalPrice = document.getElementById('modalCheckoutPlanPrice');
   const qrPrice = document.getElementById('qrPriceTag');
+  const rzpPrice = document.getElementById('razorpayPriceTag');
   if (modalName) modalName.textContent = planData.displayTitle;
   if (modalPrice) modalPrice.textContent = planData.price;
   if (qrPrice) qrPrice.textContent = planData.price;
+  if (rzpPrice) rzpPrice.textContent = planData.price;
 }
 
 /* ==========================================================================
@@ -361,9 +371,6 @@ function initPlanFilterTabs() {
         const cardPlanId = card.getAttribute('data-plan-id');
         if (filter === 'all' || cardPlanId === filter) {
           card.style.display = 'flex';
-          if (filter !== 'all') {
-            selectPlan(filter);
-          }
         } else {
           card.style.display = 'none';
         }

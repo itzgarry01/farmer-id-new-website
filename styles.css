@@ -1890,3 +1890,43 @@ textarea.form-control {
   box-shadow: 0 2px 8px rgba(239, 68, 68, 0.4);
 }
 
+/* Unavailable / Disabled Pricing Cards */
+.pricing-card.unavailable {
+  opacity: 0.72;
+  background: #F8FAFC;
+  border: 1.5px dashed #CBD5E1;
+  cursor: not-allowed;
+  position: relative;
+  overflow: hidden;
+}
+
+.pricing-card.unavailable:hover {
+  transform: none;
+  box-shadow: none;
+  border-color: #CBD5E1;
+}
+
+.unavailable-badge-banner {
+  background: #FEE2E2;
+  color: #991B1B;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 8px;
+  border: 1px solid #FECACA;
+}
+
+.btn-unavailable {
+  background: #E2E8F0 !important;
+  color: #64748B !important;
+  border: 1px solid #CBD5E1 !important;
+  cursor: not-allowed !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+
