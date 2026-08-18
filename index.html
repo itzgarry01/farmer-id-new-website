@@ -1162,16 +1162,37 @@
 
         <!-- Payment Method Tabs -->
         <div class="checkout-tabs-header">
-          <button type="button" class="checkout-tab-btn active" id="tabUpiBtn" onclick="switchCheckoutTab('upi')">
-            📱 UPI Payment (QR Code & Apps)
+          <button type="button" class="checkout-tab-btn active" id="tabRazorpayBtn" onclick="switchCheckoutTab('razorpay')">
+            🔒 Razorpay Gateway (Cards / UPI / Netbanking)
           </button>
-          <button type="button" class="checkout-tab-btn" id="tabCardBtn" onclick="switchCheckoutTab('card')">
-            💳 Card / Netbanking / Razorpay
+          <button type="button" class="checkout-tab-btn" id="tabUpiBtn" onclick="switchCheckoutTab('upi')">
+            📱 Direct UPI QR Code
           </button>
         </div>
 
-        <!-- UPI Tab Content -->
-        <div id="checkoutUpiContent">
+        <!-- Razorpay Official Gateway Tab Content (Default) -->
+        <div id="checkoutRazorpayContent">
+          <div style="background: #F8FAFC; border: 1.5px solid var(--primary-border); border-radius: var(--radius-lg); padding: 20px; text-align: center; margin-bottom: 16px;">
+            <div style="display: inline-flex; align-items: center; gap: 6px; background: #DCFCE7; color: #166536; padding: 4px 10px; border-radius: var(--radius-full); font-size: 11px; font-weight: 700; margin-bottom: 10px;">
+              ⚡ Official Razorpay Payment Gateway Active
+            </div>
+            <div style="font-size: 15px; font-weight: 800; color: #0F172A; margin-bottom: 6px;">
+              Instant Checkout: <span style="color: #166536; font-size: 18px;" id="razorpayPriceTag">₹599</span>
+            </div>
+            <p style="font-size: 12px; color: var(--text-secondary); margin-bottom: 16px;">
+              Accepts Google Pay, PhonePe, Paytm, BHIM, UPI QR, Cards (RuPay/Visa/MasterCard), & Netbanking.
+            </p>
+            <div style="display: flex; justify-content: center; gap: 10px; margin-bottom: 18px; font-size: 24px;">
+              <span>📱</span> <span>💳</span> <span>🏦</span> <span>🔒</span>
+            </div>
+            <button type="button" class="btn btn-primary btn-block btn-lg" id="payRazorpayBtn" onclick="openRazorpayCheckout()">
+              <span>🔒 Pay ₹599 via Razorpay & Download</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Direct UPI Tab Content -->
+        <div id="checkoutUpiContent" style="display: none;">
           <div class="upi-payment-box">
             <div style="font-size: 13px; font-weight: 700; color: #0F172A; margin-bottom: 10px;">
               Scan UPI QR Code to Pay <span style="color: #166536; font-size: 16px; font-weight: 900;" id="qrPriceTag">₹599</span>
@@ -1199,26 +1220,8 @@
           </div>
 
           <div style="text-align: center; margin-top: 10px;">
-            <button type="button" class="btn btn-primary btn-block btn-lg" id="verifyUpiPaymentBtn" onclick="processPaymentSuccess('UPI')">
+            <button type="button" class="btn btn-primary btn-block btn-lg" id="verifyUpiPaymentBtn" onclick="processPaymentSuccess('Direct UPI Manual Verification')">
               <span>✅ I Have Paid ₹599 — Download Extension Instantly</span>
-            </button>
-          </div>
-        </div>
-
-        <!-- Card / Razorpay Tab Content -->
-        <div id="checkoutCardContent" style="display: none;">
-          <div style="background: #F8FAFC; border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 18px; text-align: center; margin-bottom: 16px;">
-            <div style="font-size: 14px; font-weight: 700; color: #0F172A; margin-bottom: 8px;">
-              Pay ₹599 via Debit / Credit Card or Netbanking
-            </div>
-            <p style="font-size: 12px; color: var(--text-secondary); margin-bottom: 16px;">
-              Supports RuPay, Visa, MasterCard, Maestro, and Netbanking across all 50+ Indian banks.
-            </p>
-            <div style="display: flex; justify-content: center; gap: 8px; margin-bottom: 16px; font-size: 20px;">
-              <span>💳</span> <span>🏦</span> <span>🔒</span>
-            </div>
-            <button type="button" class="btn btn-primary btn-block btn-lg" id="payRazorpaySimBtn" onclick="simulateRazorpayCheckout()">
-              <span>🔒 Proceed to Secure Gateway (₹599)</span>
             </button>
           </div>
         </div>
@@ -1398,6 +1401,9 @@
       </div>
     </div>
   </div>
+
+  <!-- Razorpay Official Checkout Gateway SDK -->
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
   <!-- Core JavaScript -->
   <script src="script.js"></script>
