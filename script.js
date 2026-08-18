@@ -9,9 +9,9 @@ const PLANS = {
     cardElementId: 'planSingle',
     name: 'Pay-Per-Card',
     displayTitle: 'Pay-Per-Card (Single Generation)',
-    price: '₹10',
-    priceDisplay: '₹10 / card',
-    numericPrice: 10,
+    price: '₹20',
+    priceDisplay: '₹20 / card',
+    numericPrice: 20,
     buttonText: 'Select Pay-Per-Card'
   },
   'monthly-pro': {
