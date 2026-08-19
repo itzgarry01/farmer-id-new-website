@@ -32,8 +32,8 @@
 
   <!-- Top Announcement / Security Notice Banner -->
   <aside class="compliance-banner" id="topComplianceBanner" aria-label="Official Compliance Notice">
-    <span class="compliance-badge-tag">⚡ VERIFIED SOFTWARE</span>
-    <span>256-Bit SSL Encrypted &bull; 100% Client-Side Private Processing &bull; Instant Digital Card Delivery</span>
+    <span class="compliance-badge-tag">⚡ SPECIAL LAUNCH OFFER</span>
+    <span>Get Full Chrome Extension in <strong>₹599</strong> (Lifetime Access) &bull; Instant Automatic Download (.ZIP) &bull; 100% Client-Side Privacy</span>
   </aside>
 
   <!-- Sticky Header Navigation -->
@@ -43,20 +43,20 @@
         <img src="icons/logo.png" alt="Farmer ID Digital Identity Logo" class="brand-logo-img" width="48" height="48">
         <div class="brand-text">
           <span class="brand-title">AgriStack <span>Helper</span></span>
-          <span class="brand-subtitle">Farmer ID Digital Identity</span>
+          <span class="brand-subtitle">Farmer ID Digital Identity Extension</span>
         </div>
       </a>
 
       <nav class="nav-menu" id="navMenu">
         <a href="#features" class="nav-link" id="navFeatures">Features</a>
         <a href="#workflow" class="nav-link" id="navWorkflow">Product Workflow</a>
-        <a href="#pricing" class="nav-link" id="navPricing">Pricing Plans</a>
+        <a href="#pricing" class="nav-link" id="navPricing">Pricing (₹599)</a>
         <a href="#compliance" class="nav-link" id="navCompliance">Policies & Legal</a>
-        <a href="#contact" class="nav-link" id="navContact">Contact & Order</a>
+        <a href="#contact" class="nav-link" id="navContact">Buy Extension</a>
       </nav>
 
       <div class="nav-actions">
-        <a href="#pricing" class="btn btn-primary btn-sm" id="headerCtaBtn">Select Plan</a>
+        <a href="#pricing" class="btn btn-primary btn-sm" id="headerCtaBtn" onclick="openCheckoutModal('lifetime'); return false;">⚡ Buy Extension — ₹599</a>
         <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle Navigation Menu">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M4 6h16M4 12h16M4 18h16" />
@@ -75,20 +75,17 @@
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
               <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
             </svg>
-            1-Click Farmer ID Card Generation for CSC & VLE Operators
+            Official Chrome Extension &bull; 1-Click Card Formatter &bull; ₹599 Lifetime
           </div>
-          <h1 class="hero-title">Automated <span class="highlight">Farmer ID Card</span> Formatting from AgriStack
-            Registry</h1>
+          <h1 class="hero-title">Buy <span class="highlight">AgriStack Extension</span> in ₹599 — Instant Auto-Download</h1>
           <p class="hero-desc">
-            AgriStack Card Generator Helper is a fast, specialized browser productivity extension that extracts verified
-            farmer registry data and automatically formats print-ready, high-resolution 300 DPI ID cards with official
-            Gurmukhi/English typography and Denso Wave QR verification.
+            AgriStack Card Generator Helper is a fast browser extension that automatically formats official 300 DPI high-resolution Farmer ID cards from Punjab Farmer Registry & AgriStack portals. Pay ₹599 once to unlock lifetime unlimited generations with instant automatic file download.
           </p>
 
           <div class="hero-cta-group">
-            <a href="#pricing" class="btn btn-primary btn-lg" id="heroBuyBtn">
-              <span>⚡ View & Select Plans</span>
-            </a>
+            <button type="button" class="btn btn-primary btn-lg" id="heroBuyBtn" onclick="openCheckoutModal('lifetime')">
+              <span>⚡ Buy Extension — ₹599 (Auto-Download)</span>
+            </button>
             <a href="#workflow" class="btn btn-secondary btn-lg" id="heroDemoBtn">
               <span>📖 Step-by-Step Workflow</span>
             </a>
@@ -100,14 +97,14 @@
                 <path
                   d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
               </svg>
-              <span>Instant Digital Delivery</span>
+              <span>Instant Auto-Download (.ZIP)</span>
             </div>
             <div class="trust-item">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
                 <path
                   d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
               </svg>
-              <span>Instant UPI & Card Access</span>
+              <span>₹599 Lifetime (UPI & Cards)</span>
             </div>
             <div class="trust-item">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
@@ -425,37 +422,30 @@
         <!-- Plan Category Switcher / Filter Tabs -->
         <div class="plan-tabs-wrapper">
           <div class="plan-filter-bar" role="tablist">
-            <button class="plan-filter-btn active" data-filter="all" role="tab" aria-selected="true">All Plans</button>
-            <button class="plan-filter-btn" data-filter="pay-per-card" role="tab" aria-selected="false">Pay-Per-Card
-              (₹20)</button>
-            <button class="plan-filter-btn" data-filter="monthly-pro" role="tab" aria-selected="false">Monthly Pro
-              (₹99)</button>
-            <button class="plan-filter-btn" data-filter="lifetime" role="tab" aria-selected="false">Lifetime
-              (₹499)</button>
+            <button class="plan-filter-btn" data-filter="all" role="tab" aria-selected="false">All Plans</button>
+            <button class="plan-filter-btn active" data-filter="lifetime" role="tab" aria-selected="true">🔥 Buy Extension (₹599) — Available</button>
+            <button class="plan-filter-btn" data-filter="monthly-pro" role="tab" aria-selected="false">Monthly Pro (Unavailable)</button>
+            <button class="plan-filter-btn" data-filter="pay-per-card" role="tab" aria-selected="false">Pay-Per-Card (Unavailable)</button>
           </div>
         </div>
 
         <div class="pricing-grid">
-          <!-- 1. Single Card / Pay-as-you-go Plan -->
-          <div class="pricing-card" id="planSingle" data-plan-id="pay-per-card" data-plan-name="Pay-Per-Card"
-            data-price="20" data-billing="/ card" tabindex="0" role="button"
-            aria-label="Select Pay-Per-Card Plan at 20 Rupees per card">
-            <div class="plan-selection-indicator" title="Selection Status">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
-                <polyline points="20 6 9 17 4 12" />
-              </svg>
-            </div>
+          <!-- 1. Single Card / Pay-as-you-go Plan (Unavailable) -->
+          <div class="pricing-card unavailable" id="planSingle" data-plan-id="pay-per-card" data-plan-name="Pay-Per-Card"
+            data-price="20" data-billing="/ card" tabindex="-1" role="button" aria-disabled="true"
+            aria-label="Pay-Per-Card Plan currently not available">
             <div>
+              <div class="unavailable-badge-banner">❌ Not Available Right Now</div>
               <div class="plan-header">
-                <h3 class="plan-name">Pay-Per-Card</h3>
+                <h3 class="plan-name" style="color: var(--text-muted);">Pay-Per-Card</h3>
                 <p class="plan-desc">For occasional operators & individual farmers.</p>
               </div>
-              <div class="plan-price-box">
+              <div class="plan-price-box" style="opacity: 0.6;">
                 <span class="currency-sym">₹</span>
                 <span class="price-val">20</span>
                 <span class="price-cycle">/ card</span>
               </div>
-              <ul class="plan-features-list">
+              <ul class="plan-features-list" style="opacity: 0.6;">
                 <li class="plan-feature">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <polyline points="20 6 9 17 4 12" />
@@ -482,32 +472,27 @@
                 </li>
               </ul>
             </div>
-            <button type="button" class="btn btn-secondary btn-block plan-action-btn">
-              <span>Select Pay-Per-Card</span>
+            <button type="button" class="btn btn-unavailable btn-block plan-action-btn" disabled>
+              <span>❌ Not Available Right Now</span>
             </button>
           </div>
 
-          <!-- 2. Monthly Pro (Featured & Selected by Default) -->
-          <div class="pricing-card featured selected" id="planMonthly" data-plan-id="monthly-pro"
-            data-plan-name="Monthly Pro" data-price="99" data-billing="/ month" tabindex="0" role="button"
-            aria-label="Select Monthly Pro Plan at 99 Rupees per month">
-            <div class="featured-ribbon">Most Popular for CSCs</div>
-            <div class="plan-selection-indicator" title="Selection Status">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
-                <polyline points="20 6 9 17 4 12" />
-              </svg>
-            </div>
+          <!-- 2. Monthly Pro Plan (Unavailable) -->
+          <div class="pricing-card unavailable" id="planMonthly" data-plan-id="monthly-pro"
+            data-plan-name="Monthly Pro" data-price="99" data-billing="/ month" tabindex="-1" role="button" aria-disabled="true"
+            aria-label="Monthly Pro Plan currently not available">
             <div>
+              <div class="unavailable-badge-banner">❌ Not Available Right Now</div>
               <div class="plan-header">
-                <h3 class="plan-name">Monthly Pro</h3>
+                <h3 class="plan-name" style="color: var(--text-muted);">Monthly Pro</h3>
                 <p class="plan-desc">High volume CSC / VLE centers & cyber cafes.</p>
               </div>
-              <div class="plan-price-box">
+              <div class="plan-price-box" style="opacity: 0.6;">
                 <span class="currency-sym">₹</span>
                 <span class="price-val">99</span>
                 <span class="price-cycle">/ month</span>
               </div>
-              <ul class="plan-features-list">
+              <ul class="plan-features-list" style="opacity: 0.6;">
                 <li class="plan-feature">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <polyline points="20 6 9 17 4 12" />
@@ -534,15 +519,16 @@
                 </li>
               </ul>
             </div>
-            <button type="button" class="btn btn-primary btn-block plan-action-btn">
-              <span>✓ Selected Plan (Proceed)</span>
+            <button type="button" class="btn btn-unavailable btn-block plan-action-btn" disabled>
+              <span>❌ Not Available Right Now</span>
             </button>
           </div>
 
-          <!-- 3. Lifetime License Plan -->
-          <div class="pricing-card" id="planLifetime" data-plan-id="lifetime" data-plan-name="Lifetime License"
-            data-price="499" data-billing="one-time" tabindex="0" role="button"
-            aria-label="Select Lifetime License at 499 Rupees one-time">
+          <!-- 3. Full Extension Lifetime License (Flagship & ONLY Available Plan) -->
+          <div class="pricing-card featured selected" id="planLifetime" data-plan-id="lifetime" data-plan-name="Lifetime License"
+            data-price="599" data-billing="one-time" tabindex="0" role="button"
+            aria-label="Buy AgriStack Extension Lifetime License for 599 Rupees one-time">
+            <div class="featured-ribbon">🔥 60% OFF Launch Deal — ₹599</div>
             <div class="plan-selection-indicator" title="Selection Status">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
                 <polyline points="20 6 9 17 4 12" />
@@ -550,50 +536,67 @@
             </div>
             <div>
               <div class="plan-header">
-                <h3 class="plan-name">Lifetime License</h3>
-                <p class="plan-desc">One-time payment for permanent unlimited access.</p>
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px;">
+                  <h3 class="plan-name">Full Extension License</h3>
+                  <span class="promo-badge-tag">AVAILABLE NOW</span>
+                </div>
+                <p class="plan-desc">One-time payment for full Chrome extension package & permanent unlimited access.</p>
               </div>
               <div class="plan-price-box">
                 <span class="currency-sym">₹</span>
-                <span class="price-val">499</span>
+                <span class="price-val">599</span>
                 <span class="price-cycle">one-time</span>
+              </div>
+              <div style="font-size: 11px; color: #166536; font-weight: 700; background: #DCFCE7; padding: 4px 8px; border-radius: 4px; display: inline-block; margin-bottom: 12px;">
+                ⚡ Auto-starts .ZIP Download Immediately After Payment
               </div>
               <ul class="plan-features-list">
                 <li class="plan-feature">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <polyline points="20 6 9 17 4 12" />
                   </svg>
-                  <span><strong>Lifetime Unlimited</strong> Generations</span>
+                  <span><strong>Full Chrome Extension ZIP</strong> Download</span>
                 </li>
                 <li class="plan-feature">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <polyline points="20 6 9 17 4 12" />
                   </svg>
-                  <span>All Future State Registry Formats</span>
+                  <span><strong>Lifetime Unlimited</strong> ID Card Generations</span>
                 </li>
                 <li class="plan-feature">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <polyline points="20 6 9 17 4 12" />
                   </svg>
-                  <span>Direct Developer Remote Assistance</span>
+                  <span>HarfBuzz Gurmukhi Font Shaping Engine</span>
                 </li>
                 <li class="plan-feature">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <polyline points="20 6 9 17 4 12" />
                   </svg>
-                  <span>No Renewal or Maintenance Fees</span>
+                  <span>All Future State Registry Portal Updates</span>
+                </li>
+                <li class="plan-feature">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                  <span>Official License Key & GST Invoice Included</span>
+                </li>
+                <li class="plan-feature">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                  <span>Direct WhatsApp & Developer Support</span>
                 </li>
               </ul>
             </div>
-            <button type="button" class="btn btn-secondary btn-block plan-action-btn">
-              <span>Select Lifetime License</span>
+            <button type="button" class="btn btn-primary btn-block plan-action-btn" onclick="openCheckoutModal('lifetime')">
+              <span>⚡ Buy Extension — ₹599 (Auto-Download)</span>
             </button>
           </div>
         </div>
 
         <p class="pricing-disclaimer">
-          🔒 Digital payments are securely processed. GST / Local taxes included as applicable. Instant digital license
-          delivery.
+          🔒 Digital payments are securely processed via UPI & Cards. Instant automatic ZIP package download upon payment confirmation.
         </p>
       </div>
     </section>
@@ -885,27 +888,26 @@
 
           <!-- Order & Inquiry Form with 2-Way Plan Sync -->
           <div class="contact-form-card">
-            <h3>License Order & Inquiry Form</h3>
-            <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 16px;">Fill in your details below to
-              activate your digital license key or send an inquiry.</p>
+            <h3>Buy Extension & License Activation</h3>
+            <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 16px;">Fill in your details below to buy the extension for ₹599 and start your automatic download instantly.</p>
 
             <!-- Dynamic Selected Plan Indicator Banner -->
             <div class="selected-plan-banner" id="selectedPlanBanner">
               <div class="selected-plan-info">
                 <span class="selected-plan-label">Chosen License Plan:</span>
-                <span class="selected-plan-title" id="selectedPlanDisplayTitle">Monthly Pro (Unlimited)</span>
+                <span class="selected-plan-title" id="selectedPlanDisplayTitle">Full Extension Lifetime License</span>
               </div>
-              <div class="selected-plan-price-tag" id="selectedPlanDisplayPrice">₹99 / mo</div>
+              <div class="selected-plan-price-tag" id="selectedPlanDisplayPrice">₹599 one-time</div>
             </div>
 
-            <form id="contactForm" onsubmit="event.preventDefault(); handleContactSubmit();">
+            <form id="contactForm" onsubmit="event.preventDefault(); openCheckoutModal();">
               <div class="form-group">
                 <label class="form-label" for="selectedPlan">Select License Plan *</label>
                 <select id="selectedPlan" class="form-control" required>
-                  <option value="pay-per-card">Pay-Per-Card (₹20 / card generation)</option>
-                  <option value="monthly-pro" selected>Monthly Pro (₹99 / month - Unlimited)</option>
-                  <option value="lifetime">Lifetime License (₹499 one-time)</option>
-                  <option value="custom">Custom Bulk CSC Center Pack</option>
+                  <option value="lifetime" selected>🔥 Full Extension Lifetime License (₹599 one-time) — AVAILABLE NOW</option>
+                  <option value="monthly-pro" disabled>Monthly Pro (₹99 / month) — ❌ Not Available Right Now</option>
+                  <option value="pay-per-card" disabled>Pay-Per-Card (₹20 / card) — ❌ Not Available Right Now</option>
+                  <option value="custom" disabled>Custom Bulk CSC Pack — ❌ Not Available Right Now</option>
                 </select>
               </div>
 
@@ -916,35 +918,33 @@
               </div>
 
               <div class="form-group">
-                <label class="form-label" for="senderEmail">Email Address (For License & Invoices) *</label>
+                <label class="form-label" for="senderEmail">Email Address (For License & Auto-Download) *</label>
                 <input type="email" id="senderEmail" class="form-control" placeholder="e.g. gurpreet@example.com"
                   required>
               </div>
 
               <div class="form-group">
-                <label class="form-label" for="senderPhone">Mobile Number (Optional)</label>
-                <input type="tel" id="senderPhone" class="form-control" placeholder="e.g. +91 62392 45940">
+                <label class="form-label" for="senderPhone">Mobile / WhatsApp Number (For Instant Activation) *</label>
+                <input type="tel" id="senderPhone" class="form-control" placeholder="e.g. +91 62392 45940" required>
               </div>
 
               <div class="form-group">
-                <label class="form-label" for="senderMessage">Message / Specific Requirements</label>
+                <label class="form-label" for="senderMessage">Special Requirements (Optional)</label>
                 <textarea id="senderMessage" class="form-control"
-                  placeholder="Please activate my license for Monthly Pro..."></textarea>
+                  placeholder="I would like to activate the ₹599 Extension Lifetime License..."></textarea>
               </div>
 
               <div style="display: flex; gap: 12px; flex-wrap: wrap;">
-                <button type="button" class="btn btn-primary" id="openCheckoutModalBtn" style="flex: 1;">
-                  <span>🔒 Instant Digital Checkout</span>
+                <button type="submit" class="btn btn-primary" id="openCheckoutModalBtn" style="flex: 1;">
+                  <span>⚡ Pay ₹599 & Auto-Download Extension</span>
                 </button>
-                <button type="submit" class="btn btn-secondary" id="sendInquiryBtn">
+                <button type="button" class="btn btn-secondary" id="sendInquiryBtn" onclick="handleContactSubmit()">
                   <span>Send Inquiry</span>
                 </button>
               </div>
 
               <div id="toastMessage" class="toast-msg toast-success">
-                ✅ <strong>Success!</strong> Your inquiry and license request for <span id="toastPlanName">Monthly
-                  Pro</span> has been submitted to <code>itzgarry01@gmail.com</code>. We will contact you within 24
-                hours.
+                ✅ <strong>Success!</strong> Your inquiry and license request for <span id="toastPlanName">Lifetime License (₹599)</span> has been submitted to <code>itzgarry01@gmail.com</code>.
               </div>
             </form>
           </div>
@@ -958,73 +958,73 @@
         <div class="section-header">
           <span class="section-tag">FAQ</span>
           <h2 class="section-title">Frequently Asked Questions</h2>
-          <p class="section-desc">Quick answers regarding installation, licensing, and printing.</p>
+          <p class="section-desc">Quick answers regarding ₹599 extension purchase, automatic download, and installation.</p>
         </div>
 
         <div class="faq-grid">
-          <div class="faq-item">
+          <div class="faq-item active">
             <button type="button" class="faq-question">
-              <span>How do I select and switch plans?</span>
+              <span>How does the automatic extension download work after paying ₹599?</span>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <polyline points="6 9 12 15 18 9" />
               </svg>
             </button>
             <div class="faq-answer">
-              You can simply click on any pricing card in the Pricing section or select it from the dropdown in the
-              order form. The pricing card will light up with a green selection badge and update your order summary
-              immediately.
+              As soon as your ₹599 payment is confirmed (via UPI QR, Google Pay, PhonePe, Paytm, or Card), the complete extension package <strong>agristack-card-helper-v2.0.zip</strong> will automatically begin downloading in your web browser. You will also see an on-screen confirmation with your unique official License Key and a manual Re-Download button.
             </div>
           </div>
 
           <div class="faq-item">
             <button type="button" class="faq-question">
-              <span>Is this extension official for Punjab Farmer Registry?</span>
+              <span>How do I install the extension in Google Chrome / Brave / Edge?</span>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <polyline points="6 9 12 15 18 9" />
               </svg>
             </button>
             <div class="faq-answer">
-              AgriStack Card Helper is an independent formatting tool designed for CSC / VLE operators. It formats
-              verified registry export pages into standard 300 DPI ID card templates for easy printing.
+              Installing takes less than 30 seconds:
+              <ol style="margin-left: 20px; margin-top: 8px; line-height: 1.8;">
+                <li>Extract the downloaded <code>agristack-card-helper-v2.0.zip</code> file onto your computer.</li>
+                <li>Open Google Chrome and navigate to <code>chrome://extensions</code>.</li>
+                <li>Turn ON the <strong>Developer mode</strong> switch in the top right corner.</li>
+                <li>Click <strong>Load unpacked</strong> and choose the extracted folder. Done!</li>
+              </ol>
             </div>
           </div>
 
           <div class="faq-item">
             <button type="button" class="faq-question">
-              <span>How are card PDFs delivered after payment?</span>
+              <span>What is included in the ₹599 Lifetime License?</span>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <polyline points="6 9 12 15 18 9" />
               </svg>
             </button>
             <div class="faq-answer">
-              Delivery is instantaneous. As soon as digital payment is confirmed, your browser automatically downloads
-              the 2-page PDF file containing both Front and Back card layouts.
+              The ₹599 one-time payment gives you permanent unlimited card generations, 100% accurate Gurmukhi/Punjabi typography shaping, Denso Wave QR code formatting, 300 DPI front & back PDF output, all future extension updates, an official license key, and direct developer WhatsApp support.
             </div>
           </div>
 
           <div class="faq-item">
             <button type="button" class="faq-question">
-              <span>What payment methods are supported?</span>
+              <span>What payment methods are supported for ₹599?</span>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <polyline points="6 9 12 15 18 9" />
               </svg>
             </button>
             <div class="faq-answer">
-              We support all major Indian digital payment methods: UPI (Google Pay, PhonePe, Paytm, BHIM), Debit &
-              Credit Cards (Visa, MasterCard, RuPay), and Netbanking across all Indian banks.
+              We support all Indian digital payments: Instant UPI QR Code scanning, Google Pay, PhonePe, Paytm, BHIM, Cred, Debit/Credit Cards (RuPay, Visa, Mastercard), and Netbanking across all Indian banks.
             </div>
           </div>
 
           <div class="faq-item">
             <button type="button" class="faq-question">
-              <span>What if a card fails to download?</span>
+              <span>What if my download is blocked by browser pop-ups?</span>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <polyline points="6 9 12 15 18 9" />
               </svg>
             </button>
             <div class="faq-answer">
-              Under our 7-day refund guarantee, if a card fails to compile due to a technical error, you can simply
-              email support at itzgarry01@gmail.com with your payment ID for an instant re-generation or full refund.
+              Don't worry! If your browser popup blocker pauses the download, the Success Screen includes a prominent "Re-Download Extension (.ZIP)" button. You can also reach out on WhatsApp at +91 62392 45940 or email itzgarry01@gmail.com for instant file delivery.
             </div>
           </div>
         </div>
@@ -1037,20 +1037,19 @@
     <div class="container">
       <div class="footer-trust-strip">
         <span class="trust-pill-tag">🔒 256-Bit SSL Encrypted</span> &bull;
-        <span class="trust-pill-tag">⚡ Instant Digital Card Delivery</span> &bull;
+        <span class="trust-pill-tag">⚡ Instant Auto-Download (.ZIP)</span> &bull;
         <span class="trust-pill-tag">🛡️ 100% Client-Side Local Privacy</span> &bull;
-        <span class="trust-pill-tag">💳 Instant UPI & Card Access</span>
+        <span class="trust-pill-tag">💳 ₹599 One-Time Lifetime Access</span>
       </div>
 
       <div class="footer-grid">
         <div class="footer-brand">
-          <h4>AgriStack Card Helper</h4>
+          <h4>AgriStack Extension Helper</h4>
           <p>
-            Farmer ID Digital Identity formatting utility and browser extension for agricultural registries and CSC
-            operators.
+            Automated Farmer ID Digital Identity formatting Chrome extension for Punjab Farmer Registry and CSC / VLE operators.
           </p>
           <p style="margin-top: 8px; font-size: 12px; color: #64748B;">
-            Operating from Bathinda, Punjab, India &bull; Support: itzgarry01@gmail.com
+            Operating from Bathinda, Punjab, India &bull; Official Support: itzgarry01@gmail.com &bull; +91 62392 45940
           </p>
         </div>
 
@@ -1060,7 +1059,7 @@
             <a href="#hero">Home</a>
             <a href="#features">Features</a>
             <a href="#workflow">Product Workflow</a>
-            <a href="#pricing">Pricing Plans</a>
+            <a href="#pricing">Pricing (₹599)</a>
             <a href="#faq">FAQ</a>
           </div>
         </div>
@@ -1088,8 +1087,7 @@
 
       <div class="footer-bottom">
         <div>
-          &copy; <span id="currentYear">2026</span> AgriStack Card Helper. All rights reserved. Built for CSC &
-          AgriStack Operators.
+          &copy; <span id="currentYear">2026</span> AgriStack Card Helper. All rights reserved. Built for CSC & AgriStack Operators.
         </div>
         <div style="font-size: 12px;">
           <span>Compliant with Indian IT Act 2000 & Payment Aggregator Guidelines</span>
@@ -1114,57 +1112,290 @@
     </div>
   </div>
 
-  <!-- Interactive Instant Checkout Modal -->
+  <!-- Interactive Instant Checkout Modal with UPI & Cards -->
   <div class="modal-overlay" id="checkoutModal" aria-hidden="true" role="dialog" aria-modal="true">
-    <div class="modal-box">
+    <div class="modal-box" style="max-width: 580px;">
       <div class="modal-header">
-        <h3>🔒 Secure Digital Checkout</h3>
-        <button type="button" class="modal-close-btn" id="checkoutModalCloseBtn"
-          aria-label="Close modal">&times;</button>
+        <div>
+          <h3 style="font-size: 17px;">🔒 Instant Checkout & Auto-Download</h3>
+          <p style="font-size: 12px; color: #64748B; margin-top: 2px;">Pay ₹599 to unlock lifetime extension access</p>
+        </div>
+        <button type="button" class="modal-close-btn" id="checkoutModalCloseBtn" aria-label="Close modal">&times;</button>
       </div>
       <div class="modal-body">
-        <div
-          style="background: #F0FDF4; border: 1px solid #BBF7D0; border-radius: 8px; padding: 14px; margin-bottom: 16px;">
-          <div style="display: flex; justify-content: space-between; align-items: baseline;">
+        <!-- Selected Plan Summary Card -->
+        <div style="background: #F0FDF4; border: 1.5px solid #BBF7D0; border-radius: 8px; padding: 14px; margin-bottom: 16px;">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
             <div>
-              <div style="font-size: 11px; font-weight: 700; color: #166536; text-transform: uppercase;">Selected
-                License</div>
-              <div style="font-size: 16px; font-weight: 800; color: #0F172A;" id="modalCheckoutPlanName">Monthly Pro
-                (Unlimited)</div>
+              <div style="font-size: 11px; font-weight: 700; color: #166536; text-transform: uppercase;">Selected Software License</div>
+              <div style="font-size: 16px; font-weight: 800; color: #0F172A;" id="modalCheckoutPlanName">Full Extension Lifetime License</div>
+              <div style="font-size: 11px; color: #475569; margin-top: 2px;">⚡ agristack-card-helper-v2.0.zip will download automatically</div>
             </div>
-            <div style="font-size: 20px; font-weight: 900; color: #166536;" id="modalCheckoutPlanPrice">₹99</div>
+            <div style="font-size: 24px; font-weight: 900; color: #166536;" id="modalCheckoutPlanPrice">₹599</div>
           </div>
         </div>
 
-        <div style="font-size: 13px; color: #475569; margin-bottom: 14px; line-height: 1.5;">
-          ⚡ <strong>Instant Access:</strong> Your license key will be activated immediately upon completing UPI/Card
-          payment.
+        <!-- Customer Details Inputs -->
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px;">
+          <div class="form-group" style="margin-bottom: 0;">
+            <label class="form-label" for="modalCustName" style="font-size: 12px;">Full Name / Center Name *</label>
+            <input type="text" id="modalCustName" class="form-control" placeholder="e.g. Gurpreet Singh" required>
+          </div>
+          <div class="form-group" style="margin-bottom: 0;">
+            <label class="form-label" for="modalCustPhone" style="font-size: 12px;">WhatsApp Mobile No *</label>
+            <input type="tel" id="modalCustPhone" class="form-control" placeholder="e.g. +91 62392 45940" required>
+          </div>
         </div>
 
-        <div class="form-group">
-          <label class="form-label" for="modalCustEmail">Email Address for License Receipt *</label>
-          <input type="email" id="modalCustEmail" class="form-control" placeholder="your-email@example.com" required>
+        <div class="form-group" style="margin-bottom: 16px;">
+          <label class="form-label" for="modalCustEmail" style="font-size: 12px;">Email Address (For License Key & Receipt) *</label>
+          <input type="email" id="modalCustEmail" class="form-control" placeholder="e.g. gurpreet@example.com" required>
         </div>
 
-        <div
-          style="padding: 12px; background: #FEF3C7; border: 1px solid #FDE68A; border-radius: 6px; font-size: 12px; color: #92400E; margin-bottom: 12px;">
-          <strong>Secure Payments:</strong> Instant payments via UPI (Google Pay / PhonePe / Paytm), QR Code,
-          Debit/Credit Card, and Netbanking.
+        <!-- Payment Method Tabs -->
+        <div class="checkout-tabs-header">
+          <button type="button" class="checkout-tab-btn active" id="tabRazorpayBtn" onclick="switchCheckoutTab('razorpay')">
+            🔒 Razorpay Gateway (Cards / UPI / Netbanking)
+          </button>
+          <button type="button" class="checkout-tab-btn" id="tabUpiBtn" onclick="switchCheckoutTab('upi')">
+            📱 Direct UPI QR Code
+          </button>
         </div>
 
-        <div id="checkoutSimStatus"
-          style="display: none; padding: 12px; border-radius: 6px; font-size: 13px; text-align: center; font-weight: 600; margin-top: 10px;">
+        <!-- Razorpay Official Gateway Tab Content (Default) -->
+        <div id="checkoutRazorpayContent">
+          <div style="background: #F8FAFC; border: 1.5px solid var(--primary-border); border-radius: var(--radius-lg); padding: 20px; text-align: center; margin-bottom: 16px;">
+            <div style="display: inline-flex; align-items: center; gap: 6px; background: #DCFCE7; color: #166536; padding: 4px 10px; border-radius: var(--radius-full); font-size: 11px; font-weight: 700; margin-bottom: 10px;">
+              ⚡ Official Razorpay Payment Gateway Active
+            </div>
+            <div style="font-size: 15px; font-weight: 800; color: #0F172A; margin-bottom: 6px;">
+              Instant Checkout: <span style="color: #166536; font-size: 18px;" id="razorpayPriceTag">₹599</span>
+            </div>
+            <p style="font-size: 12px; color: var(--text-secondary); margin-bottom: 16px;">
+              Accepts Google Pay, PhonePe, Paytm, BHIM, UPI QR, Cards (RuPay/Visa/MasterCard), & Netbanking.
+            </p>
+            <div style="display: flex; justify-content: center; gap: 10px; margin-bottom: 18px; font-size: 24px;">
+              <span>📱</span> <span>💳</span> <span>🏦</span> <span>🔒</span>
+            </div>
+            <button type="button" class="btn btn-primary btn-block btn-lg" id="payRazorpayBtn" onclick="openRazorpayCheckout()">
+              <span>🔒 Pay ₹599 via Razorpay & Download</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Direct UPI Tab Content -->
+        <div id="checkoutUpiContent" style="display: none;">
+          <div class="upi-payment-box">
+            <div style="font-size: 13px; font-weight: 700; color: #0F172A; margin-bottom: 10px;">
+              Scan UPI QR Code to Pay <span style="color: #166536; font-size: 16px; font-weight: 900;" id="qrPriceTag">₹599</span>
+            </div>
+            
+            <div class="upi-qr-wrapper">
+              <!-- Live UPI QR Code generated via SVG/API -->
+              <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=upi%3A%2F%2Fpay%3Fpa%3Ditzgarry01%40okaxis%26pn%3DAgriStack%20Helper%26am%3D599%26cu%3DINR%26tn%3DAgriStack%20Extension%20License" alt="UPI QR Code for ₹599" class="upi-qr-img" id="liveUpiQr">
+            </div>
+
+            <div>
+              <div class="upi-id-badge">
+                <span>UPI ID: <strong>itzgarry01@okaxis</strong></span>
+                <button type="button" class="copy-btn" data-copy="itzgarry01@okaxis" style="padding: 2px 8px; font-size: 11px;">Copy</button>
+              </div>
+            </div>
+
+            <div class="upi-apps-row">
+              <span class="upi-app-pill">🟢 Google Pay</span>
+              <span class="upi-app-pill">🟣 PhonePe</span>
+              <span class="upi-app-pill">🔵 Paytm</span>
+              <span class="upi-app-pill">🟠 BHIM UPI</span>
+              <span class="upi-app-pill">⚪ CRED UPI</span>
+            </div>
+          </div>
+
+          <div style="text-align: center; margin-top: 10px;">
+            <button type="button" class="btn btn-primary btn-block btn-lg" id="verifyUpiPaymentBtn" onclick="processPaymentSuccess('Direct UPI Manual Verification')">
+              <span>✅ I Have Paid ₹599 — Download Extension Instantly</span>
+            </button>
+          </div>
+        </div>
+
+        <div id="checkoutSimStatus" style="display: none; padding: 12px; border-radius: 6px; font-size: 13px; text-align: center; font-weight: 600; margin-top: 10px;">
         </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary btn-sm" onclick="closeCheckoutModal()">Cancel</button>
-        <button type="button" class="btn btn-primary btn-sm" id="payCashfreeSimBtn"
-          onclick="simulateCashfreeCheckout()">
-          <span>🔒 Open Payment Gateway</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Post-Payment Automatic Download & Success Modal -->
+  <div class="modal-overlay" id="downloadSuccessModal" aria-hidden="true" role="dialog" aria-modal="true">
+    <div class="modal-box" style="max-width: 620px;">
+      <div class="modal-header" style="background: #F0FDF4; border-bottom: 1px solid #BBF7D0;">
+        <h3 style="color: #166536; font-size: 18px;">🎉 Payment Successful & Extension Ready!</h3>
+        <button type="button" class="modal-close-btn" id="successModalCloseBtn" onclick="closeSuccessModal()" aria-label="Close modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="success-header-banner">
+          <div class="success-check-icon">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+          </div>
+          <h2 style="font-size: 22px; font-weight: 900; color: #0F172A; margin-bottom: 4px;">Payment of ₹599 Confirmed!</h2>
+          <p style="font-size: 13px; color: #475569;">Thank you for your purchase. Your digital license is activated.</p>
+        </div>
+
+        <!-- Auto-Download Notification Box -->
+        <div class="auto-download-indicator">
+          <div class="download-spinner"></div>
+          <div>
+            <div style="font-size: 14px; font-weight: 800; color: #065F46;">
+              🚀 Your Download Has Started Automatically!
+            </div>
+            <div style="font-size: 12px; color: #047857;">
+              Downloading: <code>agristack-card-helper-v2.0.zip</code>
+            </div>
+          </div>
+        </div>
+
+        <!-- Generated License Key Box -->
+        <div class="license-key-box">
+          <div class="license-key-label">Your Official Lifetime License Key</div>
+          <div class="license-key-code" id="successLicenseKey">AGRI-PRO-599-8F29-4D17</div>
+          <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+            <button type="button" class="license-copy-btn" id="copyLicenseKeyBtn" onclick="copyLicenseKeyToClipboard()">
+              <span>📋 Copy License Key</span>
+            </button>
+            <button type="button" class="license-copy-btn" onclick="openInvoiceModal()">
+              <span>🧾 View Tax Invoice (₹599)</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Manual Re-Download Button if blocked -->
+        <div style="display: flex; gap: 10px; margin-bottom: 18px; flex-wrap: wrap;">
+          <a href="agristack-card-helper-v2.0.zip" download="agristack-card-helper-v2.0.zip" class="btn btn-primary" id="reDownloadZipBtn" style="flex: 1; text-align: center; text-decoration: none;">
+            <span>⬇️ Click Here to Re-Download (.ZIP)</span>
+          </a>
+        </div>
+
+        <!-- 4-Step Chrome Installation Visual Guide -->
+        <div class="install-guide-section">
+          <div class="install-guide-title">
+            <span>⚙️ How to Install in Google Chrome / Brave / Edge (30 Seconds)</span>
+          </div>
+          <div class="install-steps-list">
+            <div class="install-step-item">
+              <span class="step-num-badge">1</span>
+              <div>
+                <strong>Extract the ZIP:</strong> Right-click the downloaded <span class="step-code-highlight">agristack-card-helper-v2.0.zip</span> file and select <em>"Extract All..."</em>.
+              </div>
+            </div>
+            <div class="install-step-item">
+              <span class="step-num-badge">2</span>
+              <div>
+                <strong>Open Chrome Extensions:</strong> In your browser, go to <span class="step-code-highlight">chrome://extensions</span> (or click <em>Menu &rarr; Extensions &rarr; Manage Extensions</em>).
+              </div>
+            </div>
+            <div class="install-step-item">
+              <span class="step-num-badge">3</span>
+              <div>
+                <strong>Enable Developer Mode:</strong> Turn ON the <span class="step-code-highlight">Developer mode</span> toggle switch in the top-right corner.
+              </div>
+            </div>
+            <div class="install-step-item">
+              <span class="step-num-badge">4</span>
+              <div>
+                <strong>Load Unpacked:</strong> Click the <span class="step-code-highlight">Load unpacked</span> button (top-left) and select the extracted folder. Done!
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Support assistance footer in modal -->
+        <div style="margin-top: 14px; text-align: center; font-size: 12px; color: #64748B;">
+          Need help installing? WhatsApp Support: <a href="https://wa.me/916239245940?text=Hi%2C%20I%20bought%20the%20AgriStack%20Extension%20for%20599%20and%20need%20assistance." target="_blank" style="font-weight: 700; color: #166536;">+91 62392 45940</a>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary btn-sm" onclick="closeSuccessModal()">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Official GST Tax Invoice Modal -->
+  <div class="modal-overlay" id="invoiceModal" aria-hidden="true" role="dialog" aria-modal="true">
+    <div class="modal-box" style="max-width: 600px;">
+      <div class="modal-header">
+        <h3>🧾 Digital Software Tax Invoice</h3>
+        <button type="button" class="modal-close-btn" onclick="closeInvoiceModal()" aria-label="Close modal">&times;</button>
+      </div>
+      <div class="modal-body" id="invoicePrintArea">
+        <div style="border-bottom: 2px solid #0F172A; padding-bottom: 12px; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: flex-start;">
+          <div>
+            <h2 style="font-size: 18px; font-weight: 900; color: #0F172A;">AgriStack Card Helper</h2>
+            <p style="font-size: 12px; color: #64748B;">Farmer ID Digital Identity Solutions</p>
+            <p style="font-size: 11px; color: #64748B;">Bathinda, Punjab - 151001 &bull; itzgarry01@gmail.com</p>
+          </div>
+          <div style="text-align: right;">
+            <div style="font-size: 12px; font-weight: 800; color: #166536; background: #DCFCE7; padding: 3px 8px; border-radius: 4px; display: inline-block;">PAID & DELIVERED</div>
+            <div style="font-size: 11px; color: #64748B; margin-top: 4px;" id="invDate">Date: 18 Aug 2026</div>
+            <div style="font-size: 11px; color: #64748B;" id="invId">Inv #: AGRI-2026-8821</div>
+          </div>
+        </div>
+
+        <div style="margin-bottom: 14px; font-size: 12px;">
+          <strong>Billed To:</strong> <span id="invCustName">CSC Operator</span><br>
+          <strong>Email:</strong> <span id="invCustEmail">operator@example.com</span><br>
+          <strong>Phone:</strong> <span id="invCustPhone">+91 62392 45940</span>
+        </div>
+
+        <table style="width: 100%; border-collapse: collapse; margin-bottom: 16px; font-size: 13px;">
+          <thead>
+            <tr style="background: #F1F5F9; border-bottom: 1px solid #CBD5E1;">
+              <th style="padding: 8px; text-align: left;">Item Description</th>
+              <th style="padding: 8px; text-align: center;">Qty</th>
+              <th style="padding: 8px; text-align: right;">Amount (INR)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom: 1px solid #E2E8F0;">
+              <td style="padding: 10px 8px;">
+                <strong>AgriStack Extension Lifetime License</strong><br>
+                <span style="font-size: 11px; color: #64748B;">Key: <span id="invKey">AGRI-PRO-599-8F29-4D17</span></span>
+              </td>
+              <td style="padding: 10px 8px; text-align: center;">1</td>
+              <td style="padding: 10px 8px; text-align: right; font-weight: 700;">₹599.00</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #E2E8F0;">
+              <td style="padding: 8px; color: #64748B;">Instant Digital Electronic Delivery (ZIP)</td>
+              <td style="padding: 8px; text-align: center; color: #64748B;">1</td>
+              <td style="padding: 8px; text-align: right; color: #166536;">₹0.00</td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr style="font-weight: 800; font-size: 14px; border-top: 2px solid #0F172A;">
+              <td style="padding: 10px 8px;" colspan="2">Total Paid (Inclusive of Taxes)</td>
+              <td style="padding: 10px 8px; text-align: right; color: #166536;">₹599.00</td>
+            </tr>
+          </tfoot>
+        </table>
+
+        <p style="font-size: 11px; color: #64748B; text-align: center;">
+          This is a computer-generated tax invoice for digital software licensing. No physical signature required.
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary btn-sm" onclick="closeInvoiceModal()">Close</button>
+        <button type="button" class="btn btn-primary btn-sm" onclick="window.print()">
+          <span>🖨️ Print Invoice</span>
         </button>
       </div>
     </div>
   </div>
+
+  <!-- Razorpay Official Checkout Gateway SDK -->
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
   <!-- Core JavaScript -->
   <script src="script.js"></script>

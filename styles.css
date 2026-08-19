@@ -1620,3 +1620,313 @@ textarea.form-control {
     border-radius: var(--radius-md);
   }
 }
+
+/* ==========================================================================
+   Enhanced Checkout & UPI Payment Styles
+   ========================================================================== */
+.checkout-tabs-header {
+  display: flex;
+  gap: 8px;
+  background: #F1F5F9;
+  padding: 4px;
+  border-radius: var(--radius-md);
+  margin-bottom: 18px;
+}
+
+.checkout-tab-btn {
+  flex: 1;
+  padding: 10px 14px;
+  font-size: 13px;
+  font-weight: 700;
+  border: none;
+  background: transparent;
+  color: var(--text-secondary);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: var(--transition);
+}
+
+.checkout-tab-btn.active {
+  background: #FFFFFF;
+  color: var(--primary-dark);
+  box-shadow: var(--shadow-sm);
+}
+
+.upi-payment-box {
+  background: #F8FAFC;
+  border: 1.5px dashed #CBD5E1;
+  border-radius: var(--radius-lg);
+  padding: 18px;
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.upi-qr-wrapper {
+  position: relative;
+  display: inline-block;
+  background: #FFFFFF;
+  padding: 12px;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  margin-bottom: 12px;
+}
+
+.upi-qr-img {
+  width: 170px;
+  height: 170px;
+  display: block;
+  border-radius: 4px;
+  object-fit: contain;
+}
+
+.upi-id-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #E2E8F0;
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  font-size: 12px;
+  font-weight: 700;
+  color: #0F172A;
+  margin-top: 4px;
+}
+
+.upi-apps-row {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+
+.upi-app-pill {
+  padding: 6px 12px;
+  background: #FFFFFF;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  font-size: 11px;
+  font-weight: 700;
+  color: #334155;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* ==========================================================================
+   Post-Payment Auto-Download Success Modal Styles
+   ========================================================================== */
+.success-header-banner {
+  text-align: center;
+  padding: 10px 0 16px;
+}
+
+.success-check-icon {
+  width: 64px;
+  height: 64px;
+  background: linear-gradient(135deg, #22C55E 0%, #166536 100%);
+  color: #FFFFFF;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 12px;
+  box-shadow: 0 8px 24px rgba(34, 197, 94, 0.35);
+  animation: pulseCheck 1.5s infinite alternate;
+}
+
+@keyframes pulseCheck {
+  from { transform: scale(1); }
+  to { transform: scale(1.06); }
+}
+
+.auto-download-indicator {
+  background: #ECFDF5;
+  border: 1.5px solid #A7F3D0;
+  border-radius: var(--radius-md);
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.download-spinner {
+  width: 24px;
+  height: 24px;
+  border: 3px solid #6EE7B7;
+  border-top-color: #059669;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  flex-shrink: 0;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.license-key-box {
+  background: #0F172A;
+  color: #F8FAFC;
+  border-radius: var(--radius-lg);
+  padding: 18px;
+  margin-bottom: 20px;
+  border: 1px solid #334155;
+  position: relative;
+  box-shadow: var(--shadow-lg);
+}
+
+.license-key-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #94A3B8;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.license-key-code {
+  font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+  font-size: 18px;
+  font-weight: 800;
+  color: #4ADE80;
+  letter-spacing: 1.5px;
+  word-break: break-all;
+  display: block;
+  margin-bottom: 12px;
+}
+
+.license-copy-btn {
+  background: #1E293B;
+  color: #F8FAFC;
+  border: 1px solid #475569;
+  padding: 7px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: var(--transition);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.license-copy-btn:hover {
+  background: #334155;
+  border-color: #94A3B8;
+}
+
+/* 4-Step Chrome Installation Guide */
+.install-guide-section {
+  background: #F8FAFC;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  margin-top: 16px;
+}
+
+.install-guide-title {
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.install-steps-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.install-step-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.step-num-badge {
+  background: #E2E8F0;
+  color: #0F172A;
+  font-size: 11px;
+  font-weight: 800;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.step-code-highlight {
+  background: #E2E8F0;
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-family: monospace;
+  font-size: 12px;
+  color: #0F172A;
+}
+
+/* Launch Promo Badges */
+.promo-badge-tag {
+  background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
+  color: #FFFFFF;
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  display: inline-block;
+  box-shadow: 0 2px 8px rgba(239, 68, 68, 0.4);
+}
+
+/* Unavailable / Disabled Pricing Cards */
+.pricing-card.unavailable {
+  opacity: 0.72;
+  background: #F8FAFC;
+  border: 1.5px dashed #CBD5E1;
+  cursor: not-allowed;
+  position: relative;
+  overflow: hidden;
+}
+
+.pricing-card.unavailable:hover {
+  transform: none;
+  box-shadow: none;
+  border-color: #CBD5E1;
+}
+
+.unavailable-badge-banner {
+  background: #FEE2E2;
+  color: #991B1B;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 8px;
+  border: 1px solid #FECACA;
+}
+
+.btn-unavailable {
+  background: #E2E8F0 !important;
+  color: #64748B !important;
+  border: 1px solid #CBD5E1 !important;
+  cursor: not-allowed !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+

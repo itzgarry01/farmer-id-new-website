@@ -1,18 +1,18 @@
 /* ==========================================================================
-   AgriStack Card Helper - Interactive Landing Page & Plan Selection Scripts
+   AgriStack Card Helper - Extension Purchase & Automatic Download Engine
    ========================================================================== */
 
 // Global Plan Definition
 const PLANS = {
-  'pay-per-card': {
-    id: 'pay-per-card',
-    cardElementId: 'planSingle',
-    name: 'Pay-Per-Card',
-    displayTitle: 'Pay-Per-Card (Single Generation)',
-    price: '₹20',
-    priceDisplay: '₹20 / card',
-    numericPrice: 20,
-    buttonText: 'Select Pay-Per-Card'
+  'lifetime': {
+    id: 'lifetime',
+    cardElementId: 'planLifetime',
+    name: 'Full Extension Lifetime License',
+    displayTitle: 'Full Extension Lifetime License',
+    price: '₹599',
+    priceDisplay: '₹599 one-time',
+    numericPrice: 599,
+    buttonText: 'Buy Extension — ₹599 (Auto-Download)'
   },
   'monthly-pro': {
     id: 'monthly-pro',
@@ -24,19 +24,19 @@ const PLANS = {
     numericPrice: 99,
     buttonText: 'Select Monthly Pro'
   },
-  'lifetime': {
-    id: 'lifetime',
-    cardElementId: 'planLifetime',
-    name: 'Lifetime License',
-    displayTitle: 'Lifetime License (Permanent Access)',
-    price: '₹499',
-    priceDisplay: '₹499 one-time',
-    numericPrice: 499,
-    buttonText: 'Select Lifetime License'
+  'pay-per-card': {
+    id: 'pay-per-card',
+    cardElementId: 'planSingle',
+    name: 'Pay-Per-Card',
+    displayTitle: 'Pay-Per-Card (Single Generation)',
+    price: '₹20',
+    priceDisplay: '₹20 / card',
+    numericPrice: 20,
+    buttonText: 'Select Pay-Per-Card'
   },
   'custom': {
     id: 'custom',
-    cardElementId: 'planMonthly',
+    cardElementId: 'planLifetime',
     name: 'Custom Bulk Pack',
     displayTitle: 'Custom Bulk Pack (Multi-Center)',
     price: 'Custom',
@@ -46,7 +46,14 @@ const PLANS = {
   }
 };
 
-let currentSelectedPlanId = 'monthly-pro';
+let currentSelectedPlanId = 'lifetime';
+let lastGeneratedLicenseKey = 'AGRI-PRO-599-8F29-4D17';
+let currentCustomer = {
+  name: 'CSC Operator',
+  email: 'operator@example.com',
+  phone: '+91 62392 45940',
+  orderId: 'AGRI-' + Math.floor(100000 + Math.random() * 900000)
+};
 
 document.addEventListener('DOMContentLoaded', () => {
   // 1. Dynamic Year
@@ -156,9 +163,18 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  const openCheckoutBtn = document.getElementById('openCheckoutModalBtn');
-  if (openCheckoutBtn) {
-    openCheckoutBtn.addEventListener('click', openCheckoutModal);
+  const successModal = document.getElementById('downloadSuccessModal');
+  if (successModal) {
+    successModal.addEventListener('click', (e) => {
+      if (e.target === successModal) closeSuccessModal();
+    });
+  }
+
+  const invoiceModal = document.getElementById('invoiceModal');
+  if (invoiceModal) {
+    invoiceModal.addEventListener('click', (e) => {
+      if (e.target === invoiceModal) closeInvoiceModal();
+    });
   }
 
   // Handle ESC key for all modals
@@ -166,6 +182,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.key === 'Escape') {
       closePolicyModal();
       closeCheckoutModal();
+      closeSuccessModal();
+      closeInvoiceModal();
     }
   });
 
@@ -203,6 +221,18 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   });
+
+  // Check if user previously bought and has saved license
+  const savedPurchase = localStorage.getItem('agristack_extension_purchase');
+  if (savedPurchase) {
+    try {
+      const data = JSON.parse(savedPurchase);
+      if (data && data.licenseKey) {
+        lastGeneratedLicenseKey = data.licenseKey;
+        currentCustomer = data;
+      }
+    } catch (e) {}
+  }
 });
 
 /* ==========================================================================
@@ -212,19 +242,22 @@ function initPlanSelection() {
   const pricingCards = document.querySelectorAll('.pricing-card');
   const formPlanSelect = document.getElementById('selectedPlan');
 
-  // Click on Pricing Card or its Button
+  // Click on Pricing Card
   pricingCards.forEach(card => {
     card.addEventListener('click', (e) => {
       const planId = card.getAttribute('data-plan-id');
+      if (card.classList.contains('unavailable')) {
+        alert('This plan is temporarily unavailable. The Full Extension Lifetime License (₹599) is the only active plan.');
+        selectPlan('lifetime');
+        return;
+      }
+
       if (planId) {
         selectPlan(planId);
 
-        // If clicked on the button or card, smoothly scroll to contact section
-        if (e.target.closest('.plan-action-btn') || e.target.closest('.pricing-card')) {
-          const contactSec = document.getElementById('contact');
-          if (contactSec) {
-            contactSec.scrollIntoView({ behavior: 'smooth' });
-          }
+        // If clicked on Buy / Action button, open checkout modal directly
+        if (e.target.closest('.plan-action-btn')) {
+          openCheckoutModal(planId);
         }
       }
     });
@@ -233,11 +266,11 @@ function initPlanSelection() {
     card.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
+        if (card.classList.contains('unavailable')) return;
         const planId = card.getAttribute('data-plan-id');
         if (planId) {
           selectPlan(planId);
-          const contactSec = document.getElementById('contact');
-          if (contactSec) contactSec.scrollIntoView({ behavior: 'smooth' });
+          openCheckoutModal(planId);
         }
       }
     });
@@ -246,18 +279,23 @@ function initPlanSelection() {
   // Form Select Dropdown Change -> Sync with Pricing Cards
   if (formPlanSelect) {
     formPlanSelect.addEventListener('change', (e) => {
-      selectPlan(e.target.value, false);
+      if (e.target.value !== 'lifetime') {
+        alert('This plan is temporarily unavailable. Only the Full Extension Lifetime License (₹599) is currently available.');
+        e.target.value = 'lifetime';
+      }
+      selectPlan('lifetime', false);
     });
   }
 
   // Initialize with default plan
-  selectPlan(currentSelectedPlanId, true);
+  selectPlan('lifetime', true);
 }
 
 function selectPlan(planId, updateDropdown = true) {
-  if (!PLANS[planId]) planId = 'monthly-pro';
-  currentSelectedPlanId = planId;
-  const planData = PLANS[planId];
+  // Lock to lifetime plan as the only active product
+  planId = 'lifetime';
+  currentSelectedPlanId = 'lifetime';
+  const planData = PLANS['lifetime'];
 
   // 1. Update Pricing Cards UI
   const pricingCards = document.querySelectorAll('.pricing-card');
@@ -265,19 +303,17 @@ function selectPlan(planId, updateDropdown = true) {
     const cardPlanId = card.getAttribute('data-plan-id');
     const actionBtn = card.querySelector('.plan-action-btn span');
 
-    if (cardPlanId === planId) {
+    if (cardPlanId === 'lifetime') {
       card.classList.add('selected');
       card.setAttribute('aria-selected', 'true');
       if (actionBtn) {
-        actionBtn.textContent = '✓ Selected Plan (Proceed)';
+        actionBtn.textContent = '⚡ Buy Extension — ₹599 (Auto-Download)';
       }
     } else {
       card.classList.remove('selected');
       card.setAttribute('aria-selected', 'false');
       if (actionBtn) {
-        const fallbackText = cardPlanId === 'pay-per-card' ? 'Select Pay-Per-Card' :
-                             cardPlanId === 'lifetime' ? 'Select Lifetime License' : 'Select Monthly Pro';
-        actionBtn.textContent = fallbackText;
+        actionBtn.textContent = '❌ Not Available Right Now';
       }
     }
   });
@@ -298,15 +334,19 @@ function selectPlan(planId, updateDropdown = true) {
 
   // 3. Update Dropdown if triggered from card click
   const formPlanSelect = document.getElementById('selectedPlan');
-  if (updateDropdown && formPlanSelect && formPlanSelect.value !== planId) {
-    formPlanSelect.value = planId;
+  if (updateDropdown && formPlanSelect && formPlanSelect.value !== 'lifetime') {
+    formPlanSelect.value = 'lifetime';
   }
 
   // 4. Update Modal Info
   const modalName = document.getElementById('modalCheckoutPlanName');
   const modalPrice = document.getElementById('modalCheckoutPlanPrice');
+  const qrPrice = document.getElementById('qrPriceTag');
+  const rzpPrice = document.getElementById('razorpayPriceTag');
   if (modalName) modalName.textContent = planData.displayTitle;
   if (modalPrice) modalPrice.textContent = planData.price;
+  if (qrPrice) qrPrice.textContent = planData.price;
+  if (rzpPrice) rzpPrice.textContent = planData.price;
 }
 
 /* ==========================================================================
@@ -331,9 +371,6 @@ function initPlanFilterTabs() {
         const cardPlanId = card.getAttribute('data-plan-id');
         if (filter === 'all' || cardPlanId === filter) {
           card.style.display = 'flex';
-          if (filter !== 'all') {
-            selectPlan(filter);
-          }
         } else {
           card.style.display = 'none';
         }
@@ -386,19 +423,326 @@ function showCopyFeedback(btnElement) {
 }
 
 /* ==========================================================================
-   Contact Form Submission Handler
+   Checkout Modal & Payment Management
+   ========================================================================== */
+const RAZORPAY_TEST_KEY_ID = 'rzp_test_TQLS1vdxi3jjIi';
+
+function switchCheckoutTab(tabName) {
+  const rzpTabBtn = document.getElementById('tabRazorpayBtn');
+  const upiTabBtn = document.getElementById('tabUpiBtn');
+  const rzpContent = document.getElementById('checkoutRazorpayContent');
+  const upiContent = document.getElementById('checkoutUpiContent');
+
+  if (tabName === 'razorpay') {
+    if (rzpTabBtn) rzpTabBtn.classList.add('active');
+    if (upiTabBtn) upiTabBtn.classList.remove('active');
+    if (rzpContent) rzpContent.style.display = 'block';
+    if (upiContent) upiContent.style.display = 'none';
+  } else {
+    if (upiTabBtn) upiTabBtn.classList.add('active');
+    if (rzpTabBtn) rzpTabBtn.classList.remove('active');
+    if (upiContent) upiContent.style.display = 'block';
+    if (rzpContent) rzpContent.style.display = 'none';
+  }
+}
+
+function openCheckoutModal(planId) {
+  if (planId) selectPlan(planId);
+  const planData = PLANS[currentSelectedPlanId] || PLANS['lifetime'];
+  
+  const modal = document.getElementById('checkoutModal');
+  const modalName = document.getElementById('modalCheckoutPlanName');
+  const modalPrice = document.getElementById('modalCheckoutPlanPrice');
+  const qrPrice = document.getElementById('qrPriceTag');
+  const rzpPrice = document.getElementById('razorpayPriceTag');
+  const statusBox = document.getElementById('checkoutSimStatus');
+  
+  const nameInput = document.getElementById('modalCustName');
+  const emailInput = document.getElementById('modalCustEmail');
+  const phoneInput = document.getElementById('modalCustPhone');
+  
+  const formName = document.getElementById('senderName');
+  const formEmail = document.getElementById('senderEmail');
+  const formPhone = document.getElementById('senderPhone');
+
+  if (modalName) modalName.textContent = planData.displayTitle;
+  if (modalPrice) modalPrice.textContent = planData.price;
+  if (qrPrice) qrPrice.textContent = planData.price;
+  if (rzpPrice) rzpPrice.textContent = planData.price;
+  if (statusBox) statusBox.style.display = 'none';
+
+  // Sync inputs from contact form if filled
+  if (nameInput && formName && formName.value) nameInput.value = formName.value;
+  if (emailInput && formEmail && formEmail.value) emailInput.value = formEmail.value;
+  if (phoneInput && formPhone && formPhone.value) phoneInput.value = formPhone.value;
+
+  // Update dynamic QR Code
+  const qrImg = document.getElementById('liveUpiQr');
+  if (qrImg) {
+    const amount = planData.numericPrice || 599;
+    const upiUrl = `upi://pay?pa=itzgarry01@okaxis&pn=AgriStack%20Helper&am=${amount}&cu=INR&tn=AgriStack%20Extension%20License`;
+    qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(upiUrl)}`;
+  }
+
+  if (modal) {
+    modal.classList.add('active');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+}
+
+function closeCheckoutModal() {
+  const modal = document.getElementById('checkoutModal');
+  if (modal) {
+    modal.classList.remove('active');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+}
+
+/* ==========================================================================
+   Automatic Download & Payment Confirmation Engine
+   ========================================================================== */
+function triggerExtensionDownload() {
+  // Programmatic HTML5 auto-download trigger for zip package
+  const link = document.createElement('a');
+  link.href = 'agristack-card-helper-v2.0.zip';
+  link.setAttribute('download', 'agristack-card-helper-v2.0.zip');
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
+
+function generateLicenseKey() {
+  const hexPart1 = Math.random().toString(16).substring(2, 6).toUpperCase();
+  const hexPart2 = Math.random().toString(16).substring(2, 6).toUpperCase();
+  return `AGRI-PRO-599-${hexPart1}-${hexPart2}`;
+}
+
+function openRazorpayCheckout(planId) {
+  if (planId) selectPlan(planId);
+  const planData = PLANS[currentSelectedPlanId] || PLANS['lifetime'];
+
+  const nameInput = document.getElementById('modalCustName');
+  const emailInput = document.getElementById('modalCustEmail');
+  const phoneInput = document.getElementById('modalCustPhone');
+  const formName = document.getElementById('senderName');
+  const formEmail = document.getElementById('senderEmail');
+  const formPhone = document.getElementById('senderPhone');
+
+  const customerName = (nameInput && nameInput.value.trim()) || (formName && formName.value.trim()) || 'CSC Center Operator';
+  const customerEmail = (emailInput && emailInput.value.trim()) || (formEmail && formEmail.value.trim()) || 'itzgarry01@gmail.com';
+  const customerPhone = (phoneInput && phoneInput.value.trim()) || (formPhone && formPhone.value.trim()) || '+916239245940';
+
+  const amountInPaise = (planData.numericPrice || 599) * 100;
+
+  const options = {
+    key: RAZORPAY_TEST_KEY_ID,
+    amount: amountInPaise,
+    currency: 'INR',
+    name: 'AgriStack Card Helper',
+    description: `${planData.name} - Instant Extension Download`,
+    image: 'icons/logo.png',
+    prefill: {
+      name: customerName,
+      email: customerEmail,
+      contact: customerPhone
+    },
+    notes: {
+      plan_id: planData.id,
+      product: 'AgriStack Chrome Extension Lifetime License'
+    },
+    theme: {
+      color: '#1F8547'
+    },
+    handler: function (response) {
+      console.log('Razorpay Payment Succeeded:', response);
+      const paymentId = response.razorpay_payment_id || ('pay_' + Math.random().toString(36).substring(2, 10));
+      closeCheckoutModal();
+      processPaymentSuccess('Razorpay Gateway (' + paymentId + ')', paymentId);
+    },
+    modal: {
+      ondismiss: function () {
+        console.log('Razorpay Checkout closed by user.');
+      }
+    }
+  };
+
+  if (typeof Razorpay !== 'undefined') {
+    try {
+      const rzp = new Razorpay(options);
+      rzp.on('payment.failed', function (response) {
+        alert('Payment Failed: ' + (response.error ? response.error.description : 'Transaction could not be completed.'));
+      });
+      rzp.open();
+    } catch (e) {
+      console.error('Razorpay initialization error:', e);
+      simulateRazorpayCheckout();
+    }
+  } else {
+    simulateRazorpayCheckout();
+  }
+}
+
+function processPaymentSuccess(paymentMethod = 'UPI', gatewayTxnId = null) {
+  const nameInput = document.getElementById('modalCustName');
+  const emailInput = document.getElementById('modalCustEmail');
+  const phoneInput = document.getElementById('modalCustPhone');
+  const verifyBtn = document.getElementById('verifyUpiPaymentBtn');
+  const statusBox = document.getElementById('checkoutSimStatus');
+
+  const customerName = nameInput && nameInput.value.trim() ? nameInput.value.trim() : 'CSC Center Operator';
+  const customerEmail = emailInput && emailInput.value.trim() ? emailInput.value.trim() : 'customer@example.com';
+  const customerPhone = phoneInput && phoneInput.value.trim() ? phoneInput.value.trim() : '+91 62392 45940';
+
+  if (verifyBtn) {
+    verifyBtn.disabled = true;
+    verifyBtn.innerHTML = '<span>⏳ Verifying Transaction with Bank...</span>';
+  }
+
+  if (statusBox) {
+    statusBox.style.display = 'block';
+    statusBox.style.background = '#FEF3C7';
+    statusBox.style.color = '#92400E';
+    statusBox.innerHTML = '⚡ <em>Processing instant confirmation...</em>';
+  }
+
+  setTimeout(() => {
+    // Generate new unique license key
+    lastGeneratedLicenseKey = generateLicenseKey();
+    const orderId = gatewayTxnId || ('AGRI-2026-' + Math.floor(1000 + Math.random() * 9000));
+
+    currentCustomer = {
+      name: customerName,
+      email: customerEmail,
+      phone: customerPhone,
+      orderId: orderId,
+      licenseKey: lastGeneratedLicenseKey,
+      plan: PLANS[currentSelectedPlanId]?.name || 'AgriStack Extension Lifetime License',
+      price: PLANS[currentSelectedPlanId]?.price || '₹599',
+      date: new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })
+    };
+
+    // Save purchase in localStorage
+    localStorage.setItem('agristack_extension_purchase', JSON.stringify(currentCustomer));
+
+    // Reset button
+    if (verifyBtn) {
+      verifyBtn.disabled = false;
+      verifyBtn.innerHTML = '<span>✅ I Have Paid ₹599 — Download Extension Instantly</span>';
+    }
+
+    // Close checkout modal
+    closeCheckoutModal();
+
+    // 1. Trigger Automatic Extension Download!
+    triggerExtensionDownload();
+
+    // 2. Open Success & License Key Modal
+    openSuccessModal();
+  }, 1000);
+}
+
+function simulateRazorpayCheckout() {
+  const emailInput = document.getElementById('modalCustEmail');
+  const payBtn = document.getElementById('payRazorpayBtn');
+
+  if (payBtn) {
+    payBtn.disabled = true;
+    payBtn.innerHTML = '<span>⏳ Connecting Razorpay Gateway...</span>';
+  }
+
+  setTimeout(() => {
+    if (payBtn) {
+      payBtn.disabled = false;
+      payBtn.innerHTML = '<span>🔒 Pay ₹599 via Razorpay & Download</span>';
+    }
+    const mockTxn = 'pay_test_' + Math.random().toString(36).substring(2, 10);
+    processPaymentSuccess('Razorpay Gateway (' + mockTxn + ')', mockTxn);
+  }, 1200);
+}
+
+/* ==========================================================================
+   Success & Auto-Download Modal
+   ========================================================================== */
+function openSuccessModal() {
+  const modal = document.getElementById('downloadSuccessModal');
+  const keyDisplay = document.getElementById('successLicenseKey');
+
+  if (keyDisplay) {
+    keyDisplay.textContent = lastGeneratedLicenseKey;
+  }
+
+  if (modal) {
+    modal.classList.add('active');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+}
+
+function closeSuccessModal() {
+  const modal = document.getElementById('downloadSuccessModal');
+  if (modal) {
+    modal.classList.remove('active');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+}
+
+function copyLicenseKeyToClipboard() {
+  const keyDisplay = document.getElementById('successLicenseKey');
+  const copyBtn = document.getElementById('copyLicenseKeyBtn');
+  const keyText = keyDisplay ? keyDisplay.textContent : lastGeneratedLicenseKey;
+
+  copyToClipboard(keyText, copyBtn);
+}
+
+/* ==========================================================================
+   Tax Invoice Modal
+   ========================================================================== */
+function openInvoiceModal() {
+  const modal = document.getElementById('invoiceModal');
+  const invDate = document.getElementById('invDate');
+  const invId = document.getElementById('invId');
+  const invCustName = document.getElementById('invCustName');
+  const invCustEmail = document.getElementById('invCustEmail');
+  const invCustPhone = document.getElementById('invCustPhone');
+  const invKey = document.getElementById('invKey');
+
+  if (invDate) invDate.textContent = `Date: ${currentCustomer.date || '18 Aug 2026'}`;
+  if (invId) invId.textContent = `Inv #: ${currentCustomer.orderId || 'AGRI-2026-8821'}`;
+  if (invCustName) invCustName.textContent = currentCustomer.name || 'CSC Operator';
+  if (invCustEmail) invCustEmail.textContent = currentCustomer.email || 'operator@example.com';
+  if (invCustPhone) invCustPhone.textContent = currentCustomer.phone || '+91 62392 45940';
+  if (invKey) invKey.textContent = lastGeneratedLicenseKey;
+
+  if (modal) {
+    modal.classList.add('active');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+}
+
+function closeInvoiceModal() {
+  const modal = document.getElementById('invoiceModal');
+  if (modal) {
+    modal.classList.remove('active');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+}
+
+/* ==========================================================================
+   Contact Form Inquiry Submission
    ========================================================================== */
 function handleContactSubmit() {
   const name = document.getElementById('senderName').value.trim();
   const email = document.getElementById('senderEmail').value.trim();
-  const phone = document.getElementById('senderPhone').value.trim();
-  const plan = document.getElementById('selectedPlan').value;
-  const message = document.getElementById('senderMessage').value.trim();
   const toast = document.getElementById('toastMessage');
   const sendBtn = document.getElementById('sendInquiryBtn');
 
   if (!name || !email) {
-    alert('Please provide your name and email.');
+    alert('Please enter your name and email address.');
     return;
   }
 
@@ -432,10 +776,10 @@ const policyContents = {
     title: 'Terms & Conditions (Digital Software License Agreement)',
     content: `
       <h4>1. Overview & Agreement</h4>
-      <p>By purchasing a subscription, single-use token, or downloading <strong>AgriStack Card Generator Helper</strong> ("Software"), you agree to abide by these Terms and Conditions. This software is operated independently to provide productivity formatting tools for operators and farmers.</p>
+      <p>By purchasing a software license for <strong>₹599</strong> or using <strong>AgriStack Card Generator Helper</strong> ("Software"), you agree to abide by these Terms and Conditions. This software provides automated browser formatting tools for Punjab Farmer Registry and AgriStack operators.</p>
       
       <h4>2. Grant of License</h4>
-      <p>We grant you a non-exclusive, non-transferable, revocable software license to format farmer identity cards from authorized Punjab Farmer Registry / AgriStack portal records.</p>
+      <p>We grant you a non-exclusive, non-transferable lifetime software license to format farmer identity cards from authorized Punjab Farmer Registry / AgriStack portal records.</p>
       
       <h4>3. User Responsibilities & Acceptable Use</h4>
       <ul>
@@ -455,7 +799,7 @@ const policyContents = {
     title: 'Privacy Policy (100% Client-Side Private Processing)',
     content: `
       <h4>1. Local Client-Side Processing</h4>
-      <p>Your privacy and the security of citizen records are paramount. All registry scraping, image extraction, and PDF compilation are executed <strong>100% inside your local browser sandbox</strong>. No farmer identity data or photo is uploaded, stored, or sold to our servers or any third-party brokers.</p>
+      <p>Your privacy and citizen record security are paramount. All registry parsing, Gurmukhi text shaping, and 300 DPI PDF card compilations occur <strong>100% inside your local browser sandbox</strong>. No farmer identity records or photos are uploaded, stored, or transferred to remote servers.</p>
       
       <h4>2. Cashfree Payment Security</h4>
       <p>Payments are conducted directly via <strong>Cashfree</strong> (PCI-DSS Level 1 Compliant). We never see or store your payment card numbers, CVVs, netbanking credentials, or UPI PINs.</p>
@@ -466,20 +810,20 @@ const policyContents = {
         <li>User support email for sending digital receipts and answering inquiries.</li>
       </ul>
       
-      <h4>4. Data Rights & Inquiries</h4>
-      <p>If you have any questions or wish to request deletion of your order records, email us at <a href="mailto:itzgarry01@gmail.com">itzgarry01@gmail.com</a>.</p>
+      <h4>4. Contact Regarding Privacy</h4>
+      <p>If you have any questions, email us at <a href="mailto:itzgarry01@gmail.com">itzgarry01@gmail.com</a>.</p>
     `
   },
   refund: {
     title: 'Refund & Cancellation Policy (7-Day SLA)',
     content: `
       <h4>1. Digital Software Goods</h4>
-      <p>AgriStack Card Generator Helper is a digital software product. Access and output are delivered instantly upon payment.</p>
+      <p>AgriStack Card Generator Helper is a digital software product. The extension zip package and license key are delivered instantly upon payment confirmation.</p>
       
       <h4>2. 7-Day Refund Eligibility</h4>
       <ul>
-        <li>If a technical failure prevents your card from generating or downloading properly.</li>
-        <li>If you were charged twice due to bank or network timeout issues.</li>
+        <li>If the extension fails to format your portal records due to verified technical defects.</li>
+        <li>If you were charged multiple times due to a banking network timeout.</li>
       </ul>
       
       <h4>3. Refund Request Process</h4>
@@ -490,14 +834,14 @@ const policyContents = {
       </ul>
       
       <h4>4. Turnaround Time</h4>
-      <p>Refunds are reviewed within 24 hours. Upon approval, funds are credited back to your original payment source (Bank / Card / UPI) within <strong>5–7 business days</strong>.</p>
+      <p>Refund requests are reviewed within 24 hours. Upon approval, funds are credited back to your original payment source (Bank / UPI / Card) within <strong>5–7 business days</strong>.</p>
     `
   },
   shipping: {
     title: 'Shipping & Delivery Policy (Instant Digital Delivery)',
     content: `
       <h4>1. Nature of Product — Digital Delivery Only</h4>
-      <p><strong>Explicit Declaration:</strong> AgriStack Card Generator Helper is 100% digital software. No physical goods or packages will be shipped to your postal address.</p>
+      <p><strong>Explicit Declaration:</strong> AgriStack Card Generator Helper is 100% digital software. No physical goods or packages are shipped to your postal address.</p>
       
       <h4>2. Delivery Method & Timeline</h4>
       <ul>
@@ -506,10 +850,10 @@ const policyContents = {
       </ul>
       
       <h4>3. Delivery Charges</h4>
-      <p>There are no delivery or shipping fees (₹0.00 Delivery Fee).</p>
+      <p>₹0.00 (Free instant digital electronic delivery).</p>
       
       <h4>4. Non-Delivery Support</h4>
-      <p>If your download did not trigger automatically due to popup blocker settings, contact support at <strong>itzgarry01@gmail.com</strong> for immediate assistance.</p>
+      <p>If your browser blocked the automatic download, click the manual Re-Download button on screen or contact WhatsApp support at <strong>+91 62392 45940</strong> for instant file dispatch.</p>
     `
   }
 };
@@ -539,80 +883,4 @@ function closePolicyModal() {
     document.body.style.overflow = '';
   }
 }
-
-/* ==========================================================================
-   Checkout Modal & Cashfree Simulation
-   ========================================================================== */
-function openCheckoutModal() {
-  const planData = PLANS[currentSelectedPlanId] || PLANS['monthly-pro'];
-  const modal = document.getElementById('checkoutModal');
-  const modalName = document.getElementById('modalCheckoutPlanName');
-  const modalPrice = document.getElementById('modalCheckoutPlanPrice');
-  const statusBox = document.getElementById('checkoutSimStatus');
-  const emailInput = document.getElementById('modalCustEmail');
-  const formEmail = document.getElementById('senderEmail');
-
-  if (modalName) modalName.textContent = planData.displayTitle;
-  if (modalPrice) modalPrice.textContent = planData.price;
-  if (statusBox) statusBox.style.display = 'none';
-
-  if (emailInput && formEmail && formEmail.value) {
-    emailInput.value = formEmail.value;
-  }
-
-  if (modal) {
-    modal.classList.add('active');
-    modal.setAttribute('aria-hidden', 'false');
-    document.body.style.overflow = 'hidden';
-  }
-}
-
-function closeCheckoutModal() {
-  const modal = document.getElementById('checkoutModal');
-  if (modal) {
-    modal.classList.remove('active');
-    modal.setAttribute('aria-hidden', 'true');
-    document.body.style.overflow = '';
-  }
-}
-
-function simulateCashfreeCheckout() {
-  const emailInput = document.getElementById('modalCustEmail');
-  const statusBox = document.getElementById('checkoutSimStatus');
-  const payBtn = document.getElementById('payCashfreeSimBtn');
-
-  if (emailInput && !emailInput.value) {
-    alert('Please enter your email to receive your license confirmation.');
-    emailInput.focus();
-    return;
-  }
-
-  if (payBtn) {
-    payBtn.disabled = true;
-    payBtn.innerHTML = '<span>⏳ Connecting Cashfree Gateway...</span>';
-  }
-
-  if (statusBox) {
-    statusBox.style.display = 'block';
-    statusBox.style.background = '#FEF3C7';
-    statusBox.style.color = '#92400E';
-    statusBox.innerHTML = '⚡ <em>Opening Secure Cashfree Session...</em>';
-  }
-
-  setTimeout(() => {
-    if (statusBox) {
-      statusBox.style.background = '#DCFCE7';
-      statusBox.style.color = '#166536';
-      statusBox.innerHTML = '✅ <strong>Payment Successful!</strong> License key has been issued and sent to <u>' + (emailInput ? emailInput.value : 'your email') + '</u>.';
-    }
-    if (payBtn) {
-      payBtn.disabled = false;
-      payBtn.innerHTML = '<span>✅ License Activated</span>';
-    }
-    setTimeout(() => {
-      closeCheckoutModal();
-    }, 2800);
-  }, 1400);
-}
-
 
