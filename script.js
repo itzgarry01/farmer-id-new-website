@@ -445,7 +445,7 @@ const policyContents = {
       </ul>
       
       <h4>4. Pricing & Payments</h4>
-      <p>All prices are clearly stated in Indian Rupees (INR ₹). Payment processing is secured via Razorpay.</p>
+      <p>All prices are clearly stated in Indian Rupees (INR ₹). Payment processing is secured via Cashfree.</p>
       
       <h4>5. Governing Law & Jurisdiction</h4>
       <p>These terms shall be governed by and construed in accordance with the laws of India. Any disputes arising shall be subject to the exclusive jurisdiction of the competent courts in Punjab, India.</p>
@@ -457,12 +457,12 @@ const policyContents = {
       <h4>1. Local Client-Side Processing</h4>
       <p>Your privacy and the security of citizen records are paramount. All registry scraping, image extraction, and PDF compilation are executed <strong>100% inside your local browser sandbox</strong>. No farmer identity data or photo is uploaded, stored, or sold to our servers or any third-party brokers.</p>
       
-      <h4>2. Razorpay Payment Security</h4>
-      <p>Payments are conducted directly via <strong>Razorpay</strong> (PCI-DSS Level 1 Compliant). We never see or store your payment card numbers, CVVs, netbanking credentials, or UPI PINs.</p>
+      <h4>2. Cashfree Payment Security</h4>
+      <p>Payments are conducted directly via <strong>Cashfree</strong> (PCI-DSS Level 1 Compliant). We never see or store your payment card numbers, CVVs, netbanking credentials, or UPI PINs.</p>
       
       <h4>3. Transaction Data Collected</h4>
       <ul>
-        <li>Razorpay Order ID & Payment ID for transaction verification and license generation.</li>
+        <li>Cashfree Order ID & Payment ID for transaction verification and license generation.</li>
         <li>User support email for sending digital receipts and answering inquiries.</li>
       </ul>
       
@@ -485,7 +485,7 @@ const policyContents = {
       <h4>3. Refund Request Process</h4>
       <p>Send an email to <strong>itzgarry01@gmail.com</strong> with:</p>
       <ul>
-        <li>Your Razorpay Payment ID or Order ID</li>
+        <li>Your Cashfree Payment ID or Order ID</li>
         <li>Screenshot / description of the issue</li>
       </ul>
       
@@ -501,7 +501,7 @@ const policyContents = {
       
       <h4>2. Delivery Method & Timeline</h4>
       <ul>
-        <li><strong>Generated Card PDF:</strong> Download starts automatically in your browser within <strong>0–60 seconds</strong> of successful Razorpay payment verification.</li>
+        <li><strong>Generated Card PDF:</strong> Download starts automatically in your browser within <strong>0–60 seconds</strong> of successful Cashfree payment verification.</li>
         <li><strong>License Keys & Receipts:</strong> Delivered instantly via on-screen prompt and confirmation email.</li>
       </ul>
       
@@ -541,7 +541,7 @@ function closePolicyModal() {
 }
 
 /* ==========================================================================
-   Checkout Modal & Razorpay Simulation
+   Checkout Modal & Cashfree Simulation
    ========================================================================== */
 function openCheckoutModal() {
   const planData = PLANS[currentSelectedPlanId] || PLANS['monthly-pro'];
@@ -576,10 +576,10 @@ function closeCheckoutModal() {
   }
 }
 
-function simulateRazorpayCheckout() {
+function simulateCashfreeCheckout() {
   const emailInput = document.getElementById('modalCustEmail');
   const statusBox = document.getElementById('checkoutSimStatus');
-  const payBtn = document.getElementById('payRazorpaySimBtn');
+  const payBtn = document.getElementById('payCashfreeSimBtn');
 
   if (emailInput && !emailInput.value) {
     alert('Please enter your email to receive your license confirmation.');
@@ -589,14 +589,14 @@ function simulateRazorpayCheckout() {
 
   if (payBtn) {
     payBtn.disabled = true;
-    payBtn.innerHTML = '<span>⏳ Connecting Secure Gateway...</span>';
+    payBtn.innerHTML = '<span>⏳ Connecting Cashfree Gateway...</span>';
   }
 
   if (statusBox) {
     statusBox.style.display = 'block';
     statusBox.style.background = '#FEF3C7';
     statusBox.style.color = '#92400E';
-    statusBox.innerHTML = '⚡ <em>Opening Secure Checkout Session...</em>';
+    statusBox.innerHTML = '⚡ <em>Opening Secure Cashfree Session...</em>';
   }
 
   setTimeout(() => {
@@ -614,3 +614,5 @@ function simulateRazorpayCheckout() {
     }, 2800);
   }, 1400);
 }
+
+
