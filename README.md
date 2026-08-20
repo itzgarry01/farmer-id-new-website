@@ -8,8 +8,8 @@ This directory contains the production-ready 1-page landing page website for **A
 
 | Mandatory Requirement | Status | Location on Page |
 |---|:---:|---|
-| **Product Description & Pricing** | ✅ Complete | `#features`, `#workflow` & `#pricing` (₹20 / ₹99 / ₹499 INR transparent plans) |
-| **Contact Us** | ✅ Complete | `#contact` (Email: `itzgarry01@gmail.com`, Phone: `+91 62392 45940`, Bathinda, Punjab - 151001) |
+| **Product Description & Pricing** | ✅ Complete | `#features`, `#workflow` & `#pricing` (₹599 INR transparent lifetime license) |
+| **Contact Us & Legal Entity** | ✅ Complete | `#contact` (Proprietor: `GURINDER SINGH`, Email: `igxrry@gmail.com`, Phone: `+91 70099 80800`, Bathinda, Punjab - 151001) |
 | **Terms & Conditions** | ✅ Complete | `#terms` & Modal (Digital Software License Agreement) |
 | **Privacy Policy** | ✅ Complete | `#privacy` & Modal (100% Local Browser Sandbox Processing & PCI-DSS) |
 | **Refund & Cancellation Policy** | ✅ Complete | `#refund` & Modal (7-Day Digital Goods Refund SLA) |

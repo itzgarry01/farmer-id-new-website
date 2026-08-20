@@ -51,7 +51,7 @@ let lastGeneratedLicenseKey = 'AGRI-PRO-599-8F29-4D17';
 let currentCustomer = {
   name: 'CSC Operator',
   email: 'operator@example.com',
-  phone: '+91 62392 45940',
+  phone: '+91 70099 80800',
   orderId: 'AGRI-' + Math.floor(100000 + Math.random() * 900000)
 };
 
@@ -531,8 +531,8 @@ function openRazorpayCheckout(planId) {
   const formPhone = document.getElementById('senderPhone');
 
   const customerName = (nameInput && nameInput.value.trim()) || (formName && formName.value.trim()) || 'CSC Center Operator';
-  const customerEmail = (emailInput && emailInput.value.trim()) || (formEmail && formEmail.value.trim()) || 'itzgarry01@gmail.com';
-  const customerPhone = (phoneInput && phoneInput.value.trim()) || (formPhone && formPhone.value.trim()) || '+916239245940';
+  const customerEmail = (emailInput && emailInput.value.trim()) || (formEmail && formEmail.value.trim()) || 'igxrry@gmail.com';
+  const customerPhone = (phoneInput && phoneInput.value.trim()) || (formPhone && formPhone.value.trim()) || '+917009980800';
 
   const amountInPaise = (planData.numericPrice || 599) * 100;
 
@@ -540,7 +540,7 @@ function openRazorpayCheckout(planId) {
     key: RAZORPAY_TEST_KEY_ID,
     amount: amountInPaise,
     currency: 'INR',
-    name: 'AgriStack Card Helper',
+    name: 'GURINDER SINGH (AgriStack Helper)',
     description: `${planData.name} - Instant Extension Download`,
     image: 'icons/logo.png',
     prefill: {
@@ -553,34 +553,28 @@ function openRazorpayCheckout(planId) {
       product: 'AgriStack Chrome Extension Lifetime License'
     },
     theme: {
-      color: '#1F8547'
-    },
-    handler: function (response) {
-      console.log('Razorpay Payment Succeeded:', response);
-      const paymentId = response.razorpay_payment_id || ('pay_' + Math.random().toString(36).substring(2, 10));
-      closeCheckoutModal();
-      processPaymentSuccess('Razorpay Gateway (' + paymentId + ')', paymentId);
+      color: '#166536'
     },
     modal: {
-      ondismiss: function () {
-        console.log('Razorpay Checkout closed by user.');
+      ondismiss: function() {
+        console.log('Payment modal dismissed by user.');
       }
+    },
+    handler: function(response) {
+      console.log('Razorpay payment successful:', response);
+      processPaymentSuccess('Razorpay Gateway', response.razorpay_payment_id);
     }
   };
 
-  if (typeof Razorpay !== 'undefined') {
-    try {
-      const rzp = new Razorpay(options);
-      rzp.on('payment.failed', function (response) {
-        alert('Payment Failed: ' + (response.error ? response.error.description : 'Transaction could not be completed.'));
-      });
-      rzp.open();
-    } catch (e) {
-      console.error('Razorpay initialization error:', e);
-      simulateRazorpayCheckout();
-    }
-  } else {
-    simulateRazorpayCheckout();
+  try {
+    const rzp = new Razorpay(options);
+    rzp.on('payment.failed', function(response) {
+      alert(`Payment failed: ${response.error.description || 'Unknown error'}. Please try UPI QR mode.`);
+    });
+    rzp.open();
+  } catch (err) {
+    console.error('Razorpay SDK error:', err);
+    processPaymentSuccess('Razorpay Gateway (Simulated)');
   }
 }
 
@@ -593,7 +587,7 @@ function processPaymentSuccess(paymentMethod = 'UPI', gatewayTxnId = null) {
 
   const customerName = nameInput && nameInput.value.trim() ? nameInput.value.trim() : 'CSC Center Operator';
   const customerEmail = emailInput && emailInput.value.trim() ? emailInput.value.trim() : 'customer@example.com';
-  const customerPhone = phoneInput && phoneInput.value.trim() ? phoneInput.value.trim() : '+91 62392 45940';
+  const customerPhone = phoneInput && phoneInput.value.trim() ? phoneInput.value.trim() : '+91 70099 80800';
 
   if (verifyBtn) {
     verifyBtn.disabled = true;
@@ -618,47 +612,28 @@ function processPaymentSuccess(paymentMethod = 'UPI', gatewayTxnId = null) {
       phone: customerPhone,
       orderId: orderId,
       licenseKey: lastGeneratedLicenseKey,
-      plan: PLANS[currentSelectedPlanId]?.name || 'AgriStack Extension Lifetime License',
+      plan: PLANS[currentSelectedPlanId]?.name || 'Lifetime License',
       price: PLANS[currentSelectedPlanId]?.price || '₹599',
-      date: new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })
+      date: new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })
     };
 
     // Save purchase in localStorage
     localStorage.setItem('agristack_extension_purchase', JSON.stringify(currentCustomer));
 
-    // Reset button
+    // Close checkout modal
+    closeCheckoutModal();
+
+    // Reset verify button
     if (verifyBtn) {
       verifyBtn.disabled = false;
       verifyBtn.innerHTML = '<span>✅ I Have Paid ₹599 — Download Extension Instantly</span>';
     }
-
-    // Close checkout modal
-    closeCheckoutModal();
-
-    // 1. Trigger Automatic Extension Download!
-    triggerExtensionDownload();
-
-    // 2. Open Success & License Key Modal
-    openSuccessModal();
-  }, 1000);
-}
-
-function simulateRazorpayCheckout() {
-  const emailInput = document.getElementById('modalCustEmail');
-  const payBtn = document.getElementById('payRazorpayBtn');
-
-  if (payBtn) {
-    payBtn.disabled = true;
-    payBtn.innerHTML = '<span>⏳ Connecting Razorpay Gateway...</span>';
-  }
-
-  setTimeout(() => {
-    if (payBtn) {
-      payBtn.disabled = false;
-      payBtn.innerHTML = '<span>🔒 Pay ₹599 via Razorpay & Download</span>';
+    if (statusBox) {
+      statusBox.style.display = 'none';
     }
-    const mockTxn = 'pay_test_' + Math.random().toString(36).substring(2, 10);
-    processPaymentSuccess('Razorpay Gateway (' + mockTxn + ')', mockTxn);
+
+    // Open success modal and trigger automatic download
+    openSuccessModal();
   }, 1200);
 }
 
@@ -667,10 +642,14 @@ function simulateRazorpayCheckout() {
    ========================================================================== */
 function openSuccessModal() {
   const modal = document.getElementById('downloadSuccessModal');
-  const keyDisplay = document.getElementById('successLicenseKey');
+  const keyDisplay = document.getElementById('successLicenseKey') || document.getElementById('displayLicenseKey');
+  const copyBtn = document.getElementById('copyLicenseKeyBtn');
 
   if (keyDisplay) {
     keyDisplay.textContent = lastGeneratedLicenseKey;
+  }
+  if (copyBtn) {
+    copyBtn.setAttribute('data-copy', lastGeneratedLicenseKey);
   }
 
   if (modal) {
@@ -678,6 +657,9 @@ function openSuccessModal() {
     modal.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
   }
+
+  // Trigger auto-download
+  triggerZipDownload();
 }
 
 function closeSuccessModal() {
@@ -689,12 +671,29 @@ function closeSuccessModal() {
   }
 }
 
-function copyLicenseKeyToClipboard() {
-  const keyDisplay = document.getElementById('successLicenseKey');
-  const copyBtn = document.getElementById('copyLicenseKeyBtn');
-  const keyText = keyDisplay ? keyDisplay.textContent : lastGeneratedLicenseKey;
+function triggerZipDownload() {
+  const downloadLink = document.createElement('a');
+  downloadLink.href = 'agristack-card-helper-v2.0.zip';
+  downloadLink.download = 'agristack-card-helper-v2.0.zip';
+  downloadLink.style.display = 'none';
+  document.body.appendChild(downloadLink);
+  setTimeout(() => {
+    downloadLink.click();
+    document.body.removeChild(downloadLink);
+  }, 500);
+}
 
-  copyToClipboard(keyText, copyBtn);
+function copyLicenseKeyToClipboard() {
+  navigator.clipboard.writeText(lastGeneratedLicenseKey).then(() => {
+    const copyBtn = document.getElementById('copyLicenseKeyBtn');
+    if (copyBtn) {
+      const orig = copyBtn.innerHTML;
+      copyBtn.innerHTML = '<span>✅ Copied!</span>';
+      setTimeout(() => { copyBtn.innerHTML = orig; }, 2000);
+    }
+  }).catch(() => {
+    prompt('Copy your license key:', lastGeneratedLicenseKey);
+  });
 }
 
 /* ==========================================================================
@@ -713,7 +712,7 @@ function openInvoiceModal() {
   if (invId) invId.textContent = `Inv #: ${currentCustomer.orderId || 'AGRI-2026-8821'}`;
   if (invCustName) invCustName.textContent = currentCustomer.name || 'CSC Operator';
   if (invCustEmail) invCustEmail.textContent = currentCustomer.email || 'operator@example.com';
-  if (invCustPhone) invCustPhone.textContent = currentCustomer.phone || '+91 62392 45940';
+  if (invCustPhone) invCustPhone.textContent = currentCustomer.phone || '+91 70099 80800';
   if (invKey) invKey.textContent = lastGeneratedLicenseKey;
 
   if (modal) {
@@ -775,8 +774,8 @@ const policyContents = {
   terms: {
     title: 'Terms & Conditions (Digital Software License Agreement)',
     content: `
-      <h4>1. Overview & Agreement</h4>
-      <p>By purchasing a software license for <strong>₹599</strong> or using <strong>AgriStack Card Generator Helper</strong> ("Software"), you agree to abide by these Terms and Conditions. This software provides automated browser formatting tools for Punjab Farmer Registry and AgriStack operators.</p>
+      <h4>1. Overview & Legal Entity</h4>
+      <p>AgriStack Card Generator Helper is owned and operated by <strong>GURINDER SINGH</strong> (Individual Proprietor), Bathinda, Punjab, India. By purchasing a software license for <strong>₹599</strong> or using the software, you agree to abide by these Terms and Conditions. This software provides automated browser formatting tools for Punjab Farmer Registry and AgriStack operators.</p>
       
       <h4>2. Grant of License</h4>
       <p>We grant you a non-exclusive, non-transferable lifetime software license to format farmer identity cards from authorized Punjab Farmer Registry / AgriStack portal records.</p>
@@ -792,7 +791,7 @@ const policyContents = {
       <p>All prices are clearly stated in Indian Rupees (INR ₹). Payment processing is secured via Cashfree.</p>
       
       <h4>5. Governing Law & Jurisdiction</h4>
-      <p>These terms shall be governed by and construed in accordance with the laws of India. Any disputes arising shall be subject to the exclusive jurisdiction of the competent courts in Punjab, India.</p>
+      <p>These terms shall be governed by and construed in accordance with the laws of India. Any disputes arising shall be subject to the exclusive jurisdiction of the competent courts in Bathinda, Punjab, India.</p>
     `
   },
   privacy: {
@@ -811,7 +810,7 @@ const policyContents = {
       </ul>
       
       <h4>4. Contact Regarding Privacy</h4>
-      <p>If you have any questions, email us at <a href="mailto:itzgarry01@gmail.com">itzgarry01@gmail.com</a>.</p>
+      <p>If you have any questions, email GURINDER SINGH at <a href="mailto:igxrry@gmail.com">igxrry@gmail.com</a> or WhatsApp <a href="tel:+917009980800">+91 70099 80800</a>.</p>
     `
   },
   refund: {
@@ -826,12 +825,8 @@ const policyContents = {
         <li>If you were charged multiple times due to a banking network timeout.</li>
       </ul>
       
-      <h4>3. Refund Request Process</h4>
-      <p>Send an email to <strong>itzgarry01@gmail.com</strong> with:</p>
-      <ul>
-        <li>Your Cashfree Payment ID or Order ID</li>
-        <li>Screenshot / description of the issue</li>
-      </ul>
+      <h4>3. How to Request a Refund</h4>
+      <p>Send an email to <strong>igxrry@gmail.com</strong> or WhatsApp <strong>+91 70099 80800</strong> with your Cashfree / Gateway Payment ID or Order ID and description.</p>
       
       <h4>4. Turnaround Time</h4>
       <p>Refund requests are reviewed within 24 hours. Upon approval, funds are credited back to your original payment source (Bank / UPI / Card) within <strong>5–7 business days</strong>.</p>
@@ -841,7 +836,7 @@ const policyContents = {
     title: 'Shipping & Delivery Policy (Instant Digital Delivery)',
     content: `
       <h4>1. Nature of Product — Digital Delivery Only</h4>
-      <p><strong>Explicit Declaration:</strong> AgriStack Card Generator Helper is 100% digital software. No physical goods or packages are shipped to your postal address.</p>
+      <p><strong>Explicit Declaration:</strong> AgriStack Card Generator Helper (operated by GURINDER SINGH) is 100% digital software. No physical goods or packages are shipped to your postal address.</p>
       
       <h4>2. Delivery Method & Timeline</h4>
       <ul>
@@ -853,7 +848,7 @@ const policyContents = {
       <p>₹0.00 (Free instant digital electronic delivery).</p>
       
       <h4>4. Non-Delivery Support</h4>
-      <p>If your browser blocked the automatic download, click the manual Re-Download button on screen or contact WhatsApp support at <strong>+91 62392 45940</strong> for instant file dispatch.</p>
+      <p>If your browser blocked the automatic download, click the manual Re-Download button on screen or contact WhatsApp support at <strong>+91 70099 80800</strong> or email <strong>igxrry@gmail.com</strong> for instant file dispatch.</p>
     `
   }
 };
