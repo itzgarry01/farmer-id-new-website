@@ -2115,5 +2115,202 @@ textarea.form-control {
   margin: 0;
 }
 
+/* ==========================================================================
+   PVC Printing Supplies & Amazon Affiliate Section
+   ========================================================================== */
+.pvc-supplies-section {
+  background: linear-gradient(180deg, #F8FAFC 0%, #F1F5F9 100%);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.pvc-showcase-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+  display: grid;
+  grid-template-columns: 1fr 1.15fr;
+  gap: 32px;
+  padding: 36px;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+@media (max-width: 900px) {
+  .pvc-showcase-card {
+    grid-template-columns: 1fr;
+    padding: 24px;
+    gap: 24px;
+  }
+}
+
+.pvc-image-col {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.pvc-image-wrapper {
+  position: relative;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1.5px solid var(--border);
+  background: #F8FAFC;
+  box-shadow: var(--shadow-sm);
+}
+
+.pvc-product-img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+
+.pvc-image-wrapper:hover .pvc-product-img {
+  transform: scale(1.03);
+}
+
+.pvc-badge-float {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: rgba(15, 23, 42, 0.88);
+  backdrop-filter: blur(8px);
+  color: #FFFFFF;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 5px 12px;
+  border-radius: var(--radius-full);
+  letter-spacing: 0.03em;
+}
+
+.pvc-subtext-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.pvc-mini-stat {
+  background: #F8FAFC;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 10px;
+  text-align: center;
+}
+
+.pvc-mini-stat .stat-val {
+  display: block;
+  font-size: 14px;
+  font-weight: 800;
+  color: #0F172A;
+}
+
+.pvc-mini-stat .stat-lbl {
+  display: block;
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.pvc-details-col {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.pvc-category-tag {
+  display: inline-block;
+  background: #FEF3C7;
+  color: #92400E;
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 4px 10px;
+  border-radius: 4px;
+  margin-bottom: 8px;
+}
+
+.pvc-product-title {
+  font-size: 22px;
+  font-weight: 900;
+  color: #0F172A;
+  line-height: 1.3;
+}
+
+.pvc-product-desc {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.pvc-specs-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.pvc-spec-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 13px;
+  color: #334155;
+  line-height: 1.5;
+}
+
+.pvc-spec-item .spec-icon {
+  font-size: 16px;
+  background: #F1F5F9;
+  border-radius: 6px;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.pvc-action-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.btn-amazon {
+  background: linear-gradient(135deg, #FF9900 0%, #E67A00 100%);
+  color: #111827;
+  border: 1px solid #D97706;
+  font-weight: 800;
+  box-shadow: 0 4px 14px rgba(245, 158, 11, 0.35);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 14px 24px;
+  border-radius: var(--radius-md);
+  font-size: 15px;
+  text-decoration: none;
+  transition: var(--transition);
+}
+
+.btn-amazon:hover {
+  background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+  color: #000000;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(245, 158, 11, 0.45);
+}
+
+.pvc-amazon-note {
+  font-size: 12px;
+  color: var(--text-muted);
+  text-align: center;
+}
+
 
 
