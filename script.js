@@ -2,52 +2,22 @@
    AgriStack Card Helper - Extension Purchase & Automatic Download Engine
    ========================================================================== */
 
-// Global Plan Definition
+// Global Plan Definition - Single ₹20 Per Card Plan
 const PLANS = {
-  'lifetime': {
-    id: 'lifetime',
-    cardElementId: 'planLifetime',
-    name: 'Full Extension Lifetime License',
-    displayTitle: 'Full Extension Lifetime License',
-    price: '₹599',
-    priceDisplay: '₹599 one-time',
-    numericPrice: 599,
-    buttonText: 'Buy Extension — ₹599 (Auto-Download)'
-  },
-  'monthly-pro': {
-    id: 'monthly-pro',
-    cardElementId: 'planMonthly',
-    name: 'Monthly Pro',
-    displayTitle: 'Monthly Pro (Unlimited Access)',
-    price: '₹99',
-    priceDisplay: '₹99 / month',
-    numericPrice: 99,
-    buttonText: 'Select Monthly Pro'
-  },
   'pay-per-card': {
     id: 'pay-per-card',
     cardElementId: 'planSingle',
-    name: 'Pay-Per-Card',
-    displayTitle: 'Pay-Per-Card (Single Generation)',
+    name: 'Pay-Per-Card Plan',
+    displayTitle: 'Pay-Per-Card (₹20 / Card)',
     price: '₹20',
     priceDisplay: '₹20 / card',
     numericPrice: 20,
-    buttonText: 'Select Pay-Per-Card'
-  },
-  'custom': {
-    id: 'custom',
-    cardElementId: 'planLifetime',
-    name: 'Custom Bulk Pack',
-    displayTitle: 'Custom Bulk Pack (Multi-Center)',
-    price: 'Custom',
-    priceDisplay: 'Contact Us',
-    numericPrice: 0,
-    buttonText: 'Inquire Custom Pack'
+    buttonText: 'Pay ₹20 & Generate Card'
   }
 };
 
-let currentSelectedPlanId = 'lifetime';
-let lastGeneratedLicenseKey = 'AGRI-PRO-599-8F29-4D17';
+let currentSelectedPlanId = 'pay-per-card';
+let lastGeneratedLicenseKey = 'AGRI-CARD-20-8F29-4D17';
 let currentCustomer = {
   name: 'CSC Operator',
   email: 'operator@example.com',
@@ -245,76 +215,45 @@ function initPlanSelection() {
   // Click on Pricing Card
   pricingCards.forEach(card => {
     card.addEventListener('click', (e) => {
-      const planId = card.getAttribute('data-plan-id');
-      if (card.classList.contains('unavailable')) {
-        alert('This plan is temporarily unavailable. The Full Extension Lifetime License (₹599) is the only active plan.');
-        selectPlan('lifetime');
-        return;
-      }
-
-      if (planId) {
-        selectPlan(planId);
-
-        // If clicked on Buy / Action button, open checkout modal directly
-        if (e.target.closest('.plan-action-btn')) {
-          openCheckoutModal(planId);
-        }
+      selectPlan('pay-per-card');
+      if (e.target.closest('.plan-action-btn')) {
+        openCheckoutModal('pay-per-card');
       }
     });
 
-    // Keyboard accessibility for selecting plans via Enter / Space
     card.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
-        if (card.classList.contains('unavailable')) return;
-        const planId = card.getAttribute('data-plan-id');
-        if (planId) {
-          selectPlan(planId);
-          openCheckoutModal(planId);
-        }
+        selectPlan('pay-per-card');
+        openCheckoutModal('pay-per-card');
       }
     });
   });
 
-  // Form Select Dropdown Change -> Sync with Pricing Cards
+  // Form Select Dropdown Change -> Sync
   if (formPlanSelect) {
-    formPlanSelect.addEventListener('change', (e) => {
-      if (e.target.value !== 'lifetime') {
-        alert('This plan is temporarily unavailable. Only the Full Extension Lifetime License (₹599) is currently available.');
-        e.target.value = 'lifetime';
-      }
-      selectPlan('lifetime', false);
+    formPlanSelect.addEventListener('change', () => {
+      selectPlan('pay-per-card', false);
     });
   }
 
   // Initialize with default plan
-  selectPlan('lifetime', true);
+  selectPlan('pay-per-card', true);
 }
 
-function selectPlan(planId, updateDropdown = true) {
-  // Lock to lifetime plan as the only active product
-  planId = 'lifetime';
-  currentSelectedPlanId = 'lifetime';
-  const planData = PLANS['lifetime'];
+function selectPlan(planId = 'pay-per-card', updateDropdown = true) {
+  planId = 'pay-per-card';
+  currentSelectedPlanId = 'pay-per-card';
+  const planData = PLANS['pay-per-card'];
 
   // 1. Update Pricing Cards UI
   const pricingCards = document.querySelectorAll('.pricing-card');
   pricingCards.forEach(card => {
-    const cardPlanId = card.getAttribute('data-plan-id');
+    card.classList.add('selected');
+    card.setAttribute('aria-selected', 'true');
     const actionBtn = card.querySelector('.plan-action-btn span');
-
-    if (cardPlanId === 'lifetime') {
-      card.classList.add('selected');
-      card.setAttribute('aria-selected', 'true');
-      if (actionBtn) {
-        actionBtn.textContent = '⚡ Buy Extension — ₹599 (Auto-Download)';
-      }
-    } else {
-      card.classList.remove('selected');
-      card.setAttribute('aria-selected', 'false');
-      if (actionBtn) {
-        actionBtn.textContent = '❌ Not Available Right Now';
-      }
+    if (actionBtn) {
+      actionBtn.textContent = '⚡ Pay ₹20 & Generate Card';
     }
   });
 
@@ -334,8 +273,8 @@ function selectPlan(planId, updateDropdown = true) {
 
   // 3. Update Dropdown if triggered from card click
   const formPlanSelect = document.getElementById('selectedPlan');
-  if (updateDropdown && formPlanSelect && formPlanSelect.value !== 'lifetime') {
-    formPlanSelect.value = 'lifetime';
+  if (updateDropdown && formPlanSelect) {
+    formPlanSelect.value = 'pay-per-card';
   }
 
   // 4. Update Modal Info
@@ -350,7 +289,7 @@ function selectPlan(planId, updateDropdown = true) {
 }
 
 /* ==========================================================================
-   Plan Filter Tabs
+   Plan Filter Tabs (Optional/Simplified for Single Plan)
    ========================================================================== */
 function initPlanFilterTabs() {
   const filterBtns = document.querySelectorAll('.plan-filter-btn');
@@ -364,16 +303,8 @@ function initPlanFilterTabs() {
       });
       btn.classList.add('active');
       btn.setAttribute('aria-selected', 'true');
-
-      const filter = btn.getAttribute('data-filter');
-
       pricingCards.forEach(card => {
-        const cardPlanId = card.getAttribute('data-plan-id');
-        if (filter === 'all' || cardPlanId === filter) {
-          card.style.display = 'flex';
-        } else {
-          card.style.display = 'none';
-        }
+        card.style.display = 'flex';
       });
     });
   });
@@ -446,9 +377,9 @@ function switchCheckoutTab(tabName) {
   }
 }
 
-function openCheckoutModal(planId) {
-  if (planId) selectPlan(planId);
-  const planData = PLANS[currentSelectedPlanId] || PLANS['lifetime'];
+function openCheckoutModal(planId = 'pay-per-card') {
+  selectPlan('pay-per-card');
+  const planData = PLANS['pay-per-card'];
   
   const modal = document.getElementById('checkoutModal');
   const modalName = document.getElementById('modalCheckoutPlanName');
@@ -476,11 +407,11 @@ function openCheckoutModal(planId) {
   if (emailInput && formEmail && formEmail.value) emailInput.value = formEmail.value;
   if (phoneInput && formPhone && formPhone.value) phoneInput.value = formPhone.value;
 
-  // Update dynamic QR Code
+  // Update dynamic QR Code for ₹20
   const qrImg = document.getElementById('liveUpiQr');
   if (qrImg) {
-    const amount = planData.numericPrice || 599;
-    const upiUrl = `upi://pay?pa=itzgarry01@okaxis&pn=AgriStack%20Helper&am=${amount}&cu=INR&tn=AgriStack%20Extension%20License`;
+    const amount = 20;
+    const upiUrl = `upi://pay?pa=itzgarry01@okaxis&pn=AgriStack%20Helper&am=${amount}&cu=INR&tn=AgriStack%20Card%20Generation`;
     qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(upiUrl)}`;
   }
 
@@ -516,12 +447,12 @@ function triggerExtensionDownload() {
 function generateLicenseKey() {
   const hexPart1 = Math.random().toString(16).substring(2, 6).toUpperCase();
   const hexPart2 = Math.random().toString(16).substring(2, 6).toUpperCase();
-  return `AGRI-PRO-599-${hexPart1}-${hexPart2}`;
+  return `AGRI-CARD-20-${hexPart1}-${hexPart2}`;
 }
 
-function openRazorpayCheckout(planId) {
-  if (planId) selectPlan(planId);
-  const planData = PLANS[currentSelectedPlanId] || PLANS['lifetime'];
+function openRazorpayCheckout(planId = 'pay-per-card') {
+  selectPlan('pay-per-card');
+  const planData = PLANS['pay-per-card'];
 
   const nameInput = document.getElementById('modalCustName');
   const emailInput = document.getElementById('modalCustEmail');
@@ -534,14 +465,14 @@ function openRazorpayCheckout(planId) {
   const customerEmail = (emailInput && emailInput.value.trim()) || (formEmail && formEmail.value.trim()) || 'igxrry@gmail.com';
   const customerPhone = (phoneInput && phoneInput.value.trim()) || (formPhone && formPhone.value.trim()) || '+917009980800';
 
-  const amountInPaise = (planData.numericPrice || 599) * 100;
+  const amountInPaise = 20 * 100; // 2000 paise
 
   const options = {
     key: RAZORPAY_TEST_KEY_ID,
     amount: amountInPaise,
     currency: 'INR',
     name: 'GURINDER SINGH (AgriStack Helper)',
-    description: `${planData.name} - Instant Extension Download`,
+    description: `${planData.name} - Instant Card Generation`,
     image: 'icons/logo.png',
     prefill: {
       name: customerName,
@@ -550,7 +481,7 @@ function openRazorpayCheckout(planId) {
     },
     notes: {
       plan_id: planData.id,
-      product: 'AgriStack Chrome Extension Lifetime License'
+      product: 'AgriStack Pay-Per-Card License'
     },
     theme: {
       color: '#166536'
@@ -612,8 +543,8 @@ function processPaymentSuccess(paymentMethod = 'UPI', gatewayTxnId = null) {
       phone: customerPhone,
       orderId: orderId,
       licenseKey: lastGeneratedLicenseKey,
-      plan: PLANS[currentSelectedPlanId]?.name || 'Lifetime License',
-      price: PLANS[currentSelectedPlanId]?.price || '₹599',
+      plan: PLANS['pay-per-card'].name,
+      price: '₹20',
       date: new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })
     };
 
@@ -626,7 +557,7 @@ function processPaymentSuccess(paymentMethod = 'UPI', gatewayTxnId = null) {
     // Reset verify button
     if (verifyBtn) {
       verifyBtn.disabled = false;
-      verifyBtn.innerHTML = '<span>✅ I Have Paid ₹599 — Download Extension Instantly</span>';
+      verifyBtn.innerHTML = '<span>✅ I Have Paid ₹20 — Generate Card Now</span>';
     }
     if (statusBox) {
       statusBox.style.display = 'none';
@@ -775,7 +706,7 @@ const policyContents = {
     title: 'Terms & Conditions (Digital Software License Agreement)',
     content: `
       <h4>1. Overview & Legal Entity</h4>
-      <p>AgriStack Card Generator Helper is owned and operated by <strong>GURINDER SINGH</strong> (Individual Proprietor), Bathinda, Punjab, India. By purchasing a software license for <strong>₹599</strong> or using the software, you agree to abide by these Terms and Conditions. This software provides automated browser formatting tools for Punjab Farmer Registry and AgriStack operators.</p>
+      <p>AgriStack Card Generator Helper is owned and operated by <strong>GURINDER SINGH</strong> (Individual Proprietor), Bathinda, Punjab, India. By purchasing a software license for <strong>₹20 per card</strong> or using the software, you agree to abide by these Terms and Conditions. This software provides automated browser formatting tools for Punjab Farmer Registry and AgriStack operators.</p>
       
       <h4>2. Grant of License</h4>
       <p>We grant you a non-exclusive, non-transferable lifetime software license to format farmer identity cards from authorized Punjab Farmer Registry / AgriStack portal records.</p>

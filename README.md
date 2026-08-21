@@ -9,7 +9,7 @@ This directory contains the production-ready 1-page landing page website for **A
 | Mandatory Requirement | Status | Location on Page |
 |---|:---:|---|
 | **Official Firefox Add-on** | ✅ Live | [addons.mozilla.org/firefox/addon/farmer-card/](https://addons.mozilla.org/firefox/addon/farmer-card/) (1-Click AMO Store Install) |
-| **Product Description & Pricing** | ✅ Complete | `#features`, `#workflow` & `#pricing` (₹599 INR transparent lifetime license) |
+| **Product Description & Pricing** | ✅ Complete | `#features`, `#workflow` & `#pricing` (₹20 INR transparent Pay-Per-Card generation) |
 | **Browser Install Guide** | ✅ Complete | `#install-guide` (Interactive tabs for Firefox AMO & Chrome / Brave / Edge ZIP) |
 | **Contact Us & Legal Entity** | ✅ Complete | `#contact` (Proprietor: `GURINDER SINGH`, Email: `igxrry@gmail.com`, Phone: `+91 70099 80800`, Bathinda, Punjab - 151001) |
 | **Terms & Conditions** | ✅ Complete | `#terms` & Modal (Digital Software License Agreement) |
