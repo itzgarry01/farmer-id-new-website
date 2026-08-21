@@ -1929,4 +1929,191 @@ textarea.form-control {
   transform: none !important;
 }
 
+/* Firefox Official Brand Buttons */
+.btn-firefox {
+  background: linear-gradient(135deg, #FF7139 0%, #E22850 50%, #902096 100%);
+  color: #FFFFFF !important;
+  box-shadow: 0 4px 14px rgba(226, 40, 80, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+}
+
+.btn-firefox:hover {
+  background: linear-gradient(135deg, #FF844B 0%, #F03862 50%, #A828AF 100%);
+  color: #FFFFFF !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(226, 40, 80, 0.45);
+}
+
+.btn-firefox-outline {
+  background: #FFF7ED;
+  color: #C2410C !important;
+  border: 1.5px solid #FDBA74;
+  box-shadow: 0 2px 6px rgba(234, 88, 12, 0.15);
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  border-radius: var(--radius-md);
+  padding: 10px 18px;
+  font-size: 13px;
+  transition: var(--transition);
+}
+
+.btn-firefox-outline:hover {
+  background: #FFEDD5;
+  border-color: #FB923C;
+  color: #9A3412 !important;
+  transform: translateY(-2px);
+}
+
+/* Installation Guide Component Styles */
+.install-tabs-header {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.install-tab-btn {
+  padding: 10px 22px;
+  border-radius: var(--radius-md);
+  border: 1.5px solid var(--border);
+  background: var(--surface);
+  color: var(--text-secondary);
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: var(--transition);
+}
+
+.install-tab-btn:hover {
+  background: var(--surface-alt);
+  color: var(--text-primary);
+  border-color: var(--border-dark);
+}
+
+.install-tab-btn.active {
+  background: #0F172A;
+  color: #FFFFFF;
+  border-color: #0F172A;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.25);
+}
+
+.install-tab-btn.active.firefox-tab {
+  background: linear-gradient(135deg, #FF7139 0%, #E22850 100%);
+  border-color: #E22850;
+  box-shadow: 0 4px 14px rgba(226, 40, 80, 0.35);
+  color: #FFFFFF;
+}
+
+.install-tab-pane {
+  display: none;
+}
+
+.install-tab-pane.active {
+  display: block;
+  animation: fadeIn 0.25s ease-in-out;
+}
+
+.install-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.install-step-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: var(--transition);
+  position: relative;
+}
+
+.install-step-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--primary);
+  box-shadow: var(--shadow-md);
+}
+
+.install-step-badge {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--primary-bg);
+  color: var(--primary-dark);
+  font-weight: 800;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.install-step-card.firefox-card {
+  border-color: #FED7AA;
+  background: #FFFAF5;
+}
+
+.install-step-card.firefox-card:hover {
+  border-color: #EA580C;
+  box-shadow: 0 6px 18px rgba(234, 88, 12, 0.15);
+}
+
+.install-step-card.firefox-card .install-step-badge {
+  background: #FFEDD5;
+  color: #C2410C;
+}
+
+.install-step-card h4 {
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.install-step-card p {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.install-callout-box {
+  background: #FFF7ED;
+  border: 1.5px solid #FDBA74;
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-top: 16px;
+}
+
+.install-callout-content h4 {
+  font-size: 16px;
+  font-weight: 800;
+  color: #9A3412;
+  margin-bottom: 4px;
+}
+
+.install-callout-content p {
+  font-size: 13px;
+  color: #C2410C;
+  margin: 0;
+}
+
+
 

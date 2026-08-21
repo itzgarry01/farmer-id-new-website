@@ -879,3 +879,45 @@ function closePolicyModal() {
   }
 }
 
+/* ==========================================================================
+   Installation Guide Tab Switchers
+   ========================================================================== */
+function switchInstallTab(browserKey) {
+  const tabFirefox = document.getElementById('tabBtnFirefox');
+  const tabChrome = document.getElementById('tabBtnChrome');
+  const paneFirefox = document.getElementById('paneFirefox');
+  const paneChrome = document.getElementById('paneChrome');
+
+  if (browserKey === 'firefox') {
+    if (tabFirefox) tabFirefox.classList.add('active', 'firefox-tab');
+    if (tabChrome) tabChrome.classList.remove('active');
+    if (paneFirefox) paneFirefox.classList.add('active');
+    if (paneChrome) paneChrome.classList.remove('active');
+  } else {
+    if (tabChrome) tabChrome.classList.add('active');
+    if (tabFirefox) tabFirefox.classList.remove('active', 'firefox-tab');
+    if (paneChrome) paneChrome.classList.add('active');
+    if (paneFirefox) paneFirefox.classList.remove('active');
+  }
+}
+
+function switchModalInstallTab(browserKey) {
+  const tabFirefox = document.getElementById('modalTabFirefox');
+  const tabChrome = document.getElementById('modalTabChrome');
+  const paneFirefox = document.getElementById('modalPaneFirefox');
+  const paneChrome = document.getElementById('modalPaneChrome');
+
+  if (browserKey === 'firefox') {
+    if (tabFirefox) tabFirefox.classList.add('active', 'firefox-tab');
+    if (tabChrome) tabChrome.classList.remove('active');
+    if (paneFirefox) paneFirefox.style.display = 'flex';
+    if (paneChrome) paneChrome.style.display = 'none';
+  } else {
+    if (tabChrome) tabChrome.classList.add('active');
+    if (tabFirefox) tabFirefox.classList.remove('active', 'firefox-tab');
+    if (paneChrome) paneChrome.style.display = 'flex';
+    if (paneFirefox) paneFirefox.style.display = 'none';
+  }
+}
+
+

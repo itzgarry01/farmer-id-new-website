@@ -49,13 +49,15 @@
 
       <nav class="nav-menu" id="navMenu">
         <a href="#features" class="nav-link" id="navFeatures">Features</a>
-        <a href="#workflow" class="nav-link" id="navWorkflow">Product Workflow</a>
+        <a href="#workflow" class="nav-link" id="navWorkflow">Workflow</a>
+        <a href="#install-guide" class="nav-link" id="navInstall">Install Guide</a>
         <a href="#pricing" class="nav-link" id="navPricing">Pricing (₹599)</a>
         <a href="#compliance" class="nav-link" id="navCompliance">Policies & Legal</a>
         <a href="#contact" class="nav-link" id="navContact">Buy Extension</a>
       </nav>
 
       <div class="nav-actions">
+        <a href="https://addons.mozilla.org/firefox/addon/farmer-card/" target="_blank" rel="noopener noreferrer" class="btn btn-firefox btn-sm" id="headerFirefoxBtn" title="Install Official Firefox Add-on">🦊 Firefox Add-on</a>
         <a href="#pricing" class="btn btn-primary btn-sm" id="headerCtaBtn" onclick="openCheckoutModal('lifetime'); return false;">⚡ Buy Extension — ₹599</a>
         <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle Navigation Menu">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -75,19 +77,22 @@
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
               <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
             </svg>
-            Official Chrome Extension &bull; 1-Click Card Formatter &bull; ₹599 Lifetime
+            Official Firefox Add-on & Chrome Extension &bull; 1-Click Card Formatter &bull; ₹599 Lifetime
           </div>
           <h1 class="hero-title">Buy <span class="highlight">AgriStack Extension</span> in ₹599 — Instant Auto-Download</h1>
           <p class="hero-desc">
-            AgriStack Card Generator Helper is a fast browser extension that automatically formats official 300 DPI high-resolution Farmer ID cards from Punjab Farmer Registry & AgriStack portals. Pay ₹599 once to unlock lifetime unlimited generations with instant automatic file download.
+            AgriStack Card Generator Helper is a fast browser extension that automatically formats official 300 DPI high-resolution Farmer ID cards from Punjab Farmer Registry & AgriStack portals. Install in 1 click from the official Mozilla Firefox Add-ons store or download for Chrome, Edge, and Brave.
           </p>
 
           <div class="hero-cta-group">
             <button type="button" class="btn btn-primary btn-lg" id="heroBuyBtn" onclick="openCheckoutModal('lifetime')">
               <span>⚡ Buy Extension — ₹599 (Auto-Download)</span>
             </button>
-            <a href="#workflow" class="btn btn-secondary btn-lg" id="heroDemoBtn">
-              <span>📖 Step-by-Step Workflow</span>
+            <a href="https://addons.mozilla.org/firefox/addon/farmer-card/" target="_blank" rel="noopener noreferrer" class="btn btn-firefox btn-lg" id="heroFirefoxBtn">
+              <span>🦊 Install on Firefox (Official Store)</span>
+            </a>
+            <a href="#install-guide" class="btn btn-secondary btn-lg" id="heroDemoBtn">
+              <span>📖 Installation Guide</span>
             </a>
           </div>
 
@@ -104,7 +109,7 @@
                 <path
                   d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
               </svg>
-              <span>₹599 Lifetime (UPI & Cards)</span>
+              <span>🦊 Official Mozilla Add-on</span>
             </div>
             <div class="trust-item">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
@@ -260,21 +265,20 @@
               <span class="workflow-step-badge">STEP 01</span>
               <div class="workflow-icon-wrap">🧩</div>
             </div>
-            <h3>Install & Pin Extension</h3>
-            <p>Install the AgriStack Card Helper extension in Chrome, Brave, Edge, or Firefox and pin it to your toolbar
-              for quick 1-click access anytime.</p>
+            <h3>Install Extension</h3>
+            <p>Install the AgriStack Card Helper in 1 click from Mozilla Firefox Add-ons or download the ZIP for Chrome, Brave, and Edge.</p>
             <div class="workflow-keypoints">
               <div class="workflow-keypoint">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                   <polyline points="20 6 9 17 4 12" />
                 </svg>
-                <span>Zero complex installation or software drivers needed.</span>
+                <span><strong>Firefox:</strong> <a href="https://addons.mozilla.org/firefox/addon/farmer-card/" target="_blank" rel="noopener noreferrer" style="color: #EA580C; font-weight: 700; text-decoration: underline;">Official Add-ons Store (1-Click)</a></span>
               </div>
               <div class="workflow-keypoint">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                   <polyline points="20 6 9 17 4 12" />
                 </svg>
-                <span>Lightweight Manifest V3 browser extension.</span>
+                <span><strong>Chrome/Brave/Edge:</strong> Auto-download ZIP & load unpacked.</span>
               </div>
             </div>
           </div>
@@ -407,8 +411,102 @@
       </div>
     </section>
 
+    <!-- Dedicated Installation & Setup Guide Section -->
+    <section class="section section-alt" id="install-guide">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">Browser Setup</span>
+          <h2 class="section-title">How to Install Extension in Your Browser</h2>
+          <p class="section-desc">
+            Choose your web browser below for simple, step-by-step installation instructions.
+          </p>
+        </div>
+
+        <div class="install-tabs-header">
+          <button type="button" class="install-tab-btn active firefox-tab" onclick="switchInstallTab('firefox')" id="tabBtnFirefox">
+            <span>🦊 Mozilla Firefox (Official AMO Store — 1-Click)</span>
+          </button>
+          <button type="button" class="install-tab-btn" onclick="switchInstallTab('chrome')" id="tabBtnChrome">
+            <span>🌐 Google Chrome / Brave / Edge (.ZIP Unpack)</span>
+          </button>
+        </div>
+
+        <!-- Tab 1: Mozilla Firefox Guide -->
+        <div class="install-tab-pane active" id="paneFirefox">
+          <div class="install-cards-grid">
+            <div class="install-step-card firefox-card">
+              <div class="install-step-badge">1</div>
+              <h4>Open Add-on Page</h4>
+              <p>Click below to open our official Mozilla listing at <a href="https://addons.mozilla.org/firefox/addon/farmer-card/" target="_blank" rel="noopener noreferrer" style="color: #C2410C; font-weight: 700; text-decoration: underline;">addons.mozilla.org</a> in Firefox.</p>
+            </div>
+            <div class="install-step-card firefox-card">
+              <div class="install-step-badge">2</div>
+              <h4>Click "+ Add to Firefox"</h4>
+              <p>Click the blue <strong>"+ Add to Firefox"</strong> button on the official listing to start automatic installation.</p>
+            </div>
+            <div class="install-step-card firefox-card">
+              <div class="install-step-badge">3</div>
+              <h4>Confirm Permission</h4>
+              <p>When the Firefox browser dialog appears, click <strong>"Add"</strong> to approve browser extension permissions.</p>
+            </div>
+            <div class="install-step-card firefox-card">
+              <div class="install-step-badge">4</div>
+              <h4>Pin to Toolbar</h4>
+              <p>Click the puzzle icon in Firefox toolbar and pin <strong>Farmer Card</strong> for quick 1-click generation anytime!</p>
+            </div>
+          </div>
+
+          <div class="install-callout-box">
+            <div class="install-callout-content">
+              <h4>🦊 Official Mozilla Firefox Add-on Store</h4>
+              <p>Direct installation with automatic updates verified by Mozilla.</p>
+            </div>
+            <a href="https://addons.mozilla.org/firefox/addon/farmer-card/" target="_blank" rel="noopener noreferrer" class="btn btn-firefox btn-lg">
+              <span>🚀 Open Mozilla Add-ons Store (1-Click Install)</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Tab 2: Chrome / Brave / Edge Guide -->
+        <div class="install-tab-pane" id="paneChrome">
+          <div class="install-cards-grid">
+            <div class="install-step-card">
+              <div class="install-step-badge">1</div>
+              <h4>Extract ZIP Package</h4>
+              <p>Download <span class="step-code-highlight">agristack-card-helper-v2.0.zip</span> and extract the folder onto your computer.</p>
+            </div>
+            <div class="install-step-card">
+              <div class="install-step-badge">2</div>
+              <h4>Open chrome://extensions</h4>
+              <p>In Chrome, Brave, or Edge, navigate to <span class="step-code-highlight">chrome://extensions</span> in the address bar.</p>
+            </div>
+            <div class="install-step-card">
+              <div class="install-step-badge">3</div>
+              <h4>Enable Developer Mode</h4>
+              <p>Turn ON the <strong>Developer mode</strong> toggle switch located at the top-right corner.</p>
+            </div>
+            <div class="install-step-card">
+              <div class="install-step-badge">4</div>
+              <h4>Click "Load Unpacked"</h4>
+              <p>Click <strong>"Load unpacked"</strong> in top-left and select your extracted folder. Done!</p>
+            </div>
+          </div>
+
+          <div class="install-callout-box" style="background: #F0FDF4; border-color: #86EFAC;">
+            <div class="install-callout-content">
+              <h4 style="color: #166536;">⚡ Ready to download Chrome / Brave / Edge package?</h4>
+              <p style="color: #15803D;">Includes complete Manifest V3 package with automatic browser download.</p>
+            </div>
+            <button type="button" class="btn btn-primary btn-lg" onclick="openCheckoutModal('lifetime')">
+              <span>⚡ Buy Extension — ₹599 (Auto-Download)</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Transparent Pricing Section (Interactive & Selectable Plans) -->
-    <section class="section section-alt" id="pricing">
+    <section class="section" id="pricing">
       <div class="container">
         <div class="section-header">
           <span class="section-tag">Select Your License Plan</span>
@@ -989,6 +1087,24 @@
 
           <div class="faq-item">
             <button type="button" class="faq-question">
+              <span>How do I install the extension in Mozilla Firefox?</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="6 9 12 15 18 9" />
+              </svg>
+            </button>
+            <div class="faq-answer">
+              Installing on Mozilla Firefox is 100% automatic in 1 click:
+              <ol style="margin-left: 20px; margin-top: 8px; line-height: 1.8;">
+                <li>Open our official Mozilla Add-ons page at <a href="https://addons.mozilla.org/firefox/addon/farmer-card/" target="_blank" rel="noopener noreferrer" style="color: #EA580C; font-weight: 700; text-decoration: underline;">addons.mozilla.org/firefox/addon/farmer-card/</a>.</li>
+                <li>Click the blue <strong>"+ Add to Firefox"</strong> button.</li>
+                <li>Confirm the security prompt by clicking <strong>"Add"</strong>.</li>
+                <li>The extension is installed and ready to generate Farmer ID cards immediately!</li>
+              </ol>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button type="button" class="faq-question">
               <span>How do I install the extension in Google Chrome / Brave / Edge?</span>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <polyline points="6 9 12 15 18 9" />
@@ -1072,6 +1188,8 @@
             <a href="#hero">Home</a>
             <a href="#features">Features</a>
             <a href="#workflow">Product Workflow</a>
+            <a href="#install-guide">Install Guide</a>
+            <a href="https://addons.mozilla.org/firefox/addon/farmer-card/" target="_blank" rel="noopener noreferrer" style="color: #F97316; font-weight: 700;">🦊 Firefox Add-on</a>
             <a href="#pricing">Pricing (₹599)</a>
             <a href="#faq">FAQ</a>
           </div>
@@ -1243,11 +1361,16 @@
           <div>
             <h4 style="font-size: 15px; font-weight: 800; color: #0F172A; margin-bottom: 4px;">Automatic Download Initiated!</h4>
             <p style="font-size: 12px; color: #64748B; margin-bottom: 10px;">
-              Your browser should begin downloading <code>agristack-card-helper-v2.0.zip</code>. If it didn't start, click the button below:
+              Your browser should begin downloading <code>agristack-card-helper-v2.0.zip</code>. If it didn't start, click below:
             </p>
-            <a href="agristack-card-helper-v2.0.zip" download="agristack-card-helper-v2.0.zip" class="btn btn-primary btn-sm" id="manualDownloadBtn" style="display: inline-flex; align-items: center; gap: 6px;">
-              <span>⬇️ Re-Download Extension (.ZIP)</span>
-            </a>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+              <a href="agristack-card-helper-v2.0.zip" download="agristack-card-helper-v2.0.zip" class="btn btn-primary btn-sm" id="manualDownloadBtn" style="display: inline-flex; align-items: center; gap: 6px;">
+                <span>⬇️ Re-Download Extension (.ZIP)</span>
+              </a>
+              <a href="https://addons.mozilla.org/firefox/addon/farmer-card/" target="_blank" rel="noopener noreferrer" class="btn btn-firefox btn-sm">
+                <span>🦊 Install on Firefox (AMO 1-Click)</span>
+              </a>
+            </div>
           </div>
         </div>
 
@@ -1276,34 +1399,67 @@
           </button>
         </div>
 
-        <!-- 4-Step Chrome Installation Visual Guide -->
+        <!-- Dual-Browser Installation Visual Guide -->
         <div class="install-guide-section">
           <div class="install-guide-title">
-            <span>⚙️ How to Install in Google Chrome / Brave / Edge (30 Seconds)</span>
+            <span>⚙️ Quick Installation Guide (Choose Your Browser)</span>
           </div>
-          <div class="install-steps-list">
+          
+          <div style="display: flex; gap: 6px; margin-bottom: 12px;">
+            <button type="button" class="install-tab-btn active firefox-tab" onclick="switchModalInstallTab('firefox')" id="modalTabFirefox" style="padding: 6px 12px; font-size: 12px;">
+              <span>🦊 Firefox (1-Click)</span>
+            </button>
+            <button type="button" class="install-tab-btn" onclick="switchModalInstallTab('chrome')" id="modalTabChrome" style="padding: 6px 12px; font-size: 12px;">
+              <span>🌐 Chrome / Edge (.ZIP)</span>
+            </button>
+          </div>
+
+          <!-- Firefox Modal Instructions -->
+          <div id="modalPaneFirefox" class="install-steps-list">
+            <div class="install-step-item">
+              <span class="step-num-badge" style="background: #FFEDD5; color: #C2410C;">1</span>
+              <div>
+                <strong>Open Official Store:</strong> Visit <a href="https://addons.mozilla.org/firefox/addon/farmer-card/" target="_blank" rel="noopener noreferrer" style="color: #EA580C; font-weight: 700; text-decoration: underline;">Mozilla Add-ons Store</a> in Firefox.
+              </div>
+            </div>
+            <div class="install-step-item">
+              <span class="step-num-badge" style="background: #FFEDD5; color: #C2410C;">2</span>
+              <div>
+                <strong>Click "+ Add to Firefox":</strong> The extension installs directly into your browser without extracting files.
+              </div>
+            </div>
+            <div class="install-step-item">
+              <span class="step-num-badge" style="background: #FFEDD5; color: #C2410C;">3</span>
+              <div>
+                <strong>Pin to Toolbar:</strong> Click the puzzle icon and pin <em>Farmer Card</em> for instant 1-click access!
+              </div>
+            </div>
+          </div>
+
+          <!-- Chrome Modal Instructions -->
+          <div id="modalPaneChrome" class="install-steps-list" style="display: none;">
             <div class="install-step-item">
               <span class="step-num-badge">1</span>
               <div>
-                <strong>Extract the ZIP:</strong> Right-click the downloaded <span class="step-code-highlight">agristack-card-helper-v2.0.zip</span> file and select <em>"Extract All..."</em>.
+                <strong>Extract ZIP:</strong> Right-click <span class="step-code-highlight">agristack-card-helper-v2.0.zip</span> and choose <em>"Extract All..."</em>.
               </div>
             </div>
             <div class="install-step-item">
               <span class="step-num-badge">2</span>
               <div>
-                <strong>Open Chrome Extensions:</strong> In your browser, go to <span class="step-code-highlight">chrome://extensions</span> (or click <em>Menu &rarr; Extensions &rarr; Manage Extensions</em>).
+                <strong>Open Extensions:</strong> In Chrome/Brave/Edge, visit <span class="step-code-highlight">chrome://extensions</span>.
               </div>
             </div>
             <div class="install-step-item">
               <span class="step-num-badge">3</span>
               <div>
-                <strong>Enable Developer Mode:</strong> Turn ON the <span class="step-code-highlight">Developer mode</span> toggle switch in the top-right corner.
+                <strong>Enable Developer Mode:</strong> Toggle <strong>Developer mode</strong> ON in the top-right corner.
               </div>
             </div>
             <div class="install-step-item">
               <span class="step-num-badge">4</span>
               <div>
-                <strong>Load Unpacked:</strong> Click the <span class="step-code-highlight">Load unpacked</span> button (top-left) and select the extracted folder. Done!
+                <strong>Load Unpacked:</strong> Click <strong>"Load unpacked"</strong> and select the extracted folder.
               </div>
             </div>
           </div>
