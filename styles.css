@@ -663,7 +663,7 @@ button, input, textarea, select {
 .flowchart-system-wrapper {
   background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
   border-radius: var(--radius-xl);
-  padding: 36px 32px;
+  padding: 36px 28px;
   margin-bottom: 48px;
   border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 16px 36px rgba(15, 23, 42, 0.18);
@@ -701,28 +701,37 @@ button, input, textarea, select {
 .flowchart-header p {
   font-size: 14px;
   color: #94A3B8;
-  max-width: 680px;
+  max-width: 720px;
   margin: 6px auto 0;
 }
 
+/* 8-Step Connected Flowchart Grid */
 .flowchart-nodes-grid {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 12px;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 8px;
   position: relative;
+  align-items: stretch;
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 1200px) {
   .flowchart-nodes-grid {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
   }
 }
 
-@media (max-width: 640px) {
+@media (max-width: 768px) {
+  .flowchart-nodes-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+}
+
+@media (max-width: 480px) {
   .flowchart-nodes-grid {
     grid-template-columns: 1fr;
-    gap: 14px;
+    gap: 12px;
   }
 }
 
@@ -730,7 +739,7 @@ button, input, textarea, select {
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: var(--radius-lg);
-  padding: 20px 14px;
+  padding: 18px 10px;
   text-align: center;
   position: relative;
   display: flex;
@@ -750,10 +759,10 @@ button, input, textarea, select {
   top: -10px;
   background: #22C55E;
   color: #0F172A;
-  font-size: 10.5px;
+  font-size: 10px;
   font-weight: 900;
-  width: 22px;
-  height: 22px;
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -761,24 +770,61 @@ button, input, textarea, select {
   box-shadow: 0 0 10px rgba(34, 197, 94, 0.6);
 }
 
+.flowchart-node-actor {
+  font-size: 9.5px;
+  font-weight: 800;
+  text-transform: uppercase;
+  padding: 2px 7px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.12);
+  color: #94A3B8;
+  margin-top: 2px;
+  margin-bottom: 6px;
+  letter-spacing: 0.3px;
+}
+
+.actor-user { background: rgba(59, 130, 246, 0.25); color: #93C5FD; }
+.actor-portal { background: rgba(245, 158, 11, 0.25); color: #FCD34D; }
+.actor-ext { background: rgba(34, 197, 94, 0.25); color: #86EFAC; }
+.actor-pay { background: rgba(168, 85, 247, 0.25); color: #D8B4FE; }
+.actor-print { background: rgba(236, 72, 153, 0.25); color: #F9A8D4; }
+
 .flowchart-node-icon {
-  font-size: 26px;
-  margin-top: 4px;
-  margin-bottom: 10px;
+  font-size: 22px;
+  margin-bottom: 6px;
 }
 
 .flowchart-node-title {
-  font-size: 13.5px;
+  font-size: 12.5px;
   font-weight: 800;
   color: #F8FAFC;
-  margin-bottom: 6px;
-  line-height: 1.25;
+  margin-bottom: 4px;
+  line-height: 1.2;
 }
 
 .flowchart-node-desc {
-  font-size: 11.5px;
+  font-size: 10.5px;
   color: #94A3B8;
-  line-height: 1.4;
+  line-height: 1.35;
+}
+
+.flowchart-arrow-indicator {
+  display: none;
+}
+
+@media (min-width: 1201px) {
+  .flowchart-node:not(:last-child)::after {
+    content: '➔';
+    position: absolute;
+    right: -10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #22C55E;
+    font-size: 11px;
+    font-weight: 900;
+    z-index: 2;
+    opacity: 0.8;
+  }
 }
 
 .flowchart-security-pill {

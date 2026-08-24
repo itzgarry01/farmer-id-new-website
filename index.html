@@ -271,65 +271,89 @@
         <!-- Interactive System Execution Flowchart -->
         <div class="flowchart-system-wrapper">
           <div class="flowchart-header">
-            <span class="flowchart-header-badge">⚡ System Architecture & Execution Path</span>
-            <h3>How the Extension Runs Inside Your Browser & System</h3>
-            <p>100% in-browser client-side execution. No sensitive farmer registry data is transmitted to or stored on external cloud servers.</p>
+            <span class="flowchart-header-badge">⚡ Full Operational Flowchart (Start to End)</span>
+            <h3>End-to-End Farmer ID Card Generation Journey</h3>
+            <p>From portal search & Aadhaar OTP verification to automated in-browser extraction, ₹20 payment, and 300 DPI PVC card printing.</p>
           </div>
 
           <div class="flowchart-nodes-grid">
             <!-- Node 1 -->
             <div class="flowchart-node">
               <span class="flowchart-node-num">1</span>
+              <span class="flowchart-node-actor actor-user">Operator</span>
               <div class="flowchart-node-icon">🧩</div>
-              <div class="flowchart-node-title">Extension Launch</div>
-              <div class="flowchart-node-desc">Runs in Firefox or Chrome/Brave/Edge as isolated secure extension.</div>
+              <div class="flowchart-node-title">Install & Pin</div>
+              <div class="flowchart-node-desc">Install Firefox Add-on or Chrome ZIP & pin to browser.</div>
             </div>
 
             <!-- Node 2 -->
             <div class="flowchart-node">
               <span class="flowchart-node-num">2</span>
+              <span class="flowchart-node-actor actor-portal">Portal</span>
               <div class="flowchart-node-icon">🏛️</div>
-              <div class="flowchart-node-title">Portal Detection</div>
-              <div class="flowchart-node-desc">Identifies approved Punjab/AgriStack farmer registry tab.</div>
+              <div class="flowchart-node-title">Portal Login</div>
+              <div class="flowchart-node-desc">Log in to state Punjab / AgriStack portal dashboard.</div>
             </div>
 
             <!-- Node 3 -->
             <div class="flowchart-node">
               <span class="flowchart-node-num">3</span>
-              <div class="flowchart-node-icon">⚡</div>
-              <div class="flowchart-node-title">DOM Extraction</div>
-              <div class="flowchart-node-desc">Content script extracts name, photo, DOB, Farmer ID & land records.</div>
+              <span class="flowchart-node-actor actor-user">Operator</span>
+              <div class="flowchart-node-icon">🔍</div>
+              <div class="flowchart-node-title">Enter Aadhaar</div>
+              <div class="flowchart-node-desc">Search farmer by 12-digit Aadhaar or Farmer ID.</div>
             </div>
 
             <!-- Node 4 -->
             <div class="flowchart-node">
               <span class="flowchart-node-num">4</span>
-              <div class="flowchart-node-icon">🔤</div>
-              <div class="flowchart-node-title">Gurmukhi Engine</div>
-              <div class="flowchart-node-desc">HarfBuzz-accurate text shaping & Denso Wave QR code checksum.</div>
+              <span class="flowchart-node-actor actor-portal">Farmer / OTP</span>
+              <div class="flowchart-node-icon">📱</div>
+              <div class="flowchart-node-title">Verify OTP</div>
+              <div class="flowchart-node-desc">Farmer receives mobile OTP; portal unlocks verified profile.</div>
             </div>
 
             <!-- Node 5 -->
             <div class="flowchart-node">
               <span class="flowchart-node-num">5</span>
-              <div class="flowchart-node-icon">📄</div>
-              <div class="flowchart-node-title">300 DPI Rendering</div>
-              <div class="flowchart-node-desc">Builds front & back calibrated CR80 PDF in local memory sandbox.</div>
+              <span class="flowchart-node-actor actor-ext">Extension</span>
+              <div class="flowchart-node-icon">⚡</div>
+              <div class="flowchart-node-title">Run Extension</div>
+              <div class="flowchart-node-desc">Click AgriStack icon ➔ 'Format & Generate PDF Card'.</div>
             </div>
 
             <!-- Node 6 -->
             <div class="flowchart-node">
               <span class="flowchart-node-num">6</span>
+              <span class="flowchart-node-actor actor-ext">Local Engine</span>
+              <div class="flowchart-node-icon">🔤</div>
+              <div class="flowchart-node-title">DOM & Gurmukhi</div>
+              <div class="flowchart-node-desc">Parses Punjabi text, shapes font & builds QR in local sandbox.</div>
+            </div>
+
+            <!-- Node 7 -->
+            <div class="flowchart-node">
+              <span class="flowchart-node-num">7</span>
+              <span class="flowchart-node-actor actor-pay">Instant Pay</span>
+              <div class="flowchart-node-icon">💳</div>
+              <div class="flowchart-node-title">Pay ₹20 (UPI)</div>
+              <div class="flowchart-node-desc">Quick UPI QR scan or redeem prepaid batch token.</div>
+            </div>
+
+            <!-- Node 8 -->
+            <div class="flowchart-node">
+              <span class="flowchart-node-num">8</span>
+              <span class="flowchart-node-actor actor-print">PVC Output</span>
               <div class="flowchart-node-icon">🖨️</div>
-              <div class="flowchart-node-title">Direct PVC Print</div>
-              <div class="flowchart-node-desc">Instant PDF download ready for Epson/Canon PVC trays & lamination.</div>
+              <div class="flowchart-node-title">Download & Print</div>
+              <div class="flowchart-node-desc">Instant 300 DPI PDF ready for Epson/Canon PVC tray printing.</div>
             </div>
           </div>
 
           <div class="flowchart-security-pill">
-            <span>🛡️ <strong>Sandbox Security Guarantee:</strong> All parsing and card rendering occurs directly inside your local computer's browser process.</span>
-            <span>🔒 <strong>Zero External Storage</strong></span>
-            <span>⚡ <strong>Speed: &lt; 2 Seconds</strong></span>
+            <span>🛡️ <strong>100% In-Browser Sandbox:</strong> All Aadhaar profile parsing and card layout occurs in local browser memory.</span>
+            <span>🔒 <strong>No Cloud Data Storage</strong></span>
+            <span>⚡ <strong>Total Processing Time: &lt; 5 Seconds</strong></span>
           </div>
         </div>
 
@@ -339,12 +363,12 @@
           <div class="showcase-preview-card">
             <div class="showcase-image-wrapper">
               <img src="icons/workflow_portal_scan.jpg" alt="AgriStack Portal DOM scanning and automatic record extraction" class="showcase-img" loading="lazy">
-              <span class="showcase-badge">📸 Stage 1 &bull; Portal Scanning</span>
+              <span class="showcase-badge">📸 Stage 1 &bull; Portal Scanning & OTP Unlocked Data</span>
             </div>
             <div class="showcase-body">
               <h4 class="showcase-title">1. Automated Portal Record Detection</h4>
               <p class="showcase-desc">
-                When you click the extension on an approved farmer record, the content script automatically detects tabular data, Gurmukhi text fields, verification seals, and photographs with zero manual copying.
+                After Aadhaar OTP verification unlocks the farmer record on the government portal, clicking the extension triggers the content script to instantly scan tabular data, Gurmukhi text fields, verification seals, and photograph with zero manual copy-pasting.
               </p>
               <div class="showcase-tags">
                 <span class="showcase-tag">⚡ Automated DOM Parser</span>
@@ -358,12 +382,12 @@
           <div class="showcase-preview-card">
             <div class="showcase-image-wrapper">
               <img src="icons/workflow_card_generation.jpg" alt="300 DPI High Resolution Digital Farmer Identity Card generated with QR code" class="showcase-img" loading="lazy">
-              <span class="showcase-badge">🖨️ Stage 2 &bull; Card Formatting & PDF</span>
+              <span class="showcase-badge">🖨️ Stage 2 &bull; Card Formatting, ₹20 Pay & PDF</span>
             </div>
             <div class="showcase-body">
               <h4 class="showcase-title">2. 300 DPI Dual-Side Card & QR Generation</h4>
               <p class="showcase-desc">
-                The local formatting engine produces calibrated CR80 Front and Back ID cards with razor-sharp Punjabi typography, error-corrected QR code, and official verification badge ready for instant printing.
+                The local formatting engine produces calibrated CR80 Front and Back ID cards with razor-sharp Punjabi typography, error-corrected QR code, and official verification badge. Upon seamless ₹20 payment, the 300 DPI PDF downloads instantly for PVC tray printing.
               </p>
               <div class="showcase-tags">
                 <span class="showcase-tag">📐 Standard CR80 Size</span>
@@ -381,24 +405,20 @@
               <span class="workflow-step-badge">STEP 01</span>
               <div class="workflow-icon-wrap">🧩</div>
             </div>
-            <h3>Install Extension</h3>
-            <p>Install the AgriStack Card Helper in 1 click from Mozilla Firefox Add-ons or download the ZIP for Chrome,
-              Brave, and Edge.</p>
+            <h3>Install & Pin Browser Extension</h3>
+            <p>Add AgriStack Card Helper to your browser in seconds. Pin it to your browser toolbar for instant 1-click access during daily operations.</p>
             <div class="workflow-keypoints">
               <div class="workflow-keypoint">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                   <polyline points="20 6 9 17 4 12" />
                 </svg>
-                <span><strong>Firefox:</strong> <a href="https://addons.mozilla.org/firefox/addon/farmer-card/"
-                    target="_blank" rel="noopener noreferrer"
-                    style="color: #EA580C; font-weight: 700; text-decoration: underline;">Official Add-ons Store
-                    (1-Click)</a></span>
+                <span><strong>Firefox:</strong> <a href="https://addons.mozilla.org/firefox/addon/farmer-card/" target="_blank" rel="noopener noreferrer" style="color: #EA580C; font-weight: 700; text-decoration: underline;">Official Add-ons Store (1-Click Install)</a></span>
               </div>
               <div class="workflow-keypoint">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                   <polyline points="20 6 9 17 4 12" />
                 </svg>
-                <span><strong>Chrome/Brave/Edge:</strong> Auto-download ZIP & load unpacked.</span>
+                <span><strong>Chrome/Brave/Edge:</strong> Download ZIP, enable Developer Mode & load unpacked.</span>
               </div>
             </div>
           </div>
@@ -409,21 +429,20 @@
               <span class="workflow-step-badge">STEP 02</span>
               <div class="workflow-icon-wrap">🏛️</div>
             </div>
-            <h3>Open Farmer Registry Record</h3>
-            <p>Log in to your authorized Punjab Farmer Registry portal (or state AgriStack portal) and open the approved
-              record of the farmer.</p>
+            <h3>Log in to Government Farmer Portal</h3>
+            <p>Open the official state AgriStack or Punjab Farmer Registry portal in your browser and log in with your authorized CSC / VLE operator credentials.</p>
             <div class="workflow-keypoints">
               <div class="workflow-keypoint">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                   <polyline points="20 6 9 17 4 12" />
                 </svg>
-                <span>Works on official verified farmer profile summaries.</span>
+                <span>Compatible with official state AgriStack & Punjab Farmer Registry portals.</span>
               </div>
               <div class="workflow-keypoint">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                   <polyline points="20 6 9 17 4 12" />
                 </svg>
-                <span>Reads active registry records directly in your browser.</span>
+                <span>Ensures access to approved and active farmer database records.</span>
               </div>
             </div>
           </div>
@@ -432,23 +451,22 @@
           <div class="workflow-card">
             <div class="workflow-card-top">
               <span class="workflow-step-badge">STEP 03</span>
-              <div class="workflow-icon-wrap">⚡</div>
+              <div class="workflow-icon-wrap">🔍</div>
             </div>
-            <h3>1-Click Automated Extraction</h3>
-            <p>Click the extension icon in your browser. The parser automatically scans and extracts all essential
-              farmer parameters in under a second.</p>
+            <h3>Enter Farmer's Aadhaar / Registry ID</h3>
+            <p>In the portal's search bar, enter the farmer's 12-digit Aadhaar Number, Application Number, or state Farmer ID to locate their registered profile.</p>
             <div class="workflow-keypoints">
               <div class="workflow-keypoint">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                   <polyline points="20 6 9 17 4 12" />
                 </svg>
-                <span>Extracts Punjabi/English Name, Farmer ID, DOB & Caste.</span>
+                <span>Searches registered central & state landholder databases.</span>
               </div>
               <div class="workflow-keypoint">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                   <polyline points="20 6 9 17 4 12" />
                 </svg>
-                <span>Extracts Photo, Approval Date, Address & Land records.</span>
+                <span>Identifies approved applicant data ready for card issuance.</span>
               </div>
             </div>
           </div>
@@ -457,23 +475,22 @@
           <div class="workflow-card">
             <div class="workflow-card-top">
               <span class="workflow-step-badge">STEP 04</span>
-              <div class="workflow-icon-wrap">🔤</div>
+              <div class="workflow-icon-wrap">📱</div>
             </div>
-            <h3>AI Typography & Text Shaping</h3>
-            <p>Our HarfBuzz & FreeType engine aligns and shapes Punjabi (Gurmukhi) text conjuncts with 100% visual
-              accuracy without letter clipping.</p>
+            <h3>Farmer OTP Verification & Profile Load</h3>
+            <p>The portal dispatches a secure 6-digit OTP to the farmer's Aadhaar-linked mobile phone. Enter the OTP to unlock the full official farmer profile.</p>
             <div class="workflow-keypoints">
               <div class="workflow-keypoint">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                   <polyline points="20 6 9 17 4 12" />
                 </svg>
-                <span>Calibrated layout matching original state card format.</span>
+                <span>UIDAI Aadhaar OTP authentication ensures 100% legal verification.</span>
               </div>
               <div class="workflow-keypoint">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                   <polyline points="20 6 9 17 4 12" />
                 </svg>
-                <span>Eliminates manual alignment in Photoshop or CorelDraw.</span>
+                <span>Displays full Punjabi & English name, photograph, DOB, and land record details.</span>
               </div>
             </div>
           </div>
@@ -482,23 +499,22 @@
           <div class="workflow-card">
             <div class="workflow-card-top">
               <span class="workflow-step-badge">STEP 05</span>
-              <div class="workflow-icon-wrap">🏁</div>
+              <div class="workflow-icon-wrap">⚡</div>
             </div>
-            <h3>QR Code & Security Badging</h3>
-            <p>Generates low-density Denso Wave error-corrected QR code pointing to official registry verification URLs
-              along with verified check seals.</p>
+            <h3>Launch Extension & Click 'Generate'</h3>
+            <p>While viewing the unlocked farmer profile tab, click the AgriStack Helper icon in your toolbar and press <strong>"🖨️ Format & Generate PDF Card"</strong>.</p>
             <div class="workflow-keypoints">
               <div class="workflow-keypoint">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                   <polyline points="20 6 9 17 4 12" />
                 </svg>
-                <span>Instant mobile scanning for on-field verification.</span>
+                <span>Zero manual typing or copying required.</span>
               </div>
               <div class="workflow-keypoint">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                   <polyline points="20 6 9 17 4 12" />
                 </svg>
-                <span>Front and Back identity side formatting.</span>
+                <span>Automated content script reads active DOM tree instantaneously.</span>
               </div>
             </div>
           </div>
@@ -507,23 +523,70 @@
           <div class="workflow-card">
             <div class="workflow-card-top">
               <span class="workflow-step-badge">STEP 06</span>
-              <div class="workflow-icon-wrap">🖨️</div>
+              <div class="workflow-icon-wrap">🔤</div>
             </div>
-            <h3>Instant 300 DPI PDF & PVC Printing</h3>
-            <p>Complete payment or redeem subscription token to download the print-ready 2-page PDF file calibrated for
-              standard PVC card tray printing.</p>
+            <h3>In-Browser Shaping & QR Checksum</h3>
+            <p>The local engine shapes Punjabi Gurmukhi text conjuncts, renders the farmer photo, and builds an error-corrected Denso Wave QR code in browser memory.</p>
             <div class="workflow-keypoints">
               <div class="workflow-keypoint">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                   <polyline points="20 6 9 17 4 12" />
                 </svg>
-                <span>Compatible with Epson, Canon, Magicard, Fargo printers.</span>
+                <span>HarfBuzz typography engine eliminates Punjabi font clipping or errors.</span>
               </div>
               <div class="workflow-keypoint">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                   <polyline points="20 6 9 17 4 12" />
                 </svg>
-                <span>Ready for thermal lamination pouches and PVC card trays.</span>
+                <span>Prepares dual-side Front & Back CR80 calibrated layout.</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 7 -->
+          <div class="workflow-card">
+            <div class="workflow-card-top">
+              <span class="workflow-step-badge">STEP 07</span>
+              <div class="workflow-icon-wrap">💳</div>
+            </div>
+            <h3>Instant ₹20 Payment (UPI / QR / Token)</h3>
+            <p>A quick ₹20 micro-checkout prompt appears. Pay via UPI QR code (Google Pay, PhonePe, Paytm) or redeem a pre-purchased bulk generation token.</p>
+            <div class="workflow-keypoints">
+              <div class="workflow-keypoint">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+                <span>Ultra-fast 2-second UPI payment verification.</span>
+              </div>
+              <div class="workflow-keypoint">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+                <span>No recurring subscriptions — simple transparent pay-per-card.</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 8 -->
+          <div class="workflow-card">
+            <div class="workflow-card-top">
+              <span class="workflow-step-badge">STEP 08</span>
+              <div class="workflow-icon-wrap">🖨️</div>
+            </div>
+            <h3>Instant 300 DPI PDF Download & PVC Print</h3>
+            <p>The 2-page print-ready PDF downloads to your computer. Print directly onto CR80 PVC cards using your Epson/Canon tray printer or thermal laminator.</p>
+            <div class="workflow-keypoints">
+              <div class="workflow-keypoint">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+                <span>Calibrated 85.60 mm × 53.98 mm (Standard CR80) print dimensions.</span>
+              </div>
+              <div class="workflow-keypoint">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+                <span>Compatible with Epson L805/L8050/L850 & Canon PIXMA tray printers.</span>
               </div>
             </div>
           </div>
