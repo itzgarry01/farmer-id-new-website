@@ -261,11 +261,117 @@
     <section class="section" id="workflow">
       <div class="container">
         <div class="section-header">
-          <span class="section-tag">Complete Product Workflow</span>
+          <span class="section-tag">Complete Product Workflow & Architecture</span>
           <h2 class="section-title">How AgriStack Helper Works: Step-by-Step</h2>
           <p class="section-desc">
             An end-to-end automated pipeline taking you from portal search to physical PVC card printing in seconds.
           </p>
+        </div>
+
+        <!-- Interactive System Execution Flowchart -->
+        <div class="flowchart-system-wrapper">
+          <div class="flowchart-header">
+            <span class="flowchart-header-badge">⚡ System Architecture & Execution Path</span>
+            <h3>How the Extension Runs Inside Your Browser & System</h3>
+            <p>100% in-browser client-side execution. No sensitive farmer registry data is transmitted to or stored on external cloud servers.</p>
+          </div>
+
+          <div class="flowchart-nodes-grid">
+            <!-- Node 1 -->
+            <div class="flowchart-node">
+              <span class="flowchart-node-num">1</span>
+              <div class="flowchart-node-icon">🧩</div>
+              <div class="flowchart-node-title">Extension Launch</div>
+              <div class="flowchart-node-desc">Runs in Firefox or Chrome/Brave/Edge as isolated secure extension.</div>
+            </div>
+
+            <!-- Node 2 -->
+            <div class="flowchart-node">
+              <span class="flowchart-node-num">2</span>
+              <div class="flowchart-node-icon">🏛️</div>
+              <div class="flowchart-node-title">Portal Detection</div>
+              <div class="flowchart-node-desc">Identifies approved Punjab/AgriStack farmer registry tab.</div>
+            </div>
+
+            <!-- Node 3 -->
+            <div class="flowchart-node">
+              <span class="flowchart-node-num">3</span>
+              <div class="flowchart-node-icon">⚡</div>
+              <div class="flowchart-node-title">DOM Extraction</div>
+              <div class="flowchart-node-desc">Content script extracts name, photo, DOB, Farmer ID & land records.</div>
+            </div>
+
+            <!-- Node 4 -->
+            <div class="flowchart-node">
+              <span class="flowchart-node-num">4</span>
+              <div class="flowchart-node-icon">🔤</div>
+              <div class="flowchart-node-title">Gurmukhi Engine</div>
+              <div class="flowchart-node-desc">HarfBuzz-accurate text shaping & Denso Wave QR code checksum.</div>
+            </div>
+
+            <!-- Node 5 -->
+            <div class="flowchart-node">
+              <span class="flowchart-node-num">5</span>
+              <div class="flowchart-node-icon">📄</div>
+              <div class="flowchart-node-title">300 DPI Rendering</div>
+              <div class="flowchart-node-desc">Builds front & back calibrated CR80 PDF in local memory sandbox.</div>
+            </div>
+
+            <!-- Node 6 -->
+            <div class="flowchart-node">
+              <span class="flowchart-node-num">6</span>
+              <div class="flowchart-node-icon">🖨️</div>
+              <div class="flowchart-node-title">Direct PVC Print</div>
+              <div class="flowchart-node-desc">Instant PDF download ready for Epson/Canon PVC trays & lamination.</div>
+            </div>
+          </div>
+
+          <div class="flowchart-security-pill">
+            <span>🛡️ <strong>Sandbox Security Guarantee:</strong> All parsing and card rendering occurs directly inside your local computer's browser process.</span>
+            <span>🔒 <strong>Zero External Storage</strong></span>
+            <span>⚡ <strong>Speed: &lt; 2 Seconds</strong></span>
+          </div>
+        </div>
+
+        <!-- Visual Step Showcase with Real Mockup Visuals -->
+        <div class="workflow-visual-showcase">
+          <!-- Visual 1 -->
+          <div class="showcase-preview-card">
+            <div class="showcase-image-wrapper">
+              <img src="icons/workflow_portal_scan.jpg" alt="AgriStack Portal DOM scanning and automatic record extraction" class="showcase-img" loading="lazy">
+              <span class="showcase-badge">📸 Stage 1 &bull; Portal Scanning</span>
+            </div>
+            <div class="showcase-body">
+              <h4 class="showcase-title">1. Automated Portal Record Detection</h4>
+              <p class="showcase-desc">
+                When you click the extension on an approved farmer record, the content script automatically detects tabular data, Gurmukhi text fields, verification seals, and photographs with zero manual copying.
+              </p>
+              <div class="showcase-tags">
+                <span class="showcase-tag">⚡ Automated DOM Parser</span>
+                <span class="showcase-tag">🔍 Auto Field Mapping</span>
+                <span class="showcase-tag">⏱️ 0.8s Scan Time</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Visual 2 -->
+          <div class="showcase-preview-card">
+            <div class="showcase-image-wrapper">
+              <img src="icons/workflow_card_generation.jpg" alt="300 DPI High Resolution Digital Farmer Identity Card generated with QR code" class="showcase-img" loading="lazy">
+              <span class="showcase-badge">🖨️ Stage 2 &bull; Card Formatting & PDF</span>
+            </div>
+            <div class="showcase-body">
+              <h4 class="showcase-title">2. 300 DPI Dual-Side Card & QR Generation</h4>
+              <p class="showcase-desc">
+                The local formatting engine produces calibrated CR80 Front and Back ID cards with razor-sharp Punjabi typography, error-corrected QR code, and official verification badge ready for instant printing.
+              </p>
+              <div class="showcase-tags">
+                <span class="showcase-tag">📐 Standard CR80 Size</span>
+                <span class="showcase-tag">🔲 Denso QR Checksum</span>
+                <span class="showcase-tag">🖨️ 300 DPI Print Ready</span>
+              </div>
+            </div>
+          </div>
         </div>
 
         <div class="workflow-pipeline-grid">
