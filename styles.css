@@ -156,6 +156,11 @@ button, input, textarea, select {
   align-items: center;
   gap: 12px;
   text-decoration: none;
+  transition: transform 0.2s ease;
+}
+
+.brand-logo:hover {
+  transform: translateY(-1px);
 }
 
 .brand-logo-img {
@@ -163,8 +168,14 @@ button, input, textarea, select {
   height: 48px;
   border-radius: 50%;
   object-fit: cover;
-  box-shadow: 0 3px 10px rgba(31, 133, 71, 0.25);
+  box-shadow: 0 3px 12px rgba(31, 133, 71, 0.25);
   border: 2px solid #FFFFFF;
+  image-rendering: -webkit-optimize-contrast;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.brand-logo:hover .brand-logo-img {
+  box-shadow: 0 4px 16px rgba(31, 133, 71, 0.35);
 }
 
 .brand-text {
