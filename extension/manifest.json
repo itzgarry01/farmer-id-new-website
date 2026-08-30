@@ -1,12 +1,12 @@
 {
   "manifest_version": 3,
-  "name": "AgriStack Card Generator Helper",
+  "name": "Farmer ID Card Generator Helper",
   "version": "2.0.0",
-  "description": "1-Click automated Farmer ID Digital Identity card formatter and 300 DPI PDF generator for Punjab Farmer Registry & AgriStack portals.",
-  "author": "AgriStack Helper Team",
+  "description": "1-Click automated Farmer ID Digital Identity card formatter and 300 DPI PDF generator for Punjab Farmer Registry & Farmer ID & AgriStack portals.",
+  "author": "Farmer ID Helper Team",
   "action": {
     "default_popup": "popup.html",
-    "default_title": "AgriStack Card Generator",
+    "default_title": "Farmer ID Card Generator",
     "default_icon": {
       "16": "icons/icon16.png",
       "32": "icons/icon32.png",
