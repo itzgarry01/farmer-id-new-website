@@ -424,7 +424,7 @@
             });
         }
 
-        // 5. Submit Wallet Recharge (Live PG - Cashfree / Razorpay)
+        // 5. Submit Wallet Recharge (Cashfree PG)
         if (submitRechargeBtn) {
             submitRechargeBtn.addEventListener("click", function () {
                 if (!isServerConnected) {
@@ -438,7 +438,7 @@
                     return;
                 }
 
-                setStatus("Detecting farmer mobile & initializing Live PG...", "normal");
+                setStatus("Detecting farmer mobile & initializing Cashfree PG...", "normal");
                 submitRechargeBtn.disabled = true;
 
                 detectFarmerPhoneFromActiveTab().then(function (farmerPhone) {
@@ -488,7 +488,7 @@
                             window.open(checkoutUrl, "_blank");
                         }
 
-                        setStatus("✅ Live Checkout opened for +91 " + (data.customer_phone || finalPhone) + "! Complete payment to add funds.", "success");
+                        setStatus("✅ Cashfree Checkout opened for +91 " + (data.customer_phone || finalPhone) + "! Complete payment to add funds.", "success");
                         pollForRecharge(data.order_id);
                     })
                     .catch(function (err) {
