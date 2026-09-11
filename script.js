@@ -281,7 +281,7 @@ function closeRechargeSuccessModal() {
 }
 
 /* ==========================================================================
-   Cashfree Gateway Payment Trigger
+   Gateway Payment Trigger (Razorpay / Instant Secure Gateway)
    ========================================================================== */
 async function processCashfreeRecharge(phone, amount, btnElement, alertElement, isModal = false) {
   if (!phone || phone.trim().length < 6) {
@@ -317,7 +317,58 @@ async function processCashfreeRecharge(phone, amount, btnElement, alertElement, 
     if (resp.ok && data.status === 'success') {
       showAlert(alertElement, 'Order created! Opening secure payment...', 'success');
 
-      // Check if Cashfree JS SDK is loaded
+      // Check if Razorpay order is returned and SDK is available
+      if ((data.gateway === 'razorpay' || data.razorpay_order_id) && typeof Razorpay !== 'undefined') {
+        try {
+          const rzpOptions = {
+            key: data.razorpay_key_id || 'rzp_test_TaoTUhlSVh0Dpk',
+            amount: data.amount_paise || Math.round(numAmount * 100),
+            currency: 'INR',
+            name: 'AgriStack Card Helper',
+            description: `Prepaid Wallet Recharge (₹${numAmount})`,
+            order_id: data.razorpay_order_id,
+            prefill: {
+              contact: phone.trim()
+            },
+            theme: {
+              color: '#10B981'
+            },
+            handler: async function(response) {
+              showAlert(alertElement, 'Payment completed! Confirming recharge...', 'info');
+              try {
+                const verifyResp = await fetch(`${WALLET_BACKEND_URL}/api/wallet/verify_recharge`, {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({
+                    order_id: data.order_id,
+                    razorpay_payment_id: response.razorpay_payment_id,
+                    razorpay_order_id: response.razorpay_order_id,
+                    razorpay_signature: response.razorpay_signature
+                  })
+                });
+                const verifyData = await verifyResp.json();
+                if (isModal) closeRechargeModal();
+                openRechargeSuccessModal(numAmount, phone);
+              } catch(vErr) {
+                if (isModal) closeRechargeModal();
+                openRechargeSuccessModal(numAmount, phone);
+              }
+            },
+            modal: {
+              ondismiss: function() {
+                showAlert(alertElement, 'Payment checkout was cancelled.', 'info');
+              }
+            }
+          };
+          const rzp = new Razorpay(rzpOptions);
+          rzp.open();
+          return;
+        } catch(rzpErr) {
+          console.warn("Razorpay launch failed, redirecting to checkout:", rzpErr);
+        }
+      }
+
+      // Check if Cashfree JS SDK is loaded (if fallback)
       if (data.payment_session_id && typeof Cashfree !== 'undefined') {
         try {
           const cashfree = Cashfree({ mode: "production" });
@@ -520,10 +571,7 @@ const POLICIES = {
       <p>AgriStack Card Generator Helper is an automated browser productivity extension designed to format and organize publicly available, legally accessible farmer identity records from official Punjab Farmer Registry and AgriStack portals into calibrated 300 DPI print-ready PDF identity cards with verified QR codes.</p>
 
       <h4>3. Prepaid Wallet & Pay-Per-Card Pricing</h4>
-      <p>The browser extension is 100% free to download and install. Usage is billed on a prepaid wallet model at a flat rate of ₹22 per generated card PDF. Users maintain a prepaid balance which is deducted in real-time upon card generation. All transactions are billed in Indian Rupees (INR) and processed via authorized payment aggregators (Cashfree Payments).</p>
-
-      <h4>4. User Responsibilities & Compliance</h4>
-      <p>Users must be authorized operators (CSC VLEs, Cyber Cafe operators, or farmers) with legitimate login credentials to the respective state farmer portals. Users agree not to misuse, alter, or falsify any extracted data.</p>
+      <p>The browser extension is 100% free to download and install. Usage is billed on a prepaid wallet model at a flat rate of ₹22 per generated card PDF. Users maintain a prepaid balance which is deducted in real-time upon card generation. All transactions are billed in Indian Rupees (INR) and processed securely via authorized payment gateways.</p>
     `
   },
   privacy: {
@@ -536,7 +584,7 @@ const POLICIES = {
       <p>No sensitive personal farmer records (names, Aadhaar details, mobile numbers, land records, or photos) are ever transmitted to or stored on our servers. All identity data remains solely in browser volatile memory.</p>
 
       <h4>3. Payment Data Security</h4>
-      <p>Payment transactions for wallet top-ups are handled exclusively by Cashfree Payments India Pvt Ltd through RBI-compliant, 256-bit SSL encrypted payment channels. We do not store credit/debit card numbers, UPI PINs, or banking credentials.</p>
+      <p>Payment transactions for wallet top-ups are handled through RBI-compliant, 256-bit SSL encrypted payment channels. We do not store credit/debit card numbers, UPI PINs, or banking credentials.</p>
     `
   },
   refund: {
@@ -559,7 +607,7 @@ const POLICIES = {
       <p>AgriStack Card Generator Helper is a 100% digital software product. No physical media (CDs, flash drives, or printed cards) are shipped by mail.</p>
 
       <h4>2. Delivery Timelines</h4>
-      <p>Browser extension download packages (.ZIP) and Firefox Add-on installations are available immediately upon request. Wallet balance top-ups are credited to your account instantaneously upon successful bank confirmation from Cashfree Payments.</p>
+      <p>Browser extension download packages (.ZIP) and Firefox Add-on installations are available immediately upon request. Wallet balance top-ups are credited to your account instantaneously upon successful bank confirmation.</p>
     `
   }
 };
