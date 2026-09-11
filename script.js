@@ -297,9 +297,9 @@ async function processCashfreeRecharge(phone, amount, btnElement, alertElement, 
 
   if (btnElement) {
     btnElement.disabled = true;
-    btnElement.innerHTML = '<span>⏳ Connecting Cashfree Gateway...</span>';
+    btnElement.innerHTML = '<span>⏳ Connecting Secure Payment Gateway...</span>';
   }
-  showAlert(alertElement, 'Initializing secure Cashfree transaction...', 'info');
+  showAlert(alertElement, 'Initializing secure payment transaction...', 'info');
 
   try {
     const resp = await fetch(`${WALLET_BACKEND_URL}/api/wallet/recharge`, {
@@ -315,7 +315,7 @@ async function processCashfreeRecharge(phone, amount, btnElement, alertElement, 
     const data = await resp.json();
 
     if (resp.ok && data.status === 'success') {
-      showAlert(alertElement, 'Order created! Launching Cashfree Payments...', 'success');
+      showAlert(alertElement, 'Order created! Opening secure payment...', 'success');
 
       // Check if Cashfree JS SDK is loaded
       if (data.payment_session_id && typeof Cashfree !== 'undefined') {
@@ -352,7 +352,7 @@ async function processCashfreeRecharge(phone, amount, btnElement, alertElement, 
       openRechargeSuccessModal(numAmount, phone);
 
     } else {
-      const errMsg = data.error || 'Unable to connect to Cashfree payment gateway. Please check your connection or contact support.';
+      const errMsg = data.error || 'Unable to connect to payment gateway. Please check your connection or contact support.';
       showAlert(alertElement, errMsg, 'error');
     }
   } catch (err) {
@@ -361,7 +361,7 @@ async function processCashfreeRecharge(phone, amount, btnElement, alertElement, 
   } finally {
     if (btnElement) {
       btnElement.disabled = false;
-      btnElement.innerHTML = '<span>🔒 Proceed to Cashfree Payment</span>';
+      btnElement.innerHTML = '<span>🔒 Proceed to Payment</span>';
     }
   }
 }
