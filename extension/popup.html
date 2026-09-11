@@ -1,174 +1,197 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Farmer ID Card Helper</title>
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-    }
-    body {
-      width: 360px;
-      padding: 16px;
-      background: #0F172A;
-      color: #F8FAFC;
-    }
-    .header {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding-bottom: 12px;
-      border-bottom: 1px solid #334155;
-      margin-bottom: 14px;
-    }
-    .header img {
-      width: 36px;
-      height: 36px;
-      border-radius: 8px;
-    }
-    .header-title h1 {
-      font-size: 15px;
-      font-weight: 700;
-      color: #38BDF8;
-    }
-    .header-title p {
-      font-size: 11px;
-      color: #94A3B8;
-    }
-    .license-badge {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background: #1E293B;
-      padding: 8px 12px;
-      border-radius: 6px;
-      margin-bottom: 14px;
-      border: 1px solid #334155;
-    }
-    .license-status {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 12px;
-      font-weight: 600;
-      color: #4ADE80;
-    }
-    .license-dot {
-      width: 8px;
-      height: 8px;
-      background: #4ADE80;
-      border-radius: 50%;
-      box-shadow: 0 0 8px #4ADE80;
-    }
-    .version-tag {
-      font-size: 11px;
-      color: #64748B;
-      background: #0F172A;
-      padding: 2px 6px;
-      border-radius: 4px;
-    }
-    .main-card {
-      background: #1E293B;
-      border-radius: 8px;
-      padding: 14px;
-      margin-bottom: 14px;
-      border: 1px solid #334155;
-    }
-    .main-card h2 {
-      font-size: 13px;
-      font-weight: 600;
-      margin-bottom: 8px;
-      color: #F1F5F9;
-    }
-    .btn-action {
-      width: 100%;
-      padding: 12px;
-      background: linear-gradient(135deg, #10B981 0%, #059669 100%);
-      color: white;
-      border: none;
-      border-radius: 6px;
-      font-size: 14px;
-      font-weight: 700;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
-      transition: all 0.2s ease;
-    }
-    .btn-action:hover {
-      background: linear-gradient(135deg, #059669 0%, #047857 100%);
-      transform: translateY(-1px);
-    }
-    .status-area {
-      margin-top: 10px;
-      padding: 8px;
-      border-radius: 4px;
-      font-size: 12px;
-      display: none;
-      text-align: center;
-    }
-    .status-success {
-      background: #064E3B;
-      color: #6EE7B7;
-      display: block;
-    }
-    .status-error {
-      background: #7F1D1D;
-      color: #FCA5A5;
-      display: block;
-    }
-    .quick-links {
-      font-size: 11px;
-      color: #94A3B8;
-      line-height: 1.6;
-    }
-    .quick-links a {
-      color: #38BDF8;
-      text-decoration: none;
-    }
-    .quick-links a:hover {
-      text-decoration: underline;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgriStack Card Helper v4.0</title>
+    <style>
+        :root {
+            --primary: #1F8547;
+            --primary-hover: #166536;
+            --bg: #F8FAFC;
+            --card-bg: #FFFFFF;
+            --text-main: #1E293B;
+            --text-sub: #64748B;
+            --border: #E2E8F0;
+            --accent: #F1F5F9;
+        }
+
+        body {
+            width: 310px;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg);
+            color: var(--text-main);
+            margin: 0;
+            padding: 14px;
+            box-sizing: border-box;
+            user-select: none;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .header-title h3 {
+            margin: 0;
+            font-size: 15px;
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        .badge {
+            background: #DCFCE7;
+            color: var(--primary);
+            font-size: 10px;
+            font-weight: 700;
+            padding: 2px 6px;
+            border-radius: 9999px;
+        }
+
+        .form-group {
+            margin-bottom: 12px;
+        }
+
+        label {
+            display: block;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-sub);
+            margin-bottom: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px 10px;
+            box-sizing: border-box;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 13px;
+            background: #FFFFFF;
+            transition: all 0.2s;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(31, 133, 71, 0.15);
+        }
+
+        .info-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 10px 12px;
+            margin-bottom: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+        }
+
+        .price-badge {
+            background: #FEF3C7;
+            color: #92400E;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+
+        .btn-pay {
+            width: 100%;
+            background: linear-gradient(135deg, #1F8547 0%, #166536 100%);
+            color: #FFFFFF;
+            padding: 11px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: all 0.2s;
+            box-shadow: 0 2px 4px rgba(31, 133, 71, 0.25);
+        }
+
+        .btn-pay:hover {
+            opacity: 0.95;
+            transform: translateY(-1px);
+        }
+
+        button:disabled {
+            background: #94A3B8 !important;
+            color: #FFFFFF !important;
+            cursor: not-allowed !important;
+            transform: none !important;
+            box-shadow: none !important;
+        }
+
+        #status {
+            margin-top: 10px;
+            font-size: 11px;
+            line-height: 1.4;
+            color: var(--text-sub);
+            text-align: center;
+            padding: 8px;
+            border-radius: 4px;
+            background: var(--accent);
+        }
+
+        .status-success {
+            color: #166536 !important;
+            background: #DCFCE7 !important;
+            font-weight: 600;
+        }
+
+        .status-error {
+            color: #991B1B !important;
+            background: #FEE2E2 !important;
+            font-weight: 600;
+        }
+    </style>
 </head>
 <body>
-  <div class="header">
-    <img src="icons/logo.png" alt="Farmer ID Official Logo">
-    <div class="header-title">
-      <h1>Farmer ID Card Generator</h1>
-      <p>Farmer ID Digital Print Helper</p>
+    <div class="header">
+        <div class="header-title">
+            <h3>AgriStack Helper <span style="font-size:11px; color:#166536;">v4.0</span></h3>
+        </div>
+        <span class="badge">Razorpay / UPI</span>
     </div>
-  </div>
 
-  <div class="license-badge">
-    <div class="license-status">
-      <span class="license-dot"></span>
-      <span id="licenseText">Lifetime Pro License Active</span>
+    <div class="form-group">
+        <label for="aadhaar">Aadhaar Number (Optional)</label>
+        <input type="text" id="aadhaar" placeholder="12-digit Aadhaar (e.g. 909999669245)" maxlength="12">
     </div>
-    <span class="version-tag">v2.0</span>
-  </div>
 
-  <div class="main-card">
-    <h2>1-Click Card Extraction & Print</h2>
-    <p style="font-size: 12px; color: #94A3B8; margin-bottom: 12px;">
-      Open any approved farmer registry record in Punjab Farmer Registry / AgriStack and click below:
-    </p>
-    <button class="btn-action" id="extractAndPrintBtn">
-      <span>🖨️ Format & Generate PDF Card</span>
+    <div class="info-card">
+        <div class="info-row">
+            <span style="font-weight:600;">Generation Fee</span>
+            <span class="price-badge">₹22 / Card</span>
+        </div>
+        <div style="font-size:10px; color:#64748B; margin-top:4px;">
+            Official Razorpay Gateway (UPI, GPay, PhonePe, Cards)
+        </div>
+    </div>
+
+    <button id="payBtn" class="btn-pay">
+        <span>⚡</span> Pay ₹22 & Generate Card
     </button>
-    <div class="status-area" id="statusMessage"></div>
-  </div>
 
-  <div class="quick-links">
-    <p>💡 <strong>Tip:</strong> Calibrated for 300 DPI PVC Tray & Lamination printing.</p>
-    <p style="margin-top: 4px;">Support: <a href="mailto:igxrry@gmail.com">igxrry@gmail.com</a> | +91 70099 80800</p>
-  </div>
+    <div id="status">Make sure you are on the verified registry details page.</div>
 
-  <script src="popup.js"></script>
+    <script src="popup.js"></script>
 </body>
 </html>

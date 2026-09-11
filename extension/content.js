@@ -1,8 +1,8 @@
 // AgriStack Content Script - Portal record parser and card generator
-console.log('Farmer ID Card Generator Extension Active');
+console.log('AgriStack Card Generator Extension Active');
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  if (request.action === 'GENERATE_FARMER_ID_CARD') {
+  if (request.action === 'GENERATE_AGRISTACK_CARD') {
     try {
       // Simulate/Trigger Card formatting from active portal DOM
       console.log('Parsing Farmer Registry details from current page...');

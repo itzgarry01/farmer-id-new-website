@@ -1,6 +1,6 @@
-# Farmer ID — Digital Identity Print Layout & PDF Formatting Tool
+# AgriStack Helper — Farmer ID Digital Identity Landing Page
 
-This directory contains the production-ready 1-page landing page website for **Farmer ID Card Generator Helper** with the **Farmer ID** branding, an end-to-end 6-step product workflow pipeline, interactive plan selection, and compliant merchant policy documentation.
+This directory contains the production-ready 1-page landing page website for **AgriStack Card Generator Helper** with the **Farmer ID Digital Identity** branding, an end-to-end 6-step product workflow pipeline, interactive plan selection, and compliant merchant policy documentation.
 
 ---
 
@@ -9,7 +9,7 @@ This directory contains the production-ready 1-page landing page website for **F
 | Mandatory Requirement | Status | Location on Page |
 |---|:---:|---|
 | **Official Firefox Add-on** | ✅ Live | [addons.mozilla.org/firefox/addon/farmer-card/](https://addons.mozilla.org/firefox/addon/farmer-card/) (1-Click AMO Store Install) |
-| **Product Description & Pricing** | ✅ Complete | `#features`, `#workflow` & `#pricing` (₹20 INR transparent Pay-Per-Card generation) |
+| **Product Description & Pricing** | ✅ Complete | `#features`, `#workflow` & `#pricing` (₹22 INR transparent Pay-Per-Card generation) |
 | **Browser Install Guide** | ✅ Complete | `#install-guide` (Interactive tabs for Firefox AMO & Chrome / Brave / Edge ZIP) |
 | **Contact Us & Legal Entity** | ✅ Complete | `#contact` (Proprietor: `GURINDER SINGH`, Email: `igxrry@gmail.com`, Phone: `+91 70099 80800`, Bathinda, Punjab - 151001) |
 | **Terms & Conditions** | ✅ Complete | `#terms` & Modal (Digital Software License Agreement) |
@@ -23,15 +23,15 @@ This directory contains the production-ready 1-page landing page website for **F
 
 ### Option A: Vercel (Recommended for Private Repos — 1-Click Instant Deploy)
 1. Go to [vercel.com/new](https://vercel.com/new) and log in with GitHub.
-2. Select your repository and click **Deploy**.
-3. You will get a free HTTPS link (e.g. `https://farmer-id-website.vercel.app`).
+2. Select your repository `itzgarry01/agristack-website` and click **Deploy**.
+3. You will get a free HTTPS link (e.g. `https://agristack-website.vercel.app`).
 
 ### Option B: Netlify (Drag and Drop in 30 Seconds)
 1. Go to [app.netlify.com/drop](https://app.netlify.com/drop).
-2. Drag and drop this folder directly onto the page.
+2. Drag and drop the `website/` folder directly onto the page.
 3. Your site is live immediately with a free `.netlify.app` domain.
 
 ### Option C: GitHub Pages
 1. Push your repository to GitHub.
-2. Under repository **Settings** -> **Pages**, select branch `main` and folder `/` (root).
+2. Under repository **Settings** &rarr; **Pages**, select branch `main` and folder `/` (root).
 3. Click **Save**.
