@@ -776,7 +776,7 @@
         </section>
     </main>
 
-    <!-- Direct Wallet Recharge Modal with Real Dynamic QR & Gateway Options -->
+    <!-- Direct Wallet Recharge Modal with Real Payment Gateway -->
     <div class="modal-backdrop" id="rechargeModal">
         <div class="modal-card">
             <div class="modal-header">
@@ -804,75 +804,27 @@
                     </div>
                     <div class="amount-input-wrap mt-2">
                         <span class="amount-prefix">₹</span>
-                        <input type="number" id="modalRechargeAmount" class="modal-input pl-amount" value="1000" min="50" step="50" oninput="updateDynamicQrCode()">
+                        <input type="number" id="modalRechargeAmount" class="modal-input pl-amount" value="1000" min="50" step="50" oninput="updateGatewayAmountText()">
                     </div>
                 </div>
 
-                <!-- Payment Method Tabs -->
-                <div class="payment-tabs-nav">
-                    <button class="pay-tab-btn active" id="tabBtnUpi" onclick="switchPayTab('upi')">
-                        <i class="fa-solid fa-qrcode"></i> Scan UPI QR
+                <!-- Cashfree Payment Gateway Card -->
+                <div class="gateway-info-box mt-2">
+                    <div class="gateway-icon-badge">
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </div>
+                    <h4>Instant Secure Gateway Checkout</h4>
+                    <p>Pay securely via UPI (GPay, PhonePe, Paytm), Debit/Credit Cards, NetBanking, or Wallets with instant automated balance addition.</p>
+                    
+                    <div class="gateway-perks">
+                        <span><i class="fa-solid fa-circle-check"></i> Instant Automated Balance Credit</span>
+                        <span><i class="fa-solid fa-lock"></i> 256-Bit SSL Encrypted</span>
+                        <span><i class="fa-solid fa-building-columns"></i> All Indian Banks & UPI</span>
+                    </div>
+
+                    <button class="btn btn-primary btn-block btn-lg mt-3" id="btnLaunchGateway" onclick="launchCashfreeRecharge()">
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i> Proceed to Gateway Checkout (<span id="btnGatewayAmtText">₹1,000</span>)
                     </button>
-                    <button class="pay-tab-btn" id="tabBtnGateway" onclick="switchPayTab('gateway')">
-                        <i class="fa-solid fa-credit-card"></i> Cashfree Gateway
-                    </button>
-                </div>
-
-                <!-- Tab 1: Dynamic UPI QR Code -->
-                <div class="pay-tab-content active" id="payTabUpi">
-                    <div class="qr-pay-box">
-                        <div class="qr-image-container">
-                            <img id="qrRealImage" src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=upi%3A%2F%2Fpay%3Fpa%3Dpaytmqr28100505010111162h0f78i4%40paytm%26pn%3DAgriStack%2520Helper%2520Tools%26am%3D1000%26cu%3DINR%26tn%3DWallet%2520TopUp" alt="Scan & Pay via UPI" class="qr-dynamic-img">
-                            <div class="qr-amount-tag">Pay Exactly: <strong id="qrPayableAmountText">₹1,000.00</strong></div>
-                        </div>
-                        <div class="qr-details-side">
-                            <div class="upi-id-box">
-                                <span class="upi-label">Official Merchant UPI ID:</span>
-                                <div class="upi-val-group">
-                                    <code id="merchantUpiId">paytmqr28100505010111162h0f78i4@paytm</code>
-                                    <button class="btn btn-xs btn-outline" onclick="copyUpiId()" title="Copy UPI ID">
-                                        <i class="fa-solid fa-copy"></i> Copy
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="upi-intent-wrap">
-                                <a id="upiIntentLink" href="upi://pay?pa=paytmqr28100505010111162h0f78i4@paytm&pn=AgriStack%20Helper%20Tools&am=1000&cu=INR&tn=Operator%20Wallet%20TopUp" class="btn btn-secondary btn-sm btn-block">
-                                    <i class="fa-solid fa-mobile-screen-button"></i> Open in GPay / PhonePe / Paytm
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="utr-verification-box mt-3">
-                        <label for="modalUtrInput"><strong>Step 2:</strong> Enter 12-Digit UPI Reference / UTR No after paying:</label>
-                        <div class="utr-input-row">
-                            <input type="text" id="modalUtrInput" class="modal-input" placeholder="e.g. 425896321458 (12-digit UTR)" maxlength="18">
-                            <button class="btn btn-primary btn-md" id="btnConfirmUtr" onclick="verifyAndCreditUtr()">
-                                <i class="fa-solid fa-bolt"></i> Verify & Credit
-                            </button>
-                        </div>
-                        <small class="utr-help-text"><i class="fa-solid fa-shield-halved"></i> Instant automatic reconciliation and balance addition to your operator mobile.</small>
-                    </div>
-                </div>
-
-                <!-- Tab 2: Cashfree Payment Gateway -->
-                <div class="pay-tab-content" id="payTabGateway">
-                    <div class="gateway-info-box">
-                        <div class="gateway-icon-badge">
-                            <i class="fa-solid fa-lock"></i>
-                        </div>
-                        <h4>Instant Automated Gateway Checkout</h4>
-                        <p>Pay securely via Cards, NetBanking, Wallets, or UPI through RBI-authorized Cashfree Payment Gateway.</p>
-                        
-                        <div class="gateway-perks">
-                            <span><i class="fa-solid fa-check"></i> Instant Automated Balance Credit</span>
-                            <span><i class="fa-solid fa-check"></i> 100% Encrypted & Verified</span>
-                        </div>
-
-                        <button class="btn btn-primary btn-block btn-lg mt-3" id="btnLaunchGateway" onclick="launchCashfreeRecharge()">
-                            <i class="fa-solid fa-arrow-up-right-from-square"></i> Proceed to Gateway Checkout (<span id="btnGatewayAmtText">₹1,000</span>)
-                        </button>
-                    </div>
                 </div>
             </div>
         </div>

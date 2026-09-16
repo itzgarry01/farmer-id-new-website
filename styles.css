@@ -1723,159 +1723,18 @@ section, [id] {
   padding-left: 32px !important;
 }
 
-/* Payment Method Tabs */
-.payment-tabs-nav {
-  display: flex;
-  gap: 8px;
-  background: var(--bg-canvas-subtle);
-  border: 2px solid var(--border-dark);
-  padding: 4px;
-  border-radius: var(--radius-md);
-  margin-top: 4px;
-}
-.pay-tab-btn {
-  flex: 1;
-  background: transparent;
-  border: none;
-  padding: 8px 12px;
-  font-family: var(--font-display);
-  font-size: 13px;
-  font-weight: 800;
-  color: var(--text-secondary);
-  border-radius: var(--radius-sm);
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  transition: all 0.2s var(--ease-bouncy);
-}
-.pay-tab-btn.active {
-  background: #FFFFFF;
-  color: var(--text-main);
-  border: 1.5px solid var(--border-dark);
-  box-shadow: 2px 2px 0px #1E1815;
-}
-
-.pay-tab-content {
-  display: none;
-}
-.pay-tab-content.active {
-  display: block;
-}
-
-/* Real Dynamic UPI QR Container */
-.qr-pay-box {
-  background: var(--bg-canvas-warm);
-  border: 2px solid var(--border-dark);
-  border-radius: var(--radius-md);
-  padding: 16px;
-  display: flex;
-  gap: 16px;
-  align-items: center;
-  box-shadow: var(--shadow-hard-sm);
-}
-.qr-image-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background: #FFFFFF;
-  border: 2px solid var(--border-dark);
-  border-radius: 12px;
-  padding: 10px;
-  box-shadow: var(--shadow-hard-sm);
-  flex-shrink: 0;
-}
-.qr-dynamic-img {
-  width: 140px;
-  height: 140px;
-  display: block;
-  border-radius: 6px;
-}
-.qr-amount-tag {
-  font-size: 11px;
-  font-family: var(--font-mono);
-  font-weight: 700;
-  color: var(--text-main);
-  margin-top: 6px;
-  text-align: center;
-}
-.qr-amount-tag strong {
-  color: var(--accent-green);
-}
-
-.qr-details-side {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  flex: 1;
-}
-.upi-id-box {
-  background: #FFFFFF;
-  border: 1.5px solid var(--border-dark);
-  border-radius: 8px;
-  padding: 10px 12px;
-}
-.upi-label {
-  display: block;
-  font-size: 10.5px;
-  font-weight: 700;
-  color: var(--text-secondary);
-  margin-bottom: 4px;
-}
-.upi-val-group {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 6px;
-}
-.upi-val-group code {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  font-weight: 800;
-  color: var(--accent-orange);
-  word-break: break-all;
-}
-
-/* UTR Verification Step */
-.utr-verification-box {
-  background: #FFFFFF;
-  border: 2px solid var(--border-dark);
-  border-radius: var(--radius-md);
-  padding: 14px;
-  box-shadow: var(--shadow-hard-sm);
-}
-.utr-verification-box label {
-  display: block;
-  font-size: 12px;
-  font-weight: 700;
-  color: var(--text-main);
-  margin-bottom: 8px;
-}
-.utr-input-row {
-  display: flex;
-  gap: 8px;
-}
-.utr-help-text {
-  display: block;
-  font-size: 11px;
-  color: var(--text-secondary);
-  margin-top: 6px;
-  line-height: 1.4;
-}
-
 /* Cashfree Gateway Box */
 .gateway-info-box {
   background: var(--bg-canvas-warm);
-  border: 2px solid var(--border-dark);
+  border: 2.5px solid var(--border-dark);
   border-radius: var(--radius-md);
   padding: 24px 20px;
   text-align: center;
   box-shadow: var(--shadow-hard-sm);
 }
 .gateway-icon-badge {
-  width: 48px;
-  height: 48px;
+  width: 52px;
+  height: 52px;
   background: var(--accent-green-light);
   border: 2px solid var(--border-dark);
   border-radius: 50%;
@@ -1883,38 +1742,45 @@ section, [id] {
   align-items: center;
   justify-content: center;
   color: var(--accent-green);
-  font-size: 20px;
-  margin: 0 auto 12px;
+  font-size: 22px;
+  margin: 0 auto 14px;
   box-shadow: var(--shadow-hard-sm);
 }
 .gateway-info-box h4 {
   font-family: var(--font-display);
-  font-size: 17px;
+  font-size: 18px;
   font-weight: 800;
-  margin-bottom: 6px;
+  margin-bottom: 8px;
 }
 .gateway-info-box p {
-  font-size: 13px;
+  font-size: 13.5px;
   color: var(--text-secondary);
-  line-height: 1.45;
-  margin-bottom: 14px;
+  line-height: 1.5;
+  margin-bottom: 16px;
 }
 .gateway-perks {
   display: flex;
   justify-content: center;
-  gap: 14px;
+  gap: 16px;
   flex-wrap: wrap;
-  font-size: 11.5px;
+  font-size: 12px;
   font-weight: 700;
   color: var(--text-main);
-  margin-bottom: 8px;
+  margin-bottom: 12px;
+}
+.gateway-perks span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 .gateway-perks i {
   color: var(--accent-green);
 }
+}
 
 /* ==========================================================================
    Studio Footer
+
    ========================================================================== */
 .site-footer {
   padding: 50px 0 30px;

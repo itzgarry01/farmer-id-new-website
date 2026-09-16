@@ -905,74 +905,25 @@ function setModalAmount(amount) {
     }
   });
 
-  updateDynamicQrCode();
+  updateGatewayAmountText();
 }
 
-function updateDynamicQrCode() {
+function updateGatewayAmountText() {
   const amountInput = document.getElementById('modalRechargeAmount');
   const amount = parseFloat(amountInput ? amountInput.value : currentSelectedAmount) || 100;
-  
-  const formattedAmt = `₹${amount.toLocaleString('en-IN', { minimumFractionDigits: 2 })}`;
-  const qrAmtText = document.getElementById('qrPayableAmountText');
   const gwAmtText = document.getElementById('btnGatewayAmtText');
-  if (qrAmtText) qrAmtText.textContent = formattedAmt;
   if (gwAmtText) gwAmtText.textContent = `₹${amount.toLocaleString('en-IN')}`;
-
-  const merchantUpi = 'paytmqr28100505010111162h0f78i4@paytm';
-  const upiUrl = `upi://pay?pa=${encodeURIComponent(merchantUpi)}&pn=AgriStack%20Helper%20Tools&am=${amount}&cu=INR&tn=Operator%20Wallet%20TopUp`;
-  
-  const qrImg = document.getElementById('qrRealImage');
-  if (qrImg) {
-    const qrSrc = `https://api.qrserver.com/v1/create-qr-code/?size=240x240&data=${encodeURIComponent(upiUrl)}`;
-    qrImg.src = qrSrc;
-  }
-
-  const intentLink = document.getElementById('upiIntentLink');
-  if (intentLink) {
-    intentLink.href = upiUrl;
-  }
-}
-
-function switchPayTab(tab) {
-  const tabUpi = document.getElementById('payTabUpi');
-  const tabGateway = document.getElementById('payTabGateway');
-  const btnUpi = document.getElementById('tabBtnUpi');
-  const btnGateway = document.getElementById('tabBtnGateway');
-
-  if (tab === 'upi') {
-    if (tabUpi) tabUpi.classList.add('active');
-    if (tabGateway) tabGateway.classList.remove('active');
-    if (btnUpi) btnUpi.classList.add('active');
-    if (btnGateway) btnGateway.classList.remove('active');
-  } else {
-    if (tabUpi) tabUpi.classList.remove('active');
-    if (tabGateway) tabGateway.classList.add('active');
-    if (btnUpi) btnUpi.classList.remove('active');
-    if (btnGateway) btnGateway.classList.add('active');
-  }
-}
-
-function copyUpiId() {
-  const upiId = 'paytmqr28100505010111162h0f78i4@paytm';
-  navigator.clipboard.writeText(upiId).then(() => {
-    alert('✅ UPI ID copied to clipboard: ' + upiId);
-  }).catch(() => {
-    prompt('Copy UPI ID:', upiId);
-  });
 }
 
 function openDirectRechargeModal(amount = 1000, packTitle = 'Cyber Cafe Pack') {
   const modal = document.getElementById('rechargeModal');
   const mobileInput = document.getElementById('modalMobileInput');
   const title = document.getElementById('modalRechargeTitle');
-  const utrInput = document.getElementById('modalUtrInput');
   
   if (mobileInput) mobileInput.value = currentMobile;
   if (title) title.textContent = `⚡ Top-Up: ${packTitle}`;
-  if (utrInput) utrInput.value = '';
 
   setModalAmount(amount);
-  switchPayTab('upi');
 
   if (modal) {
     modal.classList.add('active');
@@ -990,82 +941,6 @@ function closeRechargeModal() {
 
 function openWalletModal() {
   scrollToSection('wallet');
-}
-
-async function verifyAndCreditUtr() {
-  const amountInput = document.getElementById('modalRechargeAmount');
-  const mobileInput = document.getElementById('modalMobileInput');
-  const utrInput = document.getElementById('modalUtrInput');
-  const btn = document.getElementById('btnConfirmUtr');
-
-  const amount = parseFloat(amountInput ? amountInput.value : currentSelectedAmount);
-  const mobile = mobileInput ? mobileInput.value.trim() : currentMobile;
-  const utr = utrInput ? utrInput.value.trim() : '';
-
-  if (!mobile || mobile.length !== 10) {
-    alert('Please enter a valid 10-digit operator mobile number.');
-    return;
-  }
-
-  if (!amount || amount < 50) {
-    alert('Please enter a minimum recharge amount of ₹50.');
-    return;
-  }
-
-  if (!utr || utr.length < 8) {
-    alert('Please enter a valid 12-digit UPI Transaction Reference / UTR Number from your payment app.');
-    return;
-  }
-
-  if (btn) {
-    btn.disabled = true;
-    btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Verifying UTR...';
-  }
-
-  try {
-    const res = await fetch(`${WALLET_API_BASE}/api/wallet/topup_direct`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        wallet_id: mobile,
-        amount: amount,
-        reference_id: `UTR_${utr}`,
-        description: `UPI QR Recharge (UTR: ${utr})`
-      })
-    });
-
-    const data = await res.json();
-    if (res.ok && data.status === 'success') {
-      userWalletBalance = data.new_balance;
-      currentMobile = mobile;
-      localStorage.setItem('agristack_operator_mobile', currentMobile);
-      localStorage.setItem('agristack_operator_bal', String(userWalletBalance));
-
-      if (Array.isArray(data.recent_transactions)) {
-        renderTransactionLedger(data.recent_transactions);
-      }
-    } else {
-      userWalletBalance += amount;
-      localStorage.setItem('agristack_operator_bal', String(userWalletBalance));
-    }
-  } catch (err) {
-    console.warn('Backend call fallback:', err);
-    userWalletBalance += amount;
-    localStorage.setItem('agristack_operator_bal', String(userWalletBalance));
-  }
-
-  updateWalletDisplay();
-
-  if (btn) {
-    btn.disabled = false;
-    btn.innerHTML = '<i class="fa-solid fa-check"></i> Verified & Credited!';
-  }
-
-  setTimeout(() => {
-    closeRechargeModal();
-    if (btn) btn.innerHTML = '<i class="fa-solid fa-bolt"></i> Verify & Credit';
-    alert(`🎉 Payment Verified! ₹${amount.toLocaleString('en-IN')} added to operator mobile ${mobile}.`);
-  }, 500);
 }
 
 async function launchCashfreeRecharge() {
@@ -1111,7 +986,7 @@ async function launchCashfreeRecharge() {
       if (!win) {
         window.location.href = checkoutUrl;
       } else {
-        alert(`⚡ Secure Cashfree Checkout opened in a new window!\nComplete the payment to automatically update your operator balance.`);
+        alert(`⚡ Secure Cashfree Checkout opened!\nComplete payment to automatically credit ₹${amount.toLocaleString('en-IN')} to operator wallet +91 ${mobile}.`);
       }
 
       // Start background polling for payment completion
@@ -1148,7 +1023,7 @@ async function launchCashfreeRecharge() {
     }
   } catch (err) {
     console.error('Cashfree launch error:', err);
-    alert('Could not connect to payment gateway. Please scan the UPI QR code on Tab 1 to pay directly.');
+    alert('Could not connect to payment gateway. Please check your internet connection.');
   } finally {
     if (btn) {
       btn.disabled = false;
@@ -1156,6 +1031,7 @@ async function launchCashfreeRecharge() {
     }
   }
 }
+
 
 
 /* ==========================================================================
