@@ -1870,6 +1870,11 @@ section, [id] {
   transform: none;
   box-shadow: 2px 2px 0px var(--border-dark);
 }
+
+/* ==========================================================================
+   Studio Footer
+   ========================================================================== */
+.site-footer {
   padding: 50px 0 30px;
   border-top: 2px solid var(--border-dark);
   background: #FFFFFF;
