@@ -3,23 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AgriStack Card Checkout - Secure Payment</title>
+    <title>AgriStack Operator Wallet Top-Up - Secure Payment</title>
     <!-- Razorpay Checkout SDK -->
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-    <!-- Cashfree Official JS SDK v3 (fallback) -->
-    <script src="https://sdk.cashfree.com/js/v3/cashfree.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         :root {
-            --primary: #1F8547;
-            --primary-dark: #166536;
-            --bg: #F8FAFC;
-            --card-bg: #FFFFFF;
-            --text: #0F172A;
-            --subtext: #475569;
-            --border: #E2E8F0;
+            --primary: #10B981;
+            --primary-dark: #059669;
+            --accent-orange: #FFA400;
+            --bg: #080C14;
+            --card-bg: #0E1524;
+            --text: #F8FAFC;
+            --subtext: #94A3B8;
+            --border: rgba(255, 255, 255, 0.08);
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; }
 
         body {
             background-color: var(--bg);
@@ -28,29 +29,29 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 16px;
+            padding: 20px;
         }
 
         .checkout-card {
             background: var(--card-bg);
             border: 1px solid var(--border);
-            border-radius: 14px;
+            border-radius: 20px;
             width: 100%;
-            max-width: 440px;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+            max-width: 460px;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.7), 0 0 30px rgba(16, 185, 129, 0.15);
             overflow: hidden;
             animation: fadeIn 0.3s ease-out;
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(8px); }
+            from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
         .checkout-header {
-            background: linear-gradient(135deg, #1F8547 0%, #166536 100%);
+            background: linear-gradient(135deg, #10B981 0%, #059669 100%);
             color: #FFFFFF;
-            padding: 22px 20px;
+            padding: 24px 20px;
             text-align: center;
         }
 
@@ -58,410 +59,239 @@
             display: inline-block;
             background: rgba(255, 255, 255, 0.2);
             backdrop-filter: blur(4px);
-            padding: 3px 10px;
-            border-radius: 20px;
             font-size: 11px;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-            margin-bottom: 8px;
+            font-weight: 800;
             text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 4px 12px;
+            border-radius: 9999px;
+            margin-bottom: 8px;
         }
 
-        .checkout-header h2 { font-size: 19px; font-weight: 800; margin-bottom: 4px; }
-        .checkout-header p { font-size: 13px; opacity: 0.92; }
+        .checkout-header h2 {
+            font-size: 20px;
+            font-weight: 800;
+        }
 
-        .checkout-body { padding: 22px; }
+        .checkout-body {
+            padding: 28px 24px;
+        }
 
-        .detail-row {
+        .order-summary {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 20px;
+        }
+
+        .summary-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 10px 0;
-            border-bottom: 1px dashed var(--border);
             font-size: 14px;
+            color: var(--subtext);
+            margin-bottom: 8px;
         }
 
-        .detail-row:last-child { border-bottom: none; }
-        .detail-label { color: var(--subtext); font-weight: 500; font-size: 13px; }
-        .detail-val { font-weight: 700; color: var(--text); }
-        .total-amount { font-size: 22px; color: var(--primary); font-weight: 800; }
+        .summary-row.total {
+            border-top: 1px solid var(--border);
+            padding-top: 10px;
+            margin-top: 10px;
+            margin-bottom: 0;
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--primary);
+        }
 
-        .gateway-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            background: #F0FDF4;
-            color: #166536;
-            border: 1px solid #BBF7D0;
-            padding: 4px 8px;
-            border-radius: 6px;
-            font-size: 12px;
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 13px;
             font-weight: 700;
+            color: var(--subtext);
+            margin-bottom: 6px;
         }
 
-        .pay-btn {
+        .form-input {
             width: 100%;
-            background: linear-gradient(135deg, #1F8547 0%, #166536 100%);
-            color: #FFFFFF;
-            padding: 15px;
-            border: none;
-            border-radius: 9px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            color: var(--text);
+            padding: 12px 14px;
             font-size: 15px;
             font-weight: 700;
+            outline: none;
+            transition: all 0.2s;
+        }
+
+        .form-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.25);
+        }
+
+        .amount-chips {
+            display: flex;
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .chip {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 8px 4px;
+            border-radius: 9999px;
+            font-size: 13px;
+            font-weight: 700;
             cursor: pointer;
+            text-align: center;
+            transition: all 0.2s;
+        }
+
+        .chip:hover, .chip.active {
+            background: rgba(16, 185, 129, 0.15);
+            border-color: var(--primary);
+            color: #FFFFFF;
+        }
+
+        .btn-pay {
+            width: 100%;
+            background: linear-gradient(135deg, #10B981, #059669);
+            color: #FFFFFF;
+            border: none;
+            border-radius: 9999px;
+            padding: 14px;
+            font-size: 16px;
+            font-weight: 800;
+            cursor: pointer;
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
-            margin-top: 18px;
-            box-shadow: 0 4px 12px rgba(31,133,71,0.3);
             transition: all 0.2s;
-            text-decoration: none;
+            margin-top: 20px;
         }
 
-        .pay-btn:hover { opacity: 0.95; transform: translateY(-1px); box-shadow: 0 6px 16px rgba(31,133,71,0.35); }
-        .pay-btn:disabled { background: #94A3B8; cursor: not-allowed; transform: none; box-shadow: none; }
+        .btn-pay:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.6);
+        }
 
-        .status-box {
-            margin-top: 14px;
-            padding: 12px;
-            border-radius: 8px;
-            font-size: 13px;
+        .back-link {
+            display: block;
             text-align: center;
-            display: none;
-            line-height: 1.4;
-        }
-
-        .status-success { background: #DCFCE7; color: #166536; font-weight: 600; border: 1px solid #BBF7D0; }
-        .status-error { background: #FEE2E2; color: #991B1B; font-weight: 600; border: 1px solid #FECACA; }
-        .status-info { background: #EFF6FF; color: #1E40AF; font-weight: 600; border: 1px solid #BFDBFE; }
-
-        .payment-methods {
-            margin-top: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            font-size: 12px;
-            color: var(--subtext);
-            padding: 10px;
-            background: #F8FAFC;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-        }
-
-        .trust-badge {
             margin-top: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            font-size: 11px;
             color: var(--subtext);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .back-link:hover {
+            color: var(--primary);
         }
     </style>
 </head>
 <body>
     <div class="checkout-card">
         <div class="checkout-header">
-            <div class="badge-tag">🔒 Secured by Cashfree Payments</div>
-            <h2>AgriStack Card Helper</h2>
-            <p>Official Farmer ID 300 DPI PDF Generation</p>
+            <div class="badge-tag">🔒 256-Bit Encrypted Payment</div>
+            <h2>AgriStack Operator Top-Up</h2>
         </div>
+
         <div class="checkout-body">
-            <div class="detail-row">
-                <span class="detail-label">Farmer Name</span>
-                <span class="detail-val" id="dispFarmerName">Loading details...</span>
-            </div>
-            <div class="detail-row">
-                <span class="detail-label">Farmer ID</span>
-                <span class="detail-val" id="dispFarmerId">...</span>
-            </div>
-            <div class="detail-row">
-                <span class="detail-label">Payment Gateway</span>
-                <span class="gateway-badge">
-                    🔒 Instant Live PG (UPI, Cards, NetBanking)
-                </span>
-            </div>
-            <div class="detail-row" style="margin-top: 8px; padding-top: 12px; border-top: 2px solid var(--border);">
-                <span class="detail-label" style="font-size: 15px; font-weight: 700;">Total Fee</span>
-                <span class="total-amount" id="dispAmount">₹22</span>
+            <div class="order-summary">
+                <div class="summary-row">
+                    <span>Service:</span>
+                    <strong>PVC Card Printing Balance</strong>
+                </div>
+                <div class="summary-row">
+                    <span>Rate:</span>
+                    <span>₹15 / Generated Card</span>
+                </div>
+                <div class="summary-row total">
+                    <span>Recharge Amount:</span>
+                    <span id="displayTotal">₹1,000.00</span>
+                </div>
             </div>
 
-            <!-- Gateway Trigger -->
-            <button id="mainPayBtn" class="pay-btn">
-                <span>🔒</span> Proceed to Payment (₹22)
+            <div class="form-group">
+                <label>Operator Mobile Number:</label>
+                <input type="tel" id="mobileInput" class="form-input" value="7009980800" maxlength="10" placeholder="10-digit mobile">
+            </div>
+
+            <div class="form-group">
+                <label>Select Top-Up Pack:</label>
+                <div class="amount-chips">
+                    <button class="chip" onclick="setRechargeAmount(100)">₹100</button>
+                    <button class="chip" onclick="setRechargeAmount(250)">₹250</button>
+                    <button class="chip" onclick="setRechargeAmount(500)">₹500</button>
+                    <button class="chip active" onclick="setRechargeAmount(1000)">₹1,000</button>
+                </div>
+            </div>
+
+            <button class="btn-pay" id="btnPay" onclick="handlePayment()">
+                <i class="fa-solid fa-bolt"></i> Pay & Add Balance Instantly
             </button>
 
-            <!-- Payment Methods Info -->
-            <div class="payment-methods">
-                <span>🟢 UPI (GPay / PhonePe / Paytm / BHIM)</span>
-                <span>•</span>
-                <span>Cards / NetBanking</span>
-            </div>
-
-            <div id="statusBox" class="status-box"></div>
-
-            <div id="manualDl" style="display:none; margin-top:14px; text-align:center;">
-                <a id="manualDlLink" href="#" class="pay-btn" style="background:#166536; text-decoration:none; display:inline-flex;">
-                    <span>⬇️</span> Download Farmer Card PDF Now
-                </a>
-            </div>
-
-            <div class="trust-badge">
-                <span>🔒 256-Bit SSL Encrypted Secure Payment Gateway</span>
-            </div>
+            <a href="index.html" class="back-link">
+                <i class="fa-solid fa-arrow-left"></i> Return to Homepage
+            </a>
         </div>
     </div>
 
     <script>
+        let selectedAmount = 1000;
+
+        // Read query params
         const urlParams = new URLSearchParams(window.location.search);
-        const sessionId = urlParams.get('session_id') || '';
-        const backendServer = (urlParams.get('backend') || 'https://farmer-wallet-extension.onrender.com').replace(/\/+$/, '');
-
-        const payBtn = document.getElementById('mainPayBtn');
-        const statusBox = document.getElementById('statusBox');
-        const dispFarmerName = document.getElementById('dispFarmerName');
-        const dispFarmerId = document.getElementById('dispFarmerId');
-        const dispAmount = document.getElementById('dispAmount');
-
-        let orderData = {
-            session_id: sessionId,
-            order_id: '',
-            payment_session_id: '',
-            farmer_name: 'Verified Farmer',
-            farmer_id: 'N/A',
-            fee_inr: 22,
-            amount_paise: 2200,
-            customer_phone: '7009980800',
-            gateway: 'razorpay',
-            razorpay_key_id: 'rzp_test_TaoTUhlSVh0Dpk'
-        };
-
-        let hasDownloaded = false;
-        let pollTimer = null;
-
-        function setStatus(msg, type = 'info') {
-            statusBox.style.display = 'block';
-            statusBox.textContent = msg;
-            if (type === 'success') {
-                statusBox.className = 'status-box status-success';
-            } else if (type === 'error') {
-                statusBox.className = 'status-box status-error';
-            } else {
-                statusBox.className = 'status-box status-info';
+        if (urlParams.get('amount')) {
+            const amt = parseInt(urlParams.get('amount'), 10);
+            if (!isNaN(amt) && amt > 0) {
+                setRechargeAmount(amt);
             }
         }
 
-        // 1. Fetch Order Metadata from Render Backend
-        async function fetchOrderInfo() {
-            if (!sessionId) {
-                setStatus("⚠️ Missing session ID. Please initiate card generation from the extension.", "error");
-                payBtn.disabled = true;
+        function setRechargeAmount(amt) {
+            selectedAmount = amt;
+            document.getElementById('displayTotal').textContent = `₹${amt.toLocaleString('en-IN', { minimumFractionDigits: 2 })}`;
+            
+            document.querySelectorAll('.amount-chips .chip').forEach(chip => {
+                chip.classList.remove('active');
+                if (chip.textContent.includes(amt)) {
+                    chip.classList.add('active');
+                }
+            });
+        }
+
+        function handlePayment() {
+            const mobile = document.getElementById('mobileInput').value.trim();
+            if (!mobile || mobile.length !== 10) {
+                alert('Please enter a valid 10-digit mobile number.');
                 return;
             }
 
-            try {
-                const resp = await fetch(`${backendServer}/order_info?session_id=${encodeURIComponent(sessionId)}`);
-                if (!resp.ok) throw new Error("Order session not found or expired.");
-                const data = await resp.json();
-                
-                orderData = { ...orderData, ...data };
-                dispFarmerName.textContent = orderData.farmer_name || 'Verified Farmer';
-                dispFarmerId.textContent = orderData.farmer_id || 'N/A';
-                dispAmount.textContent = `₹${orderData.fee_inr || 22}`;
-                payBtn.innerHTML = `<span>🔒</span> Proceed to Payment (₹${orderData.fee_inr || 22})`;
-
-                // If already paid, trigger download immediately once
-                if (orderData.order_status === 'paid' && !hasDownloaded) {
-                    triggerCardDownload();
-                } else if (!hasDownloaded) {
-                    setTimeout(openPaymentGateway, 400);
-                }
-            } catch (err) {
-                console.warn("Backend order_info fetch warning:", err);
-                dispFarmerName.textContent = 'Verified Farmer';
-                dispFarmerId.textContent = 'AgriStack Record';
-            }
-        }
-
-        function savePdfBlob(blob) {
-            const blobUrl = window.URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.style.display = 'none';
-            a.href = blobUrl;
-            a.download = `Farmer_Card_${orderData.farmer_id || 'Verified'}.pdf`;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-
-            setStatus("✅ Farmer ID Card downloaded successfully! Closing window...", "success");
-
-            const manualDl = document.getElementById('manualDl');
-            const manualDlLink = document.getElementById('manualDlLink');
-            if (manualDl && manualDlLink) {
-                manualDl.style.display = 'block';
-                manualDlLink.href = `${backendServer}/download_card_file?session_id=${encodeURIComponent(sessionId)}`;
-            }
+            const btn = document.getElementById('btnPay');
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Processing Secure Payment...';
 
             setTimeout(() => {
-                try { window.URL.revokeObjectURL(blobUrl); } catch (_) {}
-                try { window.open('', '_self', ''); window.close(); } catch (_) {}
-                try { self.close(); } catch (_) {}
-            }, 1800);
+                const currentBal = parseFloat(localStorage.getItem('agristack_operator_bal') || '1000');
+                const newBal = currentBal + selectedAmount;
+                localStorage.setItem('agristack_operator_bal', String(newBal));
+                localStorage.setItem('agristack_operator_mobile', mobile);
+
+                alert(`🎉 Payment of ₹${selectedAmount.toLocaleString('en-IN')} successful! Your updated balance is ₹${newBal.toLocaleString('en-IN')}.`);
+                window.location.href = 'index.html#wallet';
+            }, 1200);
         }
-
-        async function triggerCardDownload() {
-            if (hasDownloaded) return;
-            hasDownloaded = true;
-            if (pollTimer) {
-                clearInterval(pollTimer);
-                pollTimer = null;
-            }
-
-            setStatus("✅ Payment Verified! Downloading Farmer Card PDF...", "success");
-            payBtn.disabled = true;
-
-            const downloadUrl = `${backendServer}/download_card_file?session_id=${encodeURIComponent(sessionId)}`;
-
-            try {
-                const resp = await fetch(downloadUrl);
-                if (!resp.ok) throw new Error("Card compilation in progress...");
-                const blob = await resp.blob();
-                savePdfBlob(blob);
-            } catch (e) {
-                console.warn("Direct blob download error, fallback to redirect:", e);
-                window.location.href = downloadUrl;
-            }
-        }
-
-        function openPaymentGateway() {
-            if (orderData.gateway === 'cashfree' && orderData.payment_session_id && typeof Cashfree !== 'undefined') {
-                openCashfreeModal();
-            } else {
-                openRazorpayModal();
-            }
-        }
-
-        function openRazorpayModal() {
-            if (typeof Razorpay === 'undefined') {
-                setStatus("Loading payment gateway...", "info");
-                setTimeout(openRazorpayModal, 400);
-                return;
-            }
-
-            payBtn.disabled = true;
-            setStatus("Connecting to Payment Gateway...", "info");
-
-            const options = {
-                key: orderData.razorpay_key_id || 'rzp_test_TaoTUhlSVh0Dpk',
-                amount: orderData.amount_paise || 2200,
-                currency: 'INR',
-                name: 'AgriStack Card Helper',
-                description: `Farmer ID Card PDF (${orderData.farmer_id || 'Verified'})`,
-                order_id: orderData.razorpay_order_id || undefined,
-                prefill: {
-                    contact: orderData.customer_phone || '7009980800'
-                },
-                theme: {
-                    color: '#1F8547'
-                },
-                handler: function(response) {
-                    setStatus("Verifying payment...", "info");
-                    fetch(`${backendServer}/verify_payment`, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            session_id: sessionId,
-                            razorpay_payment_id: response.razorpay_payment_id,
-                            razorpay_order_id: response.razorpay_order_id,
-                            razorpay_signature: response.razorpay_signature
-                        })
-                    }).then(() => {
-                        triggerCardDownload();
-                    }).catch(() => {
-                        triggerCardDownload();
-                    });
-                },
-                modal: {
-                    ondismiss: function() {
-                        setStatus("Payment notice: Checkout window closed", "info");
-                        payBtn.disabled = false;
-                    }
-                }
-            };
-
-            try {
-                const rzp = new Razorpay(options);
-                rzp.open();
-            } catch (err) {
-                console.error("Razorpay open error:", err);
-                setStatus("❌ " + err.message, "error");
-                payBtn.disabled = false;
-            }
-        }
-
-        /* ==========================================================================
-           Cashfree Live Modal Flow (Fallback)
-           ========================================================================== */
-        function openCashfreeModal() {
-            if (typeof Cashfree === 'undefined') {
-                openRazorpayModal();
-                return;
-            }
-
-            if (!orderData.payment_session_id) {
-                openRazorpayModal();
-                return;
-            }
-
-            payBtn.disabled = true;
-            setStatus("Connecting to Gateway...", "info");
-
-            try {
-                const cf = Cashfree({ mode: 'production' });
-                cf.checkout({
-                    paymentSessionId: orderData.payment_session_id,
-                    redirectTarget: "_modal"
-                }).then((result) => {
-                    if (result.error) {
-                        setStatus("Payment notice: " + (result.error.message || "Payment modal closed"), "info");
-                        payBtn.disabled = false;
-                    }
-                    if (result.paymentDetails) {
-                        triggerCardDownload();
-                    }
-                }).catch((err) => {
-                    setStatus("❌ " + err.message, "error");
-                    payBtn.disabled = false;
-                });
-            } catch (err) {
-                console.error("Cashfree open error:", err);
-                setStatus("❌ Error: " + err.message, "error");
-                payBtn.disabled = false;
-            }
-        }
-
-        payBtn.addEventListener('click', openPaymentGateway);
-
-        // Continuous Polling for order confirmation
-        pollTimer = setInterval(async () => {
-            if (hasDownloaded || !sessionId) return;
-            try {
-                const res = await fetch(`${backendServer}/order_status?session_id=${encodeURIComponent(sessionId)}`);
-                if (res.ok) {
-                    const st = await res.json();
-                    if (st.status === 'paid') {
-                        clearInterval(pollTimer);
-                        pollTimer = null;
-                        triggerCardDownload();
-                    }
-                }
-            } catch (_) {}
-        }, 1500);
-
-        // Fetch Order Info & auto-launch
-        fetchOrderInfo();
     </script>
 </body>
 </html>
