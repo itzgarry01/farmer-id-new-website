@@ -113,25 +113,23 @@ section, [id] {
    Navigation Dock (artist.garry theme)
    ========================================================================== */
 .site-header {
-  position: fixed;
-  top: 18px;
-  left: 0;
-  width: 100%;
+  position: sticky;
+  top: 14px;
   z-index: 1000;
-  pointer-events: none;
+  width: 100%;
+  margin-bottom: 20px;
 }
 
 .nav-dock {
-  pointer-events: auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: rgba(255, 255, 255, 0.94);
+  background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 2px solid var(--border-dark);
+  border: 2.5px solid var(--border-dark);
   border-radius: var(--radius-pill);
-  padding: 9px 24px;
+  padding: 8px 22px;
   box-shadow: var(--shadow-hard);
   transition: transform 0.2s var(--ease-bouncy), box-shadow 0.2s ease;
 }
@@ -352,7 +350,7 @@ section, [id] {
    Hero Section
    ========================================================================== */
 .hero-section {
-  padding: 130px 0 50px;
+  padding: 30px 0 50px;
 }
 .hero-grid {
   display: grid;
