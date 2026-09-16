@@ -1617,18 +1617,21 @@ section, [id] {
    ========================================================================== */
 .modal-backdrop {
   position: fixed;
+.modal-backdrop {
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(30, 24, 21, 0.65);
+  background: rgba(30, 24, 21, 0.7);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   z-index: 2000;
   display: none;
   align-items: center;
   justify-content: center;
-  padding: 20px;
+  padding: 16px;
+  overflow-y: auto;
 }
 .modal-backdrop.active {
   display: flex;
@@ -1638,7 +1641,10 @@ section, [id] {
   border: 3px solid var(--border-dark);
   border-radius: var(--radius-lg);
   width: 100%;
-  max-width: 480px;
+  max-width: 500px;
+  max-height: calc(100vh - 32px);
+  display: flex;
+  flex-direction: column;
   box-shadow: var(--shadow-hard-lg);
   overflow: hidden;
   animation: modalIn 0.25s var(--ease-bouncy);
@@ -1651,9 +1657,10 @@ section, [id] {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 18px 24px;
+  padding: 16px 20px;
   border-bottom: 2px solid var(--border-dark);
   background: var(--bg-canvas-subtle);
+  flex-shrink: 0;
 }
 .modal-title-group {
   display: flex;
@@ -1680,12 +1687,20 @@ section, [id] {
   align-items: center;
   justify-content: center;
   box-shadow: var(--shadow-hard-sm);
+  transition: all 0.15s ease;
+}
+.modal-close:hover {
+  background: var(--accent-orange);
+  color: #FFF;
+  transform: scale(1.05);
 }
 .modal-body {
-  padding: 24px;
+  padding: 20px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 14px;
+  overflow-y: auto;
+  flex: 1;
 }
 .modal-form-group label {
   display: block;
@@ -1705,6 +1720,12 @@ section, [id] {
   font-family: var(--font-mono);
   font-size: 15px;
   font-weight: 800;
+  box-shadow: 2px 2px 0px var(--border-dark);
+}
+.modal-input:focus {
+  outline: none;
+  background: #FFFFFF;
+  border-color: var(--accent-orange);
 }
 .amount-input-wrap {
   position: relative;
@@ -1728,13 +1749,16 @@ section, [id] {
   background: var(--bg-canvas-warm);
   border: 2.5px solid var(--border-dark);
   border-radius: var(--radius-md);
-  padding: 24px 20px;
+  padding: 18px 16px 20px;
   text-align: center;
   box-shadow: var(--shadow-hard-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 .gateway-icon-badge {
-  width: 52px;
-  height: 52px;
+  width: 46px;
+  height: 46px;
   background: var(--accent-green-light);
   border: 2px solid var(--border-dark);
   border-radius: 50%;
@@ -1742,47 +1766,110 @@ section, [id] {
   align-items: center;
   justify-content: center;
   color: var(--accent-green);
-  font-size: 22px;
-  margin: 0 auto 14px;
+  font-size: 20px;
+  margin: 0 auto 4px;
   box-shadow: var(--shadow-hard-sm);
 }
 .gateway-info-box h4 {
   font-family: var(--font-display);
-  font-size: 18px;
+  font-size: 17px;
   font-weight: 800;
-  margin-bottom: 8px;
+  margin-bottom: 2px;
 }
 .gateway-info-box p {
-  font-size: 13.5px;
+  font-size: 12.5px;
   color: var(--text-secondary);
-  line-height: 1.5;
-  margin-bottom: 16px;
+  line-height: 1.45;
+  margin-bottom: 6px;
 }
 .gateway-perks {
   display: flex;
   justify-content: center;
-  gap: 16px;
+  gap: 12px;
   flex-wrap: wrap;
-  font-size: 12px;
+  font-size: 11.5px;
   font-weight: 700;
   color: var(--text-main);
-  margin-bottom: 12px;
+  margin-bottom: 6px;
 }
 .gateway-perks span {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 5px;
 }
 .gateway-perks i {
   color: var(--accent-green);
 }
+
+/* Modal In-Page Status Notification */
+.modal-status-box {
+  padding: 12px 14px;
+  border-radius: var(--radius-sm);
+  border: 2px solid var(--border-dark);
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.4;
+  text-align: center;
+  box-shadow: 2px 2px 0px var(--border-dark);
+  animation: fadeIn 0.2s ease-out;
+}
+.modal-status-info {
+  background: #EFF6FF;
+  border-color: #3B82F6;
+  color: #1E40AF;
+}
+.modal-status-success {
+  background: #ECFDF5;
+  border-color: #10B981;
+  color: #065F46;
+}
+.modal-status-warning {
+  background: #FFFBEB;
+  border-color: #F59E0B;
+  color: #92400E;
+}
+.modal-status-error {
+  background: #FEF2F2;
+  border-color: #EF4444;
+  color: #991B1B;
 }
 
-/* ==========================================================================
-   Studio Footer
-
-   ========================================================================== */
-.site-footer {
+/* Premium Checkout CTA Button */
+.btn-gateway-checkout {
+  width: 100%;
+  background: linear-gradient(135deg, #E65C38 0%, #D44824 100%);
+  color: #FFFFFF !important;
+  border: 2.5px solid var(--border-dark);
+  border-radius: 12px;
+  padding: 14px 18px;
+  font-family: var(--font-display);
+  font-size: 15.5px;
+  font-weight: 800;
+  letter-spacing: 0.2px;
+  cursor: pointer;
+  box-shadow: 4px 4px 0px var(--border-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: all 0.15s ease;
+  margin-top: 4px;
+}
+.btn-gateway-checkout:hover {
+  background: linear-gradient(135deg, #D44824 0%, #B83A1B 100%);
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0px var(--border-dark);
+}
+.btn-gateway-checkout:active {
+  transform: translate(4px, 4px);
+  box-shadow: 0px 0px 0px var(--border-dark);
+}
+.btn-gateway-checkout:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: 2px 2px 0px var(--border-dark);
+}
   padding: 50px 0 30px;
   border-top: 2px solid var(--border-dark);
   background: #FFFFFF;

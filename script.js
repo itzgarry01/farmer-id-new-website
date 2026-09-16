@@ -951,12 +951,32 @@ function updateGatewayAmountText() {
   if (gwAmtText) gwAmtText.textContent = `₹${amount.toLocaleString('en-IN')}`;
 }
 
+function setModalStatus(msg, type = 'info') {
+  const statusEl = document.getElementById('modalPaymentStatus');
+  if (!statusEl) return;
+  if (!msg) {
+    statusEl.style.display = 'none';
+    statusEl.innerHTML = '';
+    return;
+  }
+  statusEl.style.display = 'block';
+  statusEl.className = `modal-status-box modal-status-${type}`;
+  statusEl.innerHTML = msg;
+}
+
 function openDirectRechargeModal(amount = 1000, packTitle = 'Cyber Cafe Pack') {
   const modal = document.getElementById('rechargeModal');
   const mobileInput = document.getElementById('modalMobileInput');
   const walletInput = document.getElementById('walletMobileInput');
   const title = document.getElementById('modalRechargeTitle');
+  const btn = document.getElementById('btnLaunchGateway');
   
+  setModalStatus('');
+  if (btn) {
+    btn.disabled = false;
+    btn.innerHTML = `<i class="fa-solid fa-arrow-up-right-from-square"></i> Proceed to Gateway Checkout (<span id="btnGatewayAmtText">₹${amount}</span>)`;
+  }
+
   // Dynamically resolve active mobile from wallet input, stored state, or localStorage
   if (walletInput && walletInput.value.replace(/\D/g, '').length === 10) {
     currentMobile = walletInput.value.replace(/\D/g, '');
@@ -979,6 +999,7 @@ function openDirectRechargeModal(amount = 1000, packTitle = 'Cyber Cafe Pack') {
 
 function closeRechargeModal() {
   const modal = document.getElementById('rechargeModal');
+  setModalStatus('');
   if (modal) {
     modal.classList.remove('active');
     document.body.style.overflow = '';
@@ -999,7 +1020,7 @@ async function launchCashfreeRecharge() {
   const mobile = rawMobile.replace(/\D/g, '').trim();
 
   if (!mobile || mobile.length !== 10) {
-    alert('Please enter a valid 10-digit operator mobile number to proceed with recharge.');
+    setModalStatus('⚠️ Please enter a valid 10-digit operator mobile number.', 'warning');
     if (mobileInput) mobileInput.focus();
     return;
   }
@@ -1010,14 +1031,15 @@ async function launchCashfreeRecharge() {
   if (loggedMobile) loggedMobile.textContent = `+91 ${currentMobile}`;
 
   if (!amount || amount < 100) {
-    alert('Minimum recharge amount for Payment Gateway is ₹100.');
+    setModalStatus('⚠️ Minimum recharge amount for Payment Gateway is ₹100.', 'warning');
     return;
   }
 
   if (btn) {
     btn.disabled = true;
-    btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Initializing Secure Gateway...';
+    btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Connecting Gateway...';
   }
+  setModalStatus('<i class="fa-solid fa-spinner fa-spin"></i> Initializing secure Cashfree checkout session...', 'info');
 
   try {
     const res = await fetch(`${WALLET_API_BASE}/api/wallet/recharge`, {
@@ -1034,21 +1056,26 @@ async function launchCashfreeRecharge() {
     if (res.ok && data.status === 'success') {
       const checkoutUrl = data.full_checkout_url || `${WALLET_API_BASE}${data.checkout_url}`;
       
-      // Open Checkout Window
+      // Open Checkout Window (without blocking native alert popups)
       const win = window.open(checkoutUrl, '_blank', 'width=520,height=750');
       if (!win) {
         window.location.href = checkoutUrl;
-      } else {
-        alert(`⚡ Secure Cashfree Checkout opened for Operator +91 ${mobile}!\nComplete payment to automatically credit ₹${amount.toLocaleString('en-IN')} to your operator wallet.`);
       }
+
+      setModalStatus(`<i class="fa-solid fa-circle-notch fa-spin"></i> Checkout window opened for <strong>+91 ${mobile}</strong>.<br>Complete payment to add ₹${amount.toLocaleString('en-IN')}.`, 'info');
 
       // Start background polling for payment completion
       const orderId = data.order_id;
       let checkCount = 0;
       const pollTimer = setInterval(async () => {
         checkCount++;
-        if (checkCount > 40) {
+        if (checkCount > 50) {
           clearInterval(pollTimer);
+          setModalStatus('⚠️ Payment session timed out or cancelled. Click below to retry.', 'warning');
+          if (btn) {
+            btn.disabled = false;
+            btn.innerHTML = `<i class="fa-solid fa-arrow-up-right-from-square"></i> Retry Gateway Checkout (<span id="btnGatewayAmtText">₹${amount}</span>)`;
+          }
           return;
         }
         try {
@@ -1068,18 +1095,23 @@ async function launchCashfreeRecharge() {
                 renderTransactionLedger(vData.recent_transactions);
               }
             }
-            closeRechargeModal();
-            alert(`🎉 Payment Successful! ₹${amount} credited to operator wallet +91 ${mobile}. New balance: ₹${vData.new_balance.toFixed(2)}.`);
+            setModalStatus(`🎉 <strong>Payment Successful!</strong> ₹${amount} credited to operator wallet +91 ${mobile}. New Balance: ₹${vData.new_balance.toFixed(2)}`, 'success');
+            setTimeout(() => {
+              closeRechargeModal();
+            }, 1800);
           }
         } catch (e) {}
-      }, 3000);
+      }, 2500);
     } else {
-      alert(`Gateway Error: ${data.error || 'Could not initiate checkout'}`);
+      setModalStatus(`❌ Gateway Error: ${data.error || 'Could not initiate checkout'}`, 'error');
+      if (btn) {
+        btn.disabled = false;
+        btn.innerHTML = `<i class="fa-solid fa-arrow-up-right-from-square"></i> Proceed to Gateway Checkout (<span id="btnGatewayAmtText">₹${amount}</span>)`;
+      }
     }
   } catch (err) {
     console.error('Cashfree launch error:', err);
-    alert('Could not connect to payment gateway. Please check your internet connection.');
-  } finally {
+    setModalStatus('❌ Could not connect to payment gateway. Please check your internet connection.', 'error');
     if (btn) {
       btn.disabled = false;
       btn.innerHTML = `<i class="fa-solid fa-arrow-up-right-from-square"></i> Proceed to Gateway Checkout (<span id="btnGatewayAmtText">₹${amount}</span>)`;

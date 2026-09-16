@@ -817,12 +817,14 @@
                     <p>Pay securely via UPI (GPay, PhonePe, Paytm), Debit/Credit Cards, NetBanking, or Wallets with instant automated balance addition.</p>
                     
                     <div class="gateway-perks">
-                        <span><i class="fa-solid fa-circle-check"></i> Instant Automated Balance Credit</span>
+                        <span><i class="fa-solid fa-circle-check"></i> Instant Balance Credit</span>
                         <span><i class="fa-solid fa-lock"></i> 256-Bit SSL Encrypted</span>
                         <span><i class="fa-solid fa-building-columns"></i> All Indian Banks & UPI</span>
                     </div>
 
-                    <button class="btn btn-primary btn-block btn-lg mt-3" id="btnLaunchGateway" onclick="launchCashfreeRecharge()">
+                    <div id="modalPaymentStatus" class="modal-status-box" style="display: none;"></div>
+
+                    <button class="btn-gateway-checkout" id="btnLaunchGateway" onclick="launchCashfreeRecharge()">
                         <i class="fa-solid fa-arrow-up-right-from-square"></i> Proceed to Gateway Checkout (<span id="btnGatewayAmtText">₹1,000</span>)
                     </button>
                 </div>
