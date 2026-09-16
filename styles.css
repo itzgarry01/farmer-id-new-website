@@ -4,15 +4,15 @@
    Warm Creamy Tactile DNA • 2px Solid Borders • Hard Shadows • Bricolage Typography
    ========================================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;1,9..144,400;1,9..144,700&family=JetBrains+Mono:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;1,9..144,400;1,9..144,700&family=JetBrains+Mono:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 
 :root {
   /* Warm Creamy Luxury Palette from artist.garry */
   --bg-canvas: #FAF6EE;
   --bg-canvas-subtle: #F4EBE0;
   --bg-canvas-tint: #EFE4D4;
+  --bg-canvas-warm: #FFFBF5;
   --bg-card: #FFFFFF;
-  --bg-card-warm: #FFFBF5;
   --bg-card-dark: #1E1815;
 
   /* Typography Colors */
@@ -104,13 +104,13 @@ section, [id] {
   width: 100%;
   max-width: 1280px;
   margin: 0 auto;
-  padding: 0 28px;
+  padding: 0 24px;
   position: relative;
   z-index: 1;
 }
 
 /* ==========================================================================
-   Navigation Dock (artist.garry theme)
+   Navigation Dock (artist.garry theme) with Center-Aligned Buttons
    ========================================================================== */
 .site-header {
   position: sticky;
@@ -124,18 +124,18 @@ section, [id] {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(255, 255, 255, 0.96);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border: 2.5px solid var(--border-dark);
   border-radius: var(--radius-pill);
-  padding: 8px 22px;
+  padding: 8px 18px;
   box-shadow: var(--shadow-hard);
   transition: transform 0.2s var(--ease-bouncy), box-shadow 0.2s ease;
+  gap: 12px;
 }
 
 .nav-dock:hover {
-  transform: translateY(-2px);
   box-shadow: var(--shadow-hard-lg);
 }
 
@@ -147,8 +147,9 @@ section, [id] {
   color: var(--text-main);
   font-family: var(--font-display);
   font-weight: 800;
-  font-size: 20px;
+  font-size: 19px;
   letter-spacing: -0.02em;
+  flex-shrink: 0;
 }
 
 .logo-icon-box {
@@ -172,7 +173,7 @@ section, [id] {
 }
 
 .brand-title {
-  font-size: 20px;
+  font-size: 19px;
   font-weight: 800;
   letter-spacing: -0.5px;
 }
@@ -184,60 +185,76 @@ section, [id] {
   background: var(--accent-yellow);
   color: var(--text-main);
   font-family: var(--font-mono);
-  font-size: 10.5px;
+  font-size: 10px;
   font-weight: 800;
-  padding: 2px 8px;
+  padding: 2px 7px;
   border: 1.5px solid var(--border-dark);
   border-radius: var(--radius-pill);
   letter-spacing: 0.04em;
 }
 
+/* Center-Aligned Tactile Nav Buttons */
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 20px;
+  justify-content: center;
+  gap: 8px;
   list-style: none;
+  flex-wrap: wrap;
 }
 
-.nav-link {
+.nav-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
   color: var(--text-main);
   text-decoration: none;
   font-family: var(--font-display);
-  font-size: 14px;
-  font-weight: 700;
-  transition: color 0.2s ease, transform 0.2s var(--ease-bouncy);
-  padding: 4px 6px;
+  font-size: 12.5px;
+  font-weight: 800;
+  background: #FFFFFF;
+  border: 1.5px solid var(--border-dark);
+  border-radius: var(--radius-pill);
+  padding: 6px 13px;
+  box-shadow: 2px 2px 0px #1E1815;
+  transition: transform 0.15s var(--ease-bouncy), box-shadow 0.15s ease, background 0.15s ease;
+  white-space: nowrap;
 }
 
-.nav-link:hover, .nav-link.active {
-  color: var(--accent-orange);
-  transform: translateY(-2px);
+.nav-btn:hover, .nav-btn.active {
+  background: var(--accent-yellow);
+  color: var(--text-main);
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0px #1E1815;
 }
 
 .nav-actions {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
+  flex-shrink: 0;
 }
 
 .status-pill {
   display: flex;
   align-items: center;
-  gap: 7px;
+  gap: 6px;
   background: var(--accent-green-light);
   border: 1.5px solid var(--border-dark);
   color: var(--text-main);
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 10.5px;
   font-weight: 800;
-  padding: 5px 12px;
+  padding: 5px 10px;
   border-radius: var(--radius-pill);
   box-shadow: var(--shadow-hard-sm);
+  white-space: nowrap;
 }
 
 .status-dot {
-  width: 8px;
-  height: 8px;
+  width: 7px;
+  height: 7px;
   background-color: var(--accent-green);
   border: 1px solid var(--border-dark);
   border-radius: 50%;
@@ -254,8 +271,8 @@ section, [id] {
   color: var(--text-main);
   font-family: var(--font-mono);
   font-weight: 800;
-  font-size: 13px;
-  padding: 6px 14px;
+  font-size: 12.5px;
+  padding: 6px 12px;
   border-radius: var(--radius-pill);
   display: inline-flex;
   align-items: center;
@@ -263,6 +280,7 @@ section, [id] {
   cursor: pointer;
   box-shadow: var(--shadow-hard-sm);
   transition: transform 0.15s var(--ease-bouncy), box-shadow 0.15s ease;
+  white-space: nowrap;
 }
 .btn-wallet-nav:hover {
   transform: translate(1px, 1px);
@@ -388,7 +406,7 @@ section, [id] {
 }
 .hero-headline {
   font-family: var(--font-display);
-  font-size: clamp(2.4rem, 4.2vw, 3.8rem);
+  font-size: clamp(2.3rem, 4.2vw, 3.8rem);
   font-weight: 800;
   line-height: 1.08;
   letter-spacing: -0.03em;
@@ -524,7 +542,7 @@ section, [id] {
   transform: rotateY(180deg);
 }
 
-/* Card Internal Details */
+/* Card Internal Layout */
 .card-header-row {
   display: flex;
   align-items: center;
@@ -734,7 +752,7 @@ section, [id] {
 }
 
 /* ==========================================================================
-   Velocity Marquee Ribbon (artist.garry style)
+   Velocity Marquee Ribbon
    ========================================================================== */
 .marquee-container {
   overflow: hidden;
@@ -769,7 +787,7 @@ section, [id] {
 }
 
 /* ==========================================================================
-   Digital Prepaid Wallet & Operator Login
+   Digital Prepaid Wallet
    ========================================================================== */
 .wallet-section {
   padding: 60px 0;
@@ -1026,6 +1044,121 @@ section, [id] {
 }
 
 /* ==========================================================================
+   Visible 5-Tier Pricing Grid (#products & #pricing)
+   ========================================================================== */
+.pricing-section {
+  padding: 60px 0;
+}
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+.pricing-pack-card {
+  background: #FFFFFF;
+  border: 2px solid var(--border-dark);
+  border-radius: var(--radius-md);
+  padding: 24px 20px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  box-shadow: var(--shadow-hard);
+  transition: transform 0.2s var(--ease-bouncy), box-shadow 0.2s ease;
+}
+.pricing-pack-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-hard-lg);
+}
+.pricing-pack-card.featured {
+  border: 2.5px solid var(--border-dark);
+  background: var(--accent-yellow-light);
+}
+
+.pack-badge {
+  position: absolute;
+  top: -12px;
+  left: 20px;
+  background: #FFFFFF;
+  border: 1.5px solid var(--border-dark);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  padding: 2px 10px;
+  border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-hard-sm);
+}
+.pack-badge.popular {
+  background: var(--accent-yellow);
+}
+.pack-badge.featured-badge {
+  background: var(--accent-orange);
+  color: #FFF;
+}
+
+.pack-name {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 800;
+  margin-top: 6px;
+  margin-bottom: 6px;
+}
+.pack-price {
+  display: flex;
+  align-items: baseline;
+  gap: 3px;
+  margin-bottom: 4px;
+}
+.pack-price .currency {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--accent-orange);
+}
+.pack-price .amount {
+  font-family: var(--font-display);
+  font-size: 36px;
+  font-weight: 900;
+  color: var(--text-main);
+}
+.pack-estimate {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  font-weight: 800;
+  color: var(--accent-green);
+  margin-bottom: 12px;
+}
+.pack-desc {
+  font-size: 12.5px;
+  color: var(--text-secondary);
+  line-height: 1.45;
+  margin-bottom: 16px;
+}
+.pack-features {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 20px;
+  border-top: 1.5px solid var(--border-subtle);
+  padding-top: 14px;
+  font-size: 12px;
+  font-weight: 600;
+}
+.pack-features li {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.pack-features li i {
+  color: var(--accent-green);
+  font-size: 13px;
+}
+.pricing-pack-card .btn {
+  margin-top: auto;
+}
+
+/* ==========================================================================
    36 States Directory
    ========================================================================== */
 .portals-section {
@@ -1192,97 +1325,191 @@ section, [id] {
 }
 
 /* ==========================================================================
-   Pricing Section
+   Contact Us Section (#contact)
    ========================================================================== */
-.pricing-section {
+.contact-section {
   padding: 60px 0;
 }
-.pricing-card-wrapper {
-  max-width: 520px;
-  margin: 0 auto;
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 28px;
 }
-.pricing-card {
+.contact-info-card, .contact-form-card {
   background: #FFFFFF;
-  border: 3px solid var(--border-dark);
+  border: 2.5px solid var(--border-dark);
   border-radius: var(--radius-lg);
-  padding: 40px 34px;
-  text-align: center;
+  padding: 32px 28px;
   box-shadow: var(--shadow-hard-lg);
-  position: relative;
 }
-.pricing-badge {
-  position: absolute;
-  top: -14px;
-  left: 50%;
-  transform: translateX(-50%);
+.entity-badge {
+  display: inline-block;
   background: var(--accent-yellow);
-  color: var(--text-main);
-  border: 2px solid var(--border-dark);
-  font-family: var(--font-display);
-  font-size: 11.5px;
+  border: 1.5px solid var(--border-dark);
+  font-family: var(--font-mono);
+  font-size: 11px;
   font-weight: 800;
-  text-transform: uppercase;
-  padding: 4px 18px;
+  padding: 2px 10px;
   border-radius: var(--radius-pill);
   box-shadow: var(--shadow-hard-sm);
-}
-.plan-name {
-  font-family: var(--font-display);
-  font-size: 22px;
-  font-weight: 800;
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
-.plan-price {
-  display: flex;
-  align-items: baseline;
-  justify-content: center;
-  gap: 4px;
   margin-bottom: 12px;
 }
-.plan-price .currency {
+.entity-title {
   font-family: var(--font-display);
-  font-size: 28px;
+  font-size: 24px;
   font-weight: 800;
-  color: var(--accent-orange);
+  margin-bottom: 6px;
 }
-.plan-price .amount {
-  font-family: var(--font-display);
-  font-size: 56px;
-  font-weight: 900;
-  color: var(--text-main);
-}
-.plan-price .unit {
-  font-size: 16px;
-  font-weight: 700;
-  color: var(--text-secondary);
-}
-.plan-desc {
+.entity-sub {
   font-size: 14px;
   color: var(--text-secondary);
+  line-height: 1.5;
   margin-bottom: 24px;
 }
-.plan-features {
-  text-align: left;
+.contact-meta-list {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  margin-bottom: 30px;
-  border-top: 2px solid var(--border-subtle);
-  padding-top: 24px;
-  list-style: none;
+  gap: 16px;
 }
-.plan-features li {
+.contact-meta-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+.contact-meta-item i {
+  width: 38px;
+  height: 38px;
+  background: var(--accent-yellow-light);
+  border: 1.5px solid var(--border-dark);
+  border-radius: 10px;
   display: flex;
   align-items: center;
-  gap: 10px;
+  justify-content: center;
+  font-size: 16px;
+  color: var(--accent-orange);
+  box-shadow: var(--shadow-hard-sm);
+  flex-shrink: 0;
+}
+.meta-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-muted);
+}
+.meta-val {
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--text-main);
+  text-decoration: none;
+}
+.meta-val:hover {
+  color: var(--accent-orange);
+}
+
+.form-title {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 800;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.form-row-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+.form-group {
+  margin-bottom: 14px;
+}
+.form-group label {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--text-main);
+  margin-bottom: 6px;
+}
+.form-input {
+  width: 100%;
+  background: var(--bg-canvas-subtle);
+  border: 2px solid var(--border-dark);
+  border-radius: 10px;
+  color: var(--text-main);
+  padding: 10px 14px;
+  font-family: var(--font-body);
   font-size: 14px;
   font-weight: 600;
+  outline: none;
+  box-shadow: var(--shadow-hard-sm);
+}
+.form-input:focus {
+  border-color: var(--accent-orange);
+}
+
+/* ==========================================================================
+   Compliance Accordion (#compliance, #refund, #terms, #privacy)
+   ========================================================================== */
+.compliance-section {
+  padding: 60px 0;
+}
+.compliance-accordion-wrap {
+  max-width: 860px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.policy-card {
+  background: #FFFFFF;
+  border: 2px solid var(--border-dark);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-hard);
+}
+.policy-header {
+  padding: 18px 22px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  background: var(--bg-card);
+  user-select: none;
+}
+.policy-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 800;
   color: var(--text-main);
 }
-.plan-features li i {
-  color: var(--accent-green);
-  font-size: 15px;
+.policy-title i {
+  color: var(--accent-orange);
+  font-size: 18px;
+}
+.policy-arrow {
+  transition: transform 0.25s;
+  color: var(--text-main);
+}
+.policy-card.active .policy-arrow {
+  transform: rotate(180deg);
+}
+.policy-body {
+  padding: 0 22px 22px;
+  color: var(--text-secondary);
+  font-size: 14px;
+  line-height: 1.65;
+  display: none;
+  border-top: 1.5px solid var(--border-subtle);
+  margin-top: 6px;
+  padding-top: 16px;
+}
+.policy-card.active .policy-body {
+  display: block;
 }
 
 /* ==========================================================================
@@ -1340,7 +1567,7 @@ section, [id] {
 }
 
 /* ==========================================================================
-   Direct Recharge Modal (Tactile Style)
+   Direct Recharge Modal
    ========================================================================== */
 .modal-backdrop {
   position: fixed;
@@ -1437,6 +1664,7 @@ section, [id] {
   display: flex;
   gap: 8px;
   margin-bottom: 6px;
+  flex-wrap: wrap;
 }
 .qr-pay-box {
   background: var(--bg-canvas-warm);
@@ -1465,7 +1693,7 @@ section, [id] {
 }
 
 /* ==========================================================================
-   Studio Footer (artist.garry inspired)
+   Studio Footer
    ========================================================================== */
 .site-footer {
   padding: 50px 0 30px;
@@ -1500,7 +1728,7 @@ section, [id] {
 }
 .footer-links-group {
   display: flex;
-  gap: 20px;
+  gap: 16px;
   flex-wrap: wrap;
   justify-content: center;
 }
@@ -1543,8 +1771,8 @@ section, [id] {
 
 /* ==========================================================================
    Responsive Breakpoints
-   ========================================================================== */
-@media (max-width: 1080px) {
+   ========================================================================= */
+@media (max-width: 1140px) {
   .nav-links {
     position: fixed;
     top: 76px;
@@ -1557,7 +1785,7 @@ section, [id] {
     flex-direction: column;
     padding: 20px;
     display: none;
-    gap: 12px;
+    gap: 10px;
   }
   .nav-links.open {
     display: flex;
@@ -1583,11 +1811,14 @@ section, [id] {
   .steps-grid {
     grid-template-columns: 1fr;
   }
+  .contact-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 768px) {
   .hero-headline {
-    font-size: 32px;
+    font-size: 30px;
   }
   .wallet-top-bar {
     flex-direction: column;
@@ -1604,6 +1835,9 @@ section, [id] {
   }
   .recharge-chips {
     flex-wrap: wrap;
+  }
+  .form-row-2 {
+    grid-template-columns: 1fr;
   }
   .nav-actions .btn-sm span {
     display: none;

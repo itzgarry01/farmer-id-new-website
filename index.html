@@ -6,10 +6,10 @@
     <title>AgriStack Farmer Card & Digital Wallet Hub | 36 States Official PVC Generator</title>
     <meta name="description" content="Generate official high-resolution PVC Farmer Identity Cards across all 36 Indian States & UTs with our Chrome & Edge Extension and Prepaid Digital Wallet.">
     
-    <!-- Google Fonts -->
+    <!-- Google Fonts: Bricolage Grotesque, Fraunces, JetBrains Mono, Plus Jakarta Sans -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=Cinzel:wght@600;700&family=Noto+Sans+Devanagari:wght@600;700&family=Noto+Sans+Gurmukhi:wght@600;700&family=Noto+Sans+Telugu:wght@600;700&family=Noto+Sans+Tamil:wght@600;700&family=Noto+Sans+Gujarati:wght@600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;1,9..144,400;1,9..144,700&family=JetBrains+Mono:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     
     <!-- FontAwesome 6.5.1 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -33,14 +33,16 @@
                     </div>
                 </a>
 
+                <!-- Centered Professional Navigation Buttons -->
                 <ul class="nav-links" id="navMenu">
-                    <li><a href="#features" class="nav-link">Overview</a></li>
-                    <li><a href="#card-preview" class="nav-link">3D Card Demo</a></li>
-                    <li><a href="#wallet" class="nav-link">Digital Wallet</a></li>
-                    <li><a href="#portals" class="nav-link">36 States</a></li>
-                    <li><a href="#install" class="nav-link">Install Guide</a></li>
-                    <li><a href="#pricing" class="nav-link">Pricing</a></li>
-                    <li><a href="#faq" class="nav-link">FAQ</a></li>
+                    <li><a href="#hero" class="nav-btn">Overview</a></li>
+                    <li><a href="#card-preview" class="nav-btn">3D Card Demo</a></li>
+                    <li><a href="#wallet" class="nav-btn">Digital Wallet</a></li>
+                    <li><a href="#products" class="nav-btn">Pricing Packs</a></li>
+                    <li><a href="#portals" class="nav-btn">36 States</a></li>
+                    <li><a href="#install" class="nav-btn">Install Guide</a></li>
+                    <li><a href="#contact" class="nav-btn">Contact</a></li>
+                    <li><a href="#compliance" class="nav-btn">Policies</a></li>
                 </ul>
 
                 <div class="nav-actions">
@@ -297,7 +299,7 @@
             </div>
         </section>
 
-        <!-- Interactive Digital Wallet & Operator Login Section -->
+        <!-- Interactive Digital Wallet Section -->
         <section class="wallet-section container" id="wallet">
             <div class="section-header text-center">
                 <div class="badge-tag"><i class="fa-solid fa-wallet"></i> Instant Operator Wallet</div>
@@ -319,7 +321,7 @@
                                 </button>
                             </div>
                             <div class="user-status-label">
-                                <span class="status-indicator live-pulse"></span>
+                                <span class="status-indicator"></span>
                                 <span id="walletAuthStatus">Verified Operator Account</span>
                             </div>
                         </div>
@@ -343,7 +345,7 @@
                             <button class="chip popular active" onclick="selectRechargeAmount(1000)">₹1,000 <small>(66 Cards)</small> <span class="pop-tag">Best Value</span></button>
                         </div>
                     </div>
-                    <button class="btn btn-primary btn-recharge" onclick="openDirectRechargeModal()">
+                    <button class="btn btn-primary btn-recharge" onclick="openDirectRechargeModal(1000, 'Cyber Cafe Pack')">
                         <i class="fa-solid fa-qrcode"></i> Instant UPI / QR Recharge
                     </button>
                 </div>
@@ -387,6 +389,122 @@
             </div>
         </section>
 
+        <!-- Visible 5-Tier Pricing Packs Section (#products & #pricing) -->
+        <section class="pricing-section container" id="products">
+            <div class="section-header text-center">
+                <div class="badge-tag"><i class="fa-solid fa-tags"></i> Pricing & Recharge Packs</div>
+                <h2 class="section-title">Transparent Operator Top-Up Plans</h2>
+                <p class="section-desc">Zero subscription fees or monthly lock-ins. Select any pack below to recharge your wallet balance instantly via UPI or QR.</p>
+            </div>
+
+            <div class="pricing-grid">
+                <!-- Tier 1: Starter Pack -->
+                <div class="pricing-pack-card">
+                    <div class="pack-badge">Starter</div>
+                    <h3 class="pack-name">Starter Pack</h3>
+                    <div class="pack-price">
+                        <span class="currency">₹</span>
+                        <span class="amount">100</span>
+                    </div>
+                    <div class="pack-estimate">~4 Cards Capacity</div>
+                    <p class="pack-desc">Perfect for small kiosks, new operators, and trial PVC card printing.</p>
+                    <ul class="pack-features">
+                        <li><i class="fa-solid fa-check"></i> ₹100 Wallet Credit</li>
+                        <li><i class="fa-solid fa-check"></i> All 36 States Supported</li>
+                        <li><i class="fa-solid fa-check"></i> Instant Automated Deduction</li>
+                        <li><i class="fa-solid fa-check"></i> Valid Forever with No Expiry</li>
+                    </ul>
+                    <button class="btn btn-secondary btn-block" onclick="openDirectRechargeModal(100, 'Starter Pack')">
+                        <i class="fa-solid fa-bolt"></i> Recharge ₹100
+                    </button>
+                </div>
+
+                <!-- Tier 2: Standard Pack -->
+                <div class="pricing-pack-card">
+                    <div class="pack-badge">Standard</div>
+                    <h3 class="pack-name">Standard Pack</h3>
+                    <div class="pack-price">
+                        <span class="currency">₹</span>
+                        <span class="amount">250</span>
+                    </div>
+                    <div class="pack-estimate">~11 Cards Capacity</div>
+                    <p class="pack-desc">Ideal for daily village CSC operators and stationary print counters.</p>
+                    <ul class="pack-features">
+                        <li><i class="fa-solid fa-check"></i> ₹250 Wallet Credit</li>
+                        <li><i class="fa-solid fa-check"></i> All 36 States Supported</li>
+                        <li><i class="fa-solid fa-check"></i> High Priority PDF Generation</li>
+                        <li><i class="fa-solid fa-check"></i> 100% Client-Side Privacy</li>
+                    </ul>
+                    <button class="btn btn-secondary btn-block" onclick="openDirectRechargeModal(250, 'Standard Pack')">
+                        <i class="fa-solid fa-bolt"></i> Recharge ₹250
+                    </button>
+                </div>
+
+                <!-- Tier 3: Value Pro Pack -->
+                <div class="pricing-pack-card">
+                    <div class="pack-badge popular">Popular</div>
+                    <h3 class="pack-name">Value Pro Pack</h3>
+                    <div class="pack-price">
+                        <span class="currency">₹</span>
+                        <span class="amount">500</span>
+                    </div>
+                    <div class="pack-estimate">~22 Cards Capacity</div>
+                    <p class="pack-desc">Recommended for active CSC centers generating cards daily.</p>
+                    <ul class="pack-features">
+                        <li><i class="fa-solid fa-check"></i> ₹500 Wallet Credit</li>
+                        <li><i class="fa-solid fa-check"></i> All 36 States Supported</li>
+                        <li><i class="fa-solid fa-check"></i> HarfBuzz Indic Complex Shaping</li>
+                        <li><i class="fa-solid fa-check"></i> Direct WhatsApp Support</li>
+                    </ul>
+                    <button class="btn btn-secondary btn-block" onclick="openDirectRechargeModal(500, 'Value Pro Pack')">
+                        <i class="fa-solid fa-bolt"></i> Recharge ₹500
+                    </button>
+                </div>
+
+                <!-- Tier 4: Cyber Cafe Pack (Featured) -->
+                <div class="pricing-pack-card featured">
+                    <div class="pack-badge featured-badge">Best Value</div>
+                    <h3 class="pack-name">Cyber Cafe Pack</h3>
+                    <div class="pack-price">
+                        <span class="currency">₹</span>
+                        <span class="amount">1,000</span>
+                    </div>
+                    <div class="pack-estimate">~45 Cards Capacity</div>
+                    <p class="pack-desc">Most popular choice for cyber cafes and multi-operator shops.</p>
+                    <ul class="pack-features">
+                        <li><i class="fa-solid fa-check"></i> ₹1,000 Wallet Credit</li>
+                        <li><i class="fa-solid fa-check"></i> All 36 States Supported</li>
+                        <li><i class="fa-solid fa-check"></i> Compact Low-Density QR</li>
+                        <li><i class="fa-solid fa-check"></i> Fast Track Operator Assistance</li>
+                    </ul>
+                    <button class="btn btn-primary btn-block" onclick="openDirectRechargeModal(1000, 'Cyber Cafe Pack')">
+                        <i class="fa-solid fa-bolt"></i> Recharge ₹1,000
+                    </button>
+                </div>
+
+                <!-- Tier 5: Bulk CSC Center -->
+                <div class="pricing-pack-card">
+                    <div class="pack-badge">Bulk VLE</div>
+                    <h3 class="pack-name">Bulk CSC Center</h3>
+                    <div class="pack-price">
+                        <span class="currency">₹</span>
+                        <span class="amount">2,000</span>
+                    </div>
+                    <div class="pack-estimate">~90 Cards Capacity</div>
+                    <p class="pack-desc">Maximum convenience and volume for district-level CSC distributors.</p>
+                    <ul class="pack-features">
+                        <li><i class="fa-solid fa-check"></i> ₹2,000 Wallet Credit</li>
+                        <li><i class="fa-solid fa-check"></i> All 36 States Supported</li>
+                        <li><i class="fa-solid fa-check"></i> Multi-Device Extension Access</li>
+                        <li><i class="fa-solid fa-check"></i> Dedicated Priority Support</li>
+                    </ul>
+                    <button class="btn btn-secondary btn-block" onclick="openDirectRechargeModal(2000, 'Bulk CSC Center')">
+                        <i class="fa-solid fa-bolt"></i> Recharge ₹2,000
+                    </button>
+                </div>
+            </div>
+        </section>
+
         <!-- 36 States AgriStack Portals Directory -->
         <section class="portals-section container" id="portals">
             <div class="section-header text-center">
@@ -415,7 +533,7 @@
                     <h3 class="step-title">Download Extension</h3>
                     <p class="step-desc">Download the official <code>agristack-card-helper-v5.0.zip</code> package and extract it to your computer.</p>
                     <a href="agristack-card-helper-v5.0.zip" download class="btn btn-outline btn-sm mt-3">
-                        <i class="fa-solid fa-download"></i> Get ZIP (528 KB)
+                        <i class="fa-solid fa-download"></i> Get ZIP (400 KB)
                     </a>
                 </div>
 
@@ -437,37 +555,160 @@
             </div>
         </section>
 
-        <!-- Pricing Section -->
-        <section class="pricing-section container" id="pricing">
+        <!-- Contact Us Section (#contact) -->
+        <section class="contact-section container" id="contact">
             <div class="section-header text-center">
-                <div class="badge-tag"><i class="fa-solid fa-tags"></i> Zero Subscription</div>
-                <h2 class="section-title">Transparent Operator Pricing</h2>
-                <p class="section-desc">No monthly lock-ins or hidden fees. Pay only for the cards you print.</p>
+                <div class="badge-tag"><i class="fa-solid fa-headset"></i> Support & Entity</div>
+                <h2 class="section-title">Get in Touch with Our Team</h2>
+                <p class="section-desc">Have questions about operator wallet top-ups, state registry integration, or extension setup? Reach out to us anytime.</p>
             </div>
 
-            <div class="pricing-card-wrapper">
-                <div class="pricing-card featured">
-                    <div class="pricing-badge">Official Operator Plan</div>
-                    <h3 class="plan-name">Prepaid Operator Wallet</h3>
-                    <div class="plan-price">
-                        <span class="currency">₹</span>
-                        <span class="amount">15</span>
-                        <span class="unit">/ card</span>
+            <div class="contact-grid">
+                <!-- Entity Info Card -->
+                <div class="contact-info-card">
+                    <div class="entity-badge">Official Entity</div>
+                    <h3 class="entity-title">AgriStack Helper Tools</h3>
+                    <p class="entity-sub">Developer and provider of browser productivity tools and operator prepaid wallet solutions for AgriStack portals.</p>
+
+                    <div class="contact-meta-list">
+                        <div class="contact-meta-item">
+                            <i class="fa-solid fa-envelope"></i>
+                            <div>
+                                <span class="meta-label">Official Support Email:</span>
+                                <a href="mailto:itzgarry01@gmail.com" class="meta-val">itzgarry01@gmail.com</a>
+                            </div>
+                        </div>
+
+                        <div class="contact-meta-item">
+                            <i class="fa-solid fa-phone"></i>
+                            <div>
+                                <span class="meta-label">Operator Helpline / WhatsApp:</span>
+                                <a href="https://wa.me/917009980800" target="_blank" class="meta-val">+91 70099 80800</a>
+                            </div>
+                        </div>
+
+                        <div class="contact-meta-item">
+                            <i class="fa-solid fa-globe"></i>
+                            <div>
+                                <span class="meta-label">Official Portal URL:</span>
+                                <span class="meta-val">farmercardwebsite.vercel.app</span>
+                            </div>
+                        </div>
+
+                        <div class="contact-meta-item">
+                            <i class="fa-solid fa-clock"></i>
+                            <div>
+                                <span class="meta-label">Support Hours:</span>
+                                <span class="meta-val">Monday – Saturday (9:00 AM – 8:00 PM IST)</span>
+                            </div>
+                        </div>
                     </div>
-                    <p class="plan-desc">Single wallet balance for all 36 Indian states. Real-time automatic deduction.</p>
+                </div>
 
-                    <ul class="plan-features">
-                        <li><i class="fa-solid fa-check"></i> Complete 36 States & UTs Template Suite</li>
-                        <li><i class="fa-solid fa-check"></i> HarfBuzz Indic Complex Script Shaping</li>
-                        <li><i class="fa-solid fa-check"></i> Dual-Sided 1145×725 300 DPI Canvas</li>
-                        <li><i class="fa-solid fa-check"></i> Low-Density Compact QR Embedding</li>
-                        <li><i class="fa-solid fa-check"></i> Instant UPI / QR & Cards Top-Up</li>
-                        <li><i class="fa-solid fa-check"></i> Direct CSC / Kiosk High-Speed Printing</li>
-                    </ul>
+                <!-- Support Inquiry Form -->
+                <div class="contact-form-card">
+                    <h3 class="form-title"><i class="fa-solid fa-paper-plane"></i> Send Support Inquiry</h3>
+                    <form id="contactForm" onsubmit="handleContactSubmit(event)">
+                        <div class="form-row-2">
+                            <div class="form-group">
+                                <label for="contactName">Your Name:</label>
+                                <input type="text" id="contactName" class="form-input" placeholder="Operator / Center Name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="contactMobile">Mobile Number:</label>
+                                <input type="tel" id="contactMobile" class="form-input" placeholder="10-digit mobile" required>
+                            </div>
+                        </div>
 
-                    <a href="agristack-card-helper-v5.0.zip" download class="btn btn-primary btn-block btn-lg">
-                        <i class="fa-solid fa-download"></i> Download Extension v5.0
-                    </a>
+                        <div class="form-group">
+                            <label for="contactEmail">Email Address:</label>
+                            <input type="email" id="contactEmail" class="form-input" placeholder="name@example.com" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="contactMessage">Message / Issue Details:</label>
+                            <textarea id="contactMessage" class="form-input" rows="4" placeholder="Describe your query or transaction ID..." required></textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-block" id="btnSubmitContact">
+                            <i class="fa-solid fa-paper-plane"></i> Submit Inquiry
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Mandatory Compliance Policies Accordion (#compliance, #refund, #terms, #privacy) -->
+        <section class="compliance-section container" id="compliance">
+            <div class="section-header text-center">
+                <div class="badge-tag"><i class="fa-solid fa-scale-balanced"></i> Legal & Compliance</div>
+                <h2 class="section-title">Mandatory Service Policies</h2>
+                <p class="section-desc">Review our transparent terms, instant digital delivery specifications, and customer-first refund policies.</p>
+            </div>
+
+            <div class="compliance-accordion-wrap">
+                <!-- Policy 1: Shipping & Delivery -->
+                <div class="policy-card" id="delivery">
+                    <div class="policy-header" onclick="togglePolicy(this)">
+                        <div class="policy-title">
+                            <i class="fa-solid fa-truck-fast"></i>
+                            <span>Shipping & Delivery Policy (Digital Credits)</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-down policy-arrow"></i>
+                    </div>
+                    <div class="policy-body">
+                        <p><strong>1. Instant Digital Delivery:</strong> AgriStack Card Generator Helper is a 100% digital software extension and prepaid wallet service. No physical items or cards are shipped via post or courier.</p>
+                        <p><strong>2. Delivery Timelines:</strong> The browser extension package (.ZIP) is downloadable immediately upon clicking the download button. Prepaid wallet top-ups are credited to your mobile-linked account instantaneously upon bank confirmation.</p>
+                        <p><strong>3. Support Confirmation:</strong> You will receive real-time balance updates in your dashboard ledger upon every successful top-up transaction.</p>
+                    </div>
+                </div>
+
+                <!-- Policy 2: Refund & Cancellation -->
+                <div class="policy-card" id="refund">
+                    <div class="policy-header" onclick="togglePolicy(this)">
+                        <div class="policy-title">
+                            <i class="fa-solid fa-rotate-left"></i>
+                            <span>Cancellation & Refund Policy</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-down policy-arrow"></i>
+                    </div>
+                    <div class="policy-body">
+                        <p><strong>1. Unused Balance Refunds:</strong> If you top up your prepaid operator wallet and choose not to use the service, you may request a full refund of your unspent wallet balance within 7 business days of the recharge date.</p>
+                        <p><strong>2. Generated Cards:</strong> Fees deducted for successfully formatted and downloaded 300 DPI PDF cards (₹15 per card) are non-refundable once the file is generated and saved.</p>
+                        <p><strong>3. How to Request a Refund:</strong> Email your registered mobile number and transaction ID to <strong>itzgarry01@gmail.com</strong> or message us on WhatsApp at <strong>+91 70099 80800</strong>. Refunds are credited to the source payment method within 3–5 working days.</p>
+                    </div>
+                </div>
+
+                <!-- Policy 3: Terms & Conditions -->
+                <div class="policy-card" id="terms">
+                    <div class="policy-header" onclick="togglePolicy(this)">
+                        <div class="policy-title">
+                            <i class="fa-solid fa-file-contract"></i>
+                            <span>Terms & Conditions</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-down policy-arrow"></i>
+                    </div>
+                    <div class="policy-body">
+                        <p><strong>1. Agreement to Terms:</strong> By downloading, installing, or recharging your wallet with AgriStack Card Helper, you agree to these Terms. If you disagree, do not use the extension.</p>
+                        <p><strong>2. Nature of Productivity Tool:</strong> AgriStack Card Helper is an independent browser productivity tool designed to format publicly accessible, legally authorized farmer records from official state registry portals into printable PVC layout cards.</p>
+                        <p><strong>3. Transparent Operator Pricing:</strong> The extension is free to download. Usage is billed on a prepaid wallet model at a flat rate of ₹15 per generated PDF card across all 36 Indian States & UTs.</p>
+                    </div>
+                </div>
+
+                <!-- Policy 4: Privacy Policy -->
+                <div class="policy-card" id="privacy">
+                    <div class="policy-header" onclick="togglePolicy(this)">
+                        <div class="policy-title">
+                            <i class="fa-solid fa-shield-halved"></i>
+                            <span>Privacy Policy</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-down policy-arrow"></i>
+                    </div>
+                    <div class="policy-body">
+                        <p><strong>1. 100% Client-Side In-Browser Processing:</strong> All farmer data parsing, Indic HarfBuzz shaping, photograph embedding, and QR code generation execute strictly inside your local browser memory sandbox.</p>
+                        <p><strong>2. Zero Server Storage of Citizen Data:</strong> No personal farmer details (names, Aadhaar numbers, land coordinates, or photo images) are ever sent to, processed by, or stored on our servers.</p>
+                        <p><strong>3. Secure Transactions:</strong> Payments for wallet balance top-ups are processed through RBI-compliant, 256-bit SSL encrypted channels. We never store card numbers, UPI PINs, or banking passwords.</p>
+                    </div>
                 </div>
             </div>
         </section>
@@ -537,6 +778,7 @@
                         <button class="chip" onclick="setModalAmount(250)">₹250</button>
                         <button class="chip" onclick="setModalAmount(500)">₹500</button>
                         <button class="chip popular active" onclick="setModalAmount(1000)">₹1,000</button>
+                        <button class="chip" onclick="setModalAmount(2000)">₹2,000</button>
                     </div>
                     <input type="number" id="modalRechargeAmount" class="modal-input mt-2" value="1000" min="50" step="50">
                 </div>
@@ -565,23 +807,27 @@
                 <div class="footer-brand">
                     <div class="footer-logo">
                         <i class="fa-solid fa-seedling"></i>
-                        <span>AgriStack Card Helper</span>
+                        <span>AgriStack Helper Tools</span>
                     </div>
                     <p class="footer-sub">Official PVC Identity Card Automation & Prepaid Operator Hub for 36 Indian States.</p>
                 </div>
 
                 <div class="footer-links-group">
-                    <a href="#features">Overview</a>
+                    <a href="#hero">Overview</a>
                     <a href="#card-preview">3D Preview</a>
                     <a href="#wallet">Wallet Hub</a>
+                    <a href="#products">Pricing Packs</a>
                     <a href="#portals">36 Portals</a>
-                    <a href="#install">Install</a>
-                    <a href="#faq">FAQ</a>
+                    <a href="#contact">Contact</a>
+                    <a href="#compliance">Delivery Policy</a>
+                    <a href="#refund">Refund Policy</a>
+                    <a href="#terms">Terms</a>
+                    <a href="#privacy">Privacy</a>
                 </div>
 
                 <div class="footer-creator">
-                    <span class="creator-badge">CRAFTED WITH PRECISION</span>
-                    <span class="copyright-text">© 2026 AgriStack Helper. All rights reserved.</span>
+                    <span class="creator-badge">DEVELOPER & SUPPORT: itzgarry01@gmail.com</span>
+                    <span class="copyright-text">© 2026 AgriStack Helper Tools. All rights reserved.</span>
                 </div>
             </div>
         </div>

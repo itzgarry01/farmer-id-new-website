@@ -739,12 +739,15 @@ function setModalAmount(amount) {
   });
 }
 
-function openDirectRechargeModal() {
+function openDirectRechargeModal(amount = 1000, packTitle = 'Cyber Cafe Pack') {
   const modal = document.getElementById('rechargeModal');
   const mobileInput = document.getElementById('modalMobileInput');
+  const title = document.getElementById('modalRechargeTitle');
+  
   if (mobileInput) mobileInput.value = currentMobile;
+  if (title) title.textContent = `⚡ Top-Up: ${packTitle}`;
 
-  setModalAmount(currentSelectedAmount);
+  setModalAmount(amount);
 
   if (modal) {
     modal.classList.add('active');
@@ -809,13 +812,13 @@ async function processWalletRecharge() {
     setTimeout(() => {
       closeRechargeModal();
       if (btn) btn.innerHTML = '<i class="fa-solid fa-check"></i> Confirm Payment & Update Balance';
-      alert(`🎉 ₹${amount.toLocaleString('en-IN')} successfully credited to mobile ${mobile}!`);
+      alert(`🎉 ₹${amount.toLocaleString('en-IN')} successfully credited to operator mobile ${mobile}!`);
     }, 600);
   }, 1000);
 }
 
 /* ==========================================================================
-   Navigation & Accordions
+   Navigation, Policies & Forms
    ========================================================================== */
 function initMobileMenu() {
   const mobileToggle = document.getElementById('mobileToggle');
@@ -826,12 +829,42 @@ function initMobileMenu() {
       navMenu.classList.toggle('open');
     });
 
-    navMenu.querySelectorAll('.nav-link').forEach(link => {
+    navMenu.querySelectorAll('.nav-btn').forEach(link => {
       link.addEventListener('click', () => {
         navMenu.classList.remove('open');
       });
     });
   }
+}
+
+function togglePolicy(headerEl) {
+  const card = headerEl.closest('.policy-card');
+  if (!card) return;
+  const isActive = card.classList.contains('active');
+  document.querySelectorAll('.policy-card').forEach(c => c.classList.remove('active'));
+  if (!isActive) {
+    card.classList.add('active');
+  }
+}
+
+function handleContactSubmit(e) {
+  e.preventDefault();
+  const name = document.getElementById('contactName').value;
+  const btn = document.getElementById('btnSubmitContact');
+
+  if (btn) {
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Submitting...';
+  }
+
+  setTimeout(() => {
+    alert(`Thank you, ${name}! Your inquiry has been received. Our operator support team will reply to your email / WhatsApp within 2 hours.`);
+    document.getElementById('contactForm').reset();
+    if (btn) {
+      btn.disabled = false;
+      btn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Submit Inquiry';
+    }
+  }, 800);
 }
 
 function toggleFaq(btn) {
@@ -848,7 +881,20 @@ function scrollToSection(id) {
   const el = document.getElementById(id);
   if (el) {
     el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (el.classList.contains('policy-card')) {
+      document.querySelectorAll('.policy-card').forEach(c => c.classList.remove('active'));
+      el.classList.add('active');
+    } else if (id === 'compliance') {
+      const deliveryCard = document.getElementById('delivery');
+      if (deliveryCard) deliveryCard.classList.add('active');
+    }
   }
+}
+
+function handleHashNavigation() {
+  const hash = window.location.hash.replace('#', '');
+  if (!hash) return;
+  scrollToSection(hash);
 }
 
 function initSmoothScroll() {
@@ -858,7 +904,12 @@ function initSmoothScroll() {
       if (targetId) {
         e.preventDefault();
         scrollToSection(targetId);
+        window.history.pushState(null, null, `#${targetId}`);
       }
     });
   });
 }
+
+window.addEventListener('hashchange', handleHashNavigation);
+
+
