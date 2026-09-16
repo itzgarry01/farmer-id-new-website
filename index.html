@@ -36,11 +36,11 @@
                 <!-- Centered Professional Navigation Buttons -->
                 <ul class="nav-links" id="navMenu">
                     <li><a href="#hero" class="nav-btn">Overview</a></li>
-                    <li><a href="#card-preview" class="nav-btn">3D Card Demo</a></li>
-                    <li><a href="#wallet" class="nav-btn">Digital Wallet</a></li>
-                    <li><a href="#products" class="nav-btn">Pricing Packs</a></li>
+                    <li><a href="#card-preview" class="nav-btn">3D Demo</a></li>
+                    <li><a href="#wallet" class="nav-btn">Wallet</a></li>
+                    <li><a href="#products" class="nav-btn">Pricing</a></li>
                     <li><a href="#portals" class="nav-btn">36 States</a></li>
-                    <li><a href="#install" class="nav-btn">Install Guide</a></li>
+                    <li><a href="#install" class="nav-btn">Guide</a></li>
                     <li><a href="#contact" class="nav-btn">Contact</a></li>
                     <li><a href="#compliance" class="nav-btn">Policies</a></li>
                 </ul>
@@ -360,15 +360,15 @@
                     <div class="recharge-options-group">
                         <div class="rec-title"><i class="fa-solid fa-bolt"></i> Quick Top-Up Packs:</div>
                         <div class="recharge-chips">
-                            <button class="chip" onclick="selectRechargeAmount(100)">₹100 <small>(~6 Cards)</small></button>
-                            <button class="chip" onclick="selectRechargeAmount(250)">₹250 <small>(~16 Cards)</small></button>
-                            <button class="chip" onclick="selectRechargeAmount(500)">₹500 <small>(~33 Cards)</small></button>
-                            <button class="chip popular active" onclick="selectRechargeAmount(1000)">₹1,000 <small>(~66 Cards)</small> <span class="pop-tag">Best Value</span></button>
-                            <button class="chip" onclick="selectRechargeAmount(2000)">₹2,000 <small>(~133 Cards)</small></button>
+                            <button class="chip" onclick="openDirectRechargeModal(100, 'Starter Pack')">₹100 <small>(~4 Cards)</small></button>
+                            <button class="chip" onclick="openDirectRechargeModal(250, 'Standard Pack')">₹250 <small>(~11 Cards)</small></button>
+                            <button class="chip" onclick="openDirectRechargeModal(500, 'Value Pro Pack')">₹500 <small>(~22 Cards)</small></button>
+                            <button class="chip popular active" onclick="openDirectRechargeModal(1000, 'Cyber Cafe Pack')">₹1,000 <small>(~45 Cards)</small> <span class="pop-tag">Best Value</span></button>
+                            <button class="chip" onclick="openDirectRechargeModal(2000, 'Bulk CSC Center')">₹2,000 <small>(~90 Cards)</small></button>
                         </div>
                     </div>
                     <button class="btn btn-primary btn-recharge" onclick="openDirectRechargeModal(1000, 'Cyber Cafe Pack')">
-                        <i class="fa-solid fa-qrcode"></i> Instant UPI / QR Recharge
+                        <i class="fa-solid fa-bolt"></i> Quick Add Funds
                     </button>
                 </div>
 
