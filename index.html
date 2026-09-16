@@ -327,7 +327,7 @@
                                 <i class="fa-solid fa-user-plus"></i> Register
                             </button>
                             <button class="btn btn-secondary btn-sm" onclick="fetchLiveWalletBalance()">
-                                <i class="fa-solid fa-rotate"></i> Sync MongoDB
+                                <i class="fa-solid fa-rotate"></i> Sync Balance
                             </button>
                         </div>
                     </div>
@@ -340,11 +340,10 @@
                             <div class="user-phone-wrap">
                                 <span class="phone-label">Active Operator:</span>
                                 <strong id="loggedOperatorMobile" class="logged-mobile-text">+91 7009980800</strong>
-                                <span class="badge success" id="dbConnBadge"><i class="fa-solid fa-database"></i> MongoDB Cloud</span>
                             </div>
                             <div class="user-status-label">
                                 <span class="status-indicator active"></span>
-                                <span id="walletAuthStatus">Authenticated & Ready for Card Generation</span>
+                                <span id="walletAuthStatus">Verified Operator Account</span>
                             </div>
                         </div>
                     </div>
@@ -377,7 +376,7 @@
                 <div class="wallet-ledger">
                     <div class="ledger-header">
                         <h4><i class="fa-solid fa-receipt"></i> Recent Card Activity & Deductions</h4>
-                        <span class="ledger-note"><i class="fa-solid fa-cloud"></i> Synced with MongoDB Atlas database</span>
+                        <span class="ledger-note"><i class="fa-solid fa-bolt"></i> Live Ledger Sync</span>
                     </div>
                     <div class="ledger-table-wrap">
                         <table class="ledger-table">

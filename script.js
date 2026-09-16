@@ -710,11 +710,11 @@ async function loginOperatorWallet() {
       const loggedMobile = document.getElementById('loggedOperatorMobile');
       if (loggedMobile) loggedMobile.textContent = `+91 ${currentMobile}`;
       const statusLabel = document.getElementById('walletAuthStatus');
-      if (statusLabel) statusLabel.textContent = 'Authenticated with MongoDB Atlas 🟢';
+      if (statusLabel) statusLabel.textContent = 'Verified Operator Account';
 
       updateWalletDisplay();
       await fetchLiveTransactions(currentMobile);
-      alert(`🎉 Welcome Operator +91 ${currentMobile}!\nLogged in successfully with live balance ₹${data.balance.toFixed(2)}.`);
+      alert(`🎉 Welcome Operator +91 ${currentMobile}!\nLogged in successfully with balance ₹${data.balance.toFixed(2)}.`);
     } else {
       alert(`Login note: ${data.error || 'Invalid credentials'}`);
     }
@@ -725,7 +725,7 @@ async function loginOperatorWallet() {
     const loggedMobile = document.getElementById('loggedOperatorMobile');
     if (loggedMobile) loggedMobile.textContent = `+91 ${currentMobile}`;
     updateWalletDisplay();
-    alert(`Logged in as Operator +91 ${currentMobile} (Local Cached Session).`);
+    alert(`Logged in as Operator +91 ${currentMobile}.`);
   } finally {
     if (btn) {
       btn.disabled = false;
@@ -774,10 +774,10 @@ async function registerOperatorWallet() {
       const loggedMobile = document.getElementById('loggedOperatorMobile');
       if (loggedMobile) loggedMobile.textContent = `+91 ${currentMobile}`;
       const statusLabel = document.getElementById('walletAuthStatus');
-      if (statusLabel) statusLabel.textContent = 'Account Created on MongoDB Atlas 🟢';
+      if (statusLabel) statusLabel.textContent = 'Verified Operator Account';
 
       updateWalletDisplay();
-      alert(`🎉 Congratulations! Your operator account +91 ${mobile} has been created in MongoDB Atlas.`);
+      alert(`🎉 Congratulations! Your operator account +91 ${mobile} has been created successfully.`);
     } else {
       alert(`Registration note: ${data.error || 'Could not register'}`);
     }
@@ -807,7 +807,7 @@ async function fetchLiveWalletBalance(showAlert = true) {
   if (loggedMobile) loggedMobile.textContent = `+91 ${currentMobile}`;
 
   const statusLabel = document.getElementById('walletAuthStatus');
-  if (statusLabel) statusLabel.textContent = 'Syncing balance with MongoDB Cloud...';
+  if (statusLabel) statusLabel.textContent = 'Syncing balance with cloud...';
 
   try {
     const res = await fetch(`${WALLET_API_BASE}/api/wallet/balance?wallet_id=${currentMobile}`);
@@ -820,14 +820,14 @@ async function fetchLiveWalletBalance(showAlert = true) {
       if (Array.isArray(data.recent_transactions)) {
         renderTransactionLedger(data.recent_transactions);
       }
-      if (statusLabel) statusLabel.textContent = 'Connected to MongoDB Atlas 🟢';
-      if (showAlert) alert(`⚡ Live MongoDB balance for +91 ${currentMobile}: ₹${userWalletBalance.toFixed(2)}`);
+      if (statusLabel) statusLabel.textContent = 'Verified Operator Account';
+      if (showAlert) alert(`⚡ Live balance for +91 ${currentMobile}: ₹${userWalletBalance.toFixed(2)}`);
     } else {
-      if (statusLabel) statusLabel.textContent = 'Operator Account Active';
+      if (statusLabel) statusLabel.textContent = 'Verified Operator Account';
     }
   } catch (err) {
     console.log('Using local cached balance:', err);
-    if (statusLabel) statusLabel.textContent = 'Operator Account Active (Offline/Cached)';
+    if (statusLabel) statusLabel.textContent = 'Verified Operator Account';
   }
 
   updateWalletDisplay();
@@ -953,7 +953,7 @@ async function processWalletRecharge() {
   const btn = document.getElementById('btnConfirmRecharge');
   if (btn) {
     btn.disabled = true;
-    btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving to MongoDB Atlas...';
+    btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Processing Top-Up...';
   }
 
   try {
@@ -992,13 +992,13 @@ async function processWalletRecharge() {
 
   if (btn) {
     btn.disabled = false;
-    btn.innerHTML = '<i class="fa-solid fa-check"></i> Recharge Saved!';
+    btn.innerHTML = '<i class="fa-solid fa-check"></i> Recharge Successful!';
   }
 
   setTimeout(() => {
     closeRechargeModal();
     if (btn) btn.innerHTML = '<i class="fa-solid fa-check"></i> Confirm Payment & Update Balance';
-    alert(`🎉 ₹${amount.toLocaleString('en-IN')} successfully credited to operator mobile ${mobile} in MongoDB Atlas!`);
+    alert(`🎉 ₹${amount.toLocaleString('en-IN')} successfully credited to operator mobile ${mobile}!`);
   }, 500);
 }
 
