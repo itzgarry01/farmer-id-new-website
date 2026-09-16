@@ -1,1424 +1,561 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AgriStack Card Helper - Official Farmer ID Digital Identity Generator</title>
-
-  <!-- SEO & Verification Meta Tags -->
-  <meta name="description"
-    content="AgriStack Card Generator Helper is a fast, automated browser tool for formatting official farmer identity cards from registry records into 300 DPI print-ready PDFs.">
-  <meta name="keywords"
-    content="AgriStack, Punjab Farmer Registry, Farmer ID Card, CSC VLE Tool, AgriStack Card Generator, AgriStack Extension, Farmer ID Digital Identity">
-  <meta name="author" content="AgriStack Card Helper">
-
-  <!-- Google Fonts: Inter -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
-    rel="stylesheet">
-
-  <!-- Favicons and Title Logo using official logo -->
-  <link rel="icon" type="image/png" href="icons/logo.png">
-  <link rel="shortcut icon" type="image/png" href="icons/logo.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="icons/icon32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="icons/icon16.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="icons/logo.png">
-  <meta property="og:image" content="icons/logo.png">
-  <meta name="twitter:image" content="icons/logo.png">
-
-  <!-- Razorpay Official Checkout SDK -->
-  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-
-  <!-- Core CSS -->
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgriStack Farmer Card & Digital Wallet Hub | 36 States Official Card Generator</title>
+    <meta name="description" content="Generate official high-resolution PVC Farmer Identity Cards across all 36 Indian States & UTs with our Chrome & Edge Extension and Prepaid Digital Wallet.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Cinzel:wght@600;700&family=Noto+Sans+Devanagari:wght@600;700&family=Noto+Sans+Gurmukhi:wght@600;700&family=Noto+Sans+Telugu:wght@600;700&family=Noto+Sans+Tamil:wght@600;700&family=Noto+Sans+Gujarati:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
 </head>
+<body class="dark-theme">
+    <!-- Background Glow Effect -->
+    <div class="bg-glow bg-glow-1"></div>
+    <div class="bg-glow bg-glow-2"></div>
 
-<body>
+    <!-- Navigation Bar -->
+    <header class="navbar-wrapper">
+        <nav class="navbar container">
+            <a href="#" class="nav-logo">
+                <div class="logo-icon-box">
+                    <i class="fa-solid fa-seedling"></i>
+                </div>
+                <div class="logo-text">
+                    <span class="brand-title">Agri<span>Stack</span></span>
+                    <span class="brand-badge">Wallet v5.0</span>
+                </div>
+            </a>
 
-  <!-- Top Announcement / Security Notice Banner -->
-  <aside class="compliance-banner" id="topComplianceBanner" aria-label="Official Compliance Notice">
-    <span class="compliance-badge-tag">⚡ PREPAID DIGITAL WALLET v5.0</span>
-    <span>Free Extension Install &bull; Format 300 DPI Official Farmer ID Cards &bull; ₹22 / Card from Prepaid Balance</span>
-  </aside>
+            <div class="nav-menu" id="navMenu">
+                <a href="#features" class="nav-link">Features</a>
+                <a href="#card-preview" class="nav-link">Live Preview</a>
+                <a href="#wallet" class="nav-link">Digital Wallet</a>
+                <a href="#portals" class="nav-link">36 States</a>
+                <a href="#install" class="nav-link">Install Guide</a>
+                <a href="#pricing" class="nav-link">Pricing</a>
+                <a href="#faq" class="nav-link">FAQ</a>
+            </div>
 
-  <!-- Sticky Header Navigation -->
-  <header class="site-header" id="siteHeader">
-    <div class="container nav-container">
-      <a href="#hero" class="brand-logo" id="logoLink">
-        <img src="icons/logo.png" alt="Farmer ID Digital Identity Logo" class="brand-logo-img" width="48" height="48">
-        <div class="brand-text">
-          <span class="brand-title">AgriStack <span>Helper</span></span>
-          <span class="brand-subtitle">Farmer ID & Prepaid Wallet v5.0</span>
-        </div>
-      </a>
+            <div class="nav-actions">
+                <button class="btn btn-outline btn-sm" id="navWalletBtn" onclick="openWalletModal()">
+                    <i class="fa-solid fa-wallet"></i>
+                    <span id="navWalletBalanceText">Wallet: ₹1000.00</span>
+                </button>
+                <a href="agristack-card-helper-v5.0.zip" download class="btn btn-primary btn-sm">
+                    <i class="fa-solid fa-download"></i>
+                    <span>Download Extension</span>
+                </a>
+                <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle Navigation">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+        </nav>
+    </header>
 
-      <nav class="nav-menu" id="navMenu">
-        <a href="#features" class="nav-link" id="navFeatures">Features</a>
-        <a href="#workflow" class="nav-link" id="navWorkflow">Workflow</a>
-        <a href="#install-guide" class="nav-link" id="navInstall">Install Guide</a>
-        <a href="#pricing" class="nav-link" id="navPricing">Prepaid Wallet & Recharge</a>
-        <a href="#compliance" class="nav-link" id="navCompliance">Policies & Legal</a>
-        <a href="#contact" class="nav-link" id="navContact">Support</a>
-      </nav>
-
-      <div class="nav-actions">
-        <a href="https://addons.mozilla.org/firefox/addon/farmer-card/" target="_blank" rel="noopener noreferrer"
-          class="btn btn-firefox btn-sm" id="headerFirefoxBtn" title="Install Official Firefox Add-on">🦊 Firefox Add-on</a>
-        <a href="agristack-card-helper-v5.0.zip" download="agristack-card-helper-v5.0.zip"
-          class="btn btn-primary btn-sm" id="headerDownloadBtn"
-          title="Download Chrome / Edge / Brave Extension (.ZIP)">⬇️ Download (.ZIP v5.0)</a>
-        <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle Navigation Menu">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M4 6h16M4 12h16M4 18h16" />
-          </svg>
-        </button>
-      </div>
-    </div>
-  </header>
-
-  <main>
     <!-- Hero Section -->
-    <section class="hero-section" id="hero">
-      <div class="container hero-grid">
-        <div class="hero-content">
-          <div class="badge-pill">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-            </svg>
-            Prepaid Digital Wallet v5.0 &bull; Free Direct Download &bull; ₹22 / Card
-          </div>
-          <h1 class="hero-title">Generate & Print <span class="highlight">Farmer ID Cards</span> in Seconds — 300 DPI PDF</h1>
-          <p class="hero-desc">
-            AgriStack Card Generator Helper is the automated browser utility built specifically for Punjab Farmer Registry, CSC operators, and cyber cafes. Features built-in <strong>Prepaid Digital Wallet</strong> integration, native HarfBuzz Gurmukhi typography shaping, Denso Wave QR generation, and calibrated dual-side PVC tray layouts. Free to download — recharge anytime.
-          </p>
-
-          <div class="hero-cta-group">
-            <a href="agristack-card-helper-v5.0.zip" download="agristack-card-helper-v5.0.zip"
-              class="btn btn-primary btn-lg" id="heroDownloadBtn">
-              <span>⬇️ Download Chrome Extension (.ZIP)</span>
-            </a>
-            <a href="https://addons.mozilla.org/firefox/addon/farmer-card/" target="_blank" rel="noopener noreferrer"
-              class="btn btn-firefox btn-lg" id="heroFirefoxBtn">
-              <span>🦊 Install on Firefox (Official Store)</span>
-            </a>
-            <a href="#pricing" class="btn btn-secondary btn-lg" id="heroRechargeBtn">
-              <span>⚡ Top-Up / Recharge Wallet</span>
-            </a>
-          </div>
-
-          <div class="hero-trust-bar">
-            <div class="trust-item">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
-              </svg>
-              <span>100% Free Direct Download</span>
-            </div>
-            <div class="trust-item">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
-              </svg>
-              <span>Prepaid Digital Wallet</span>
-            </div>
-            <div class="trust-item">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
-              </svg>
-              <span>₹22 / Card (No Subscriptions)</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Visual Product Preview Mockup -->
-        <div class="mockup-card-container">
-          <div class="mockup-window">
-            <div class="mockup-window-header">
-              <div class="window-dots">
-                <span class="dot-red"></span>
-                <span class="dot-yellow"></span>
-                <span class="dot-green"></span>
-              </div>
-              <span class="window-title">AgriStack Extension Live Card Preview</span>
-              <span style="font-size: 11px; color: #4ADE80; font-weight: 700;">● Active</span>
-            </div>
-            <div class="mockup-window-body">
-              <div class="card-sample-preview">
-                <div class="card-header-bar">
-                  <div class="card-header-text">
-                    <h4>Punjab Farmer Registry</h4>
-                    <p>Government of Punjab &bull; Department of Agriculture</p>
-                  </div>
-                  <span style="font-size: 16px;">🌾</span>
+    <section class="hero-section container">
+        <div class="hero-grid">
+            <div class="hero-content">
+                <div class="hero-pill">
+                    <span class="pill-dot"></span>
+                    <span>All 36 Indian States & UTs Supported</span>
+                    <span class="pill-tag">Govt Standard</span>
                 </div>
-                <div class="card-body-content">
-                  <div class="farmer-avatar-box">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                      <circle cx="12" cy="8" r="4" />
-                      <path d="M4 20c0-4 4-6 8-6s8 2 8 6" />
-                    </svg>
-                    <span>Verified Photo</span>
-                  </div>
-                  <div class="farmer-details-list">
-                    <div class="detail-line">
-                      <span class="label">Farmer Name:</span>
-                      <span class="val">Harpreet Singh (ਹਰਪ੍ਰੀਤ ਸਿੰਘ)</span>
+                <h1 class="hero-title">
+                    Official PVC <span class="gradient-text">Farmer ID Cards</span> in 1-Click
+                </h1>
+                <p class="hero-subtitle">
+                    Transform official state farmer registries (Punjab, Rajasthan, UP, Maharashtra, and 32 more) into calibrated, dual-sided, printable PVC Identity Cards with low-density QR verification and authentic regional typography.
+                </p>
+
+                <div class="hero-cta-group">
+                    <a href="agristack-card-helper-v5.0.zip" download class="btn btn-primary btn-lg pulse-glow">
+                        <i class="fa-solid fa-circle-down"></i>
+                        <div class="btn-text-group">
+                            <span class="btn-main">Download Extension v5.0</span>
+                            <span class="btn-sub">Chrome, Edge & Brave (Free .ZIP)</span>
+                        </div>
+                    </a>
+                    <button class="btn btn-glass btn-lg" onclick="scrollToSection('card-preview')">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                        <span>Interactive 3D Demo</span>
+                    </button>
+                </div>
+
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">36</div>
+                        <div class="stat-label">States & UTs</div>
                     </div>
-                    <div class="detail-line">
-                      <span class="label">Farmer ID:</span>
-                      <span class="val">PB-FR-2024-884920</span>
+                    <div class="stat-divider"></div>
+                    <div class="stat-item">
+                        <div class="stat-number">₹15</div>
+                        <div class="stat-label">Flat / Card</div>
                     </div>
-                    <div class="detail-line">
-                      <span class="label">Gender / DOB:</span>
-                      <span class="val">Male &bull; 14/08/1982</span>
+                    <div class="stat-divider"></div>
+                    <div class="stat-item">
+                        <div class="stat-number">100%</div>
+                        <div class="stat-label">HarfBuzz Precision</div>
                     </div>
-                    <div class="detail-line">
-                      <span class="label">Land Registry:</span>
-                      <span class="val">Khata No. 42 / Khasra 18/2</span>
+                </div>
+            </div>
+
+            <!-- 3D Interactive Card Showcase -->
+            <div class="hero-visual">
+                <div class="card-showcase-container">
+                    <div class="card-3d-wrapper" id="card3D">
+                        <!-- Front Card -->
+                        <div class="farmer-card-canvas front-canvas" id="cardFrontPreview">
+                            <div class="card-header-row">
+                                <div class="card-logo-left">
+                                    <span class="agri-logo-text">Agri<span class="stack-green">Stack</span></span>
+                                </div>
+                                <div class="card-center-header">
+                                    <div class="regional-bharat" id="previewRegionalBharat">ਭਾਰਤ ਸਰਕਾਰ</div>
+                                    <div class="english-govt">Government of India</div>
+                                </div>
+                                <div class="card-emblem-right">
+                                    <i class="fa-solid fa-landmark emblem-icon"></i>
+                                </div>
+                            </div>
+
+                            <div class="card-body-content">
+                                <div class="farmer-photo-box">
+                                    <img src="icons/app_logo_128.png" alt="Farmer Photo" class="farmer-avatar-img" id="previewPhoto">
+                                    <div class="vertical-date" id="previewAppDate">Approval Date : 15/09/2026</div>
+                                </div>
+
+                                <div class="farmer-details-list">
+                                    <div class="detail-row">
+                                        <span class="detail-label" id="previewRegLabel">ਨਾਮ</span>
+                                        <span class="detail-val bold" id="previewRegName">ਹਰਵਿੰਦਰ ਸਿੰਘ</span>
+                                    </div>
+                                    <div class="detail-row">
+                                        <span class="detail-label">Name</span>
+                                        <span class="detail-val" id="previewEngName">Harvinder Singh</span>
+                                    </div>
+                                    <div class="detail-row">
+                                        <span class="detail-label">Gender</span>
+                                        <span class="detail-val" id="previewGender">ਮਰਦ / Male</span>
+                                    </div>
+                                    <div class="detail-row">
+                                        <span class="detail-label">DOB</span>
+                                        <span class="detail-val">12/04/1980</span>
+                                    </div>
+                                    <div class="detail-row">
+                                        <span class="detail-label">Caste</span>
+                                        <span class="detail-val">General</span>
+                                    </div>
+                                    <div class="detail-row">
+                                        <span class="detail-label">Area</span>
+                                        <span class="detail-val">Rural</span>
+                                    </div>
+                                    <div class="detail-row">
+                                        <span class="detail-label">Aadhaar</span>
+                                        <span class="detail-val">XXXX XXXX 1778</span>
+                                    </div>
+                                </div>
+
+                                <div class="qr-container">
+                                    <div class="qr-box">
+                                        <i class="fa-solid fa-qrcode qr-code-icon"></i>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="farmer-id-banner">
+                                Farmer ID : <span class="fid-number" id="previewFid">86881808582</span>
+                            </div>
+
+                            <div class="card-footer-strip">
+                                <span class="footer-registry-title" id="previewFooterRegistry">Punjab Farmer Registry</span>
+                            </div>
+                        </div>
+
+                        <!-- Back Card -->
+                        <div class="farmer-card-canvas back-canvas" id="cardBackPreview">
+                            <div class="card-header-row">
+                                <div class="card-logo-left">
+                                    <span class="agri-logo-text">Agri<span class="stack-green">Stack</span></span>
+                                </div>
+                                <div class="card-center-header">
+                                    <div class="regional-ministry" id="previewRegionalMinistry">ਖੇਤੀਬਾੜੀ ਅਤੇ ਕਿਸਾਨ ਭਲਾਈ ਮੰਤਰਾਲਾ</div>
+                                    <div class="english-ministry">Ministry of Agri & Farmers Welfare</div>
+                                </div>
+                                <div class="card-emblem-right">
+                                    <i class="fa-solid fa-landmark emblem-icon"></i>
+                                </div>
+                            </div>
+
+                            <div class="back-body-content">
+                                <div class="vertical-date-back">Download Date : 16/09/2026</div>
+                                <div class="address-box">
+                                    <strong>Address:</strong>
+                                    <span id="previewAddress">C/o Balveer Singh, 104, Shergarh (95), Talwandi Sabo, Bathinda, PUNJAB, 151301</span>
+                                </div>
+
+                                <div class="land-table-wrapper">
+                                    <table class="preview-land-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Khata</th>
+                                                <th>Khasra</th>
+                                                <th>Area</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr><td>1</td><td>0//80/1/2</td><td>0.0505 Ha</td></tr>
+                                            <tr><td>1</td><td>0//80/1/1</td><td>0.0505 Ha</td></tr>
+                                            <tr><td>1</td><td>0//77/1</td><td>0.0986 Ha</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="card-footer-back-strip">
+                                <div class="helpline-group">
+                                    <i class="fa-solid fa-phone-volume"></i>
+                                    <span>1800-180-1551</span>
+                                </div>
+                                <div class="website-group">
+                                    <i class="fa-solid fa-globe"></i>
+                                    <span id="previewPortalUrl">www.pbfr.agristack.gov.in</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                  </div>
+
+                    <!-- Interactive State Switcher Controls -->
+                    <div class="showcase-controls">
+                        <div class="state-select-wrapper">
+                            <label for="stateSelector"><i class="fa-solid fa-location-dot"></i> Select State to Preview:</label>
+                            <select id="stateSelector" class="state-dropdown" onchange="onStateChange(this.value)">
+                                <option value="PB">Punjab (ਪੰਜਾਬ)</option>
+                                <option value="RJ">Rajasthan (राजस्थान)</option>
+                                <option value="UP">Uttar Pradesh (उत्तर प्रदेश)</option>
+                                <option value="MH">Maharashtra (महाराष्ट्र)</option>
+                                <option value="GJ">Gujarat (ગુજરાત)</option>
+                                <option value="TN">Tamil Nadu (தமிழ்நாடு)</option>
+                                <option value="AP">Andhra Pradesh (ఆంధ్రప్రదేశ్)</option>
+                                <option value="MP">Madhya Pradesh (मध्य प्रदेश)</option>
+                                <option value="AS">Assam (অসম)</option>
+                                <option value="OR">Odisha (ଓଡ଼ିଶା)</option>
+                                <option value="BR">Bihar (बिहार)</option>
+                                <option value="CG">Chhattisgarh (छत्तीसगढ़)</option>
+                                <option value="HP">Himachal Pradesh (हिमाचल)</option>
+                                <option value="UK">Uttarakhand (उत्तराखंड)</option>
+                                <option value="JH">Jharkhand (झारखंड)</option>
+                                <option value="KL">Kerala (കേരളം)</option>
+                                <option value="TR">Tripura (ত্রিপুরা)</option>
+                                <option value="KA">Karnataka (ಕರ್ನಾಟಕ)</option>
+                                <option value="WB">West Bengal (পশ্চিমবঙ্গ)</option>
+                                <option value="TS">Telangana (తెలంగాణ)</option>
+                                <option value="HR">Haryana (हरियाणा)</option>
+                                <option value="IN">Central / National Hindi (भारत)</option>
+                            </select>
+                        </div>
+                        <button class="btn btn-secondary btn-sm" onclick="toggleCardFlip()">
+                            <i class="fa-solid fa-arrows-rotate"></i> Flip Card (Front / Back)
+                        </button>
+                    </div>
                 </div>
-                <div class="card-footer-strip">
-                  <div class="qr-code-box">
-                    <span>🏁 [QR Verified]</span>
-                  </div>
-                  <span style="font-size: 9px; font-weight: 700; color: #166536;">✓ 300 DPI PRINT READY PDF</span>
-                </div>
-              </div>
             </div>
-          </div>
-          <div class="floating-pill-badge">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
-              <polyline points="22 4 12 14.01 9 11.01" />
-            </svg>
-            <span>Generates Card in &lt; 2 Seconds</span>
-          </div>
         </div>
-      </div>
     </section>
 
-    <!-- Product Features Section -->
-    <section class="section section-alt" id="features">
-      <div class="container">
-        <div class="section-header">
-          <span class="section-tag">Key Features</span>
-          <h2 class="section-title">Engineered Specifically for CSC & VLE Center Workflows</h2>
-          <p class="section-desc">
-            No more manual Photoshop cropping or misaligned Gurmukhi fonts. Our browser extension automates every aspect
-            of card creation seamlessly.
-          </p>
+    <!-- Digital Prepaid Wallet Section -->
+    <section class="wallet-section container" id="wallet">
+        <div class="section-header text-center">
+            <div class="badge-tag"><i class="fa-solid fa-wallet"></i> Instant Digital Prepaid Wallet</div>
+            <h2 class="section-title">Seamless Printing with Prepaid Balance</h2>
+            <p class="section-desc">Zero manual payments for each card. Just top-up your mobile-linked wallet and generate official cards instantaneously with single-click automation.</p>
         </div>
 
-        <div class="features-grid">
-          <div class="feature-card">
-            <div class="feature-icon-box">⚡</div>
-            <h3>Instant Auto-Extraction</h3>
-            <p>Directly reads farmer name, father's name, land records, approval date, and photo from the official
-              portal with one click.</p>
-          </div>
+        <div class="wallet-dashboard-card">
+            <div class="wallet-top-bar">
+                <div class="user-profile-badge">
+                    <div class="avatar-circle"><i class="fa-solid fa-user-check"></i></div>
+                    <div>
+                        <div class="user-phone-label" id="walletUserPhone">Mobile: 7009980800</div>
+                        <div class="user-status-label"><span class="status-indicator"></span> Verified Partner Wallet</div>
+                    </div>
+                </div>
+                <div class="wallet-balance-box">
+                    <div class="bal-title">Available Wallet Balance</div>
+                    <div class="bal-amount" id="mainWalletBalance">₹1,000.00</div>
+                    <div class="bal-cards-tag">Est. <strong>66 Cards</strong> Available (₹15/card)</div>
+                </div>
+            </div>
 
-          <div class="feature-card">
-            <div class="feature-icon-box">🔤</div>
-            <h3>Gurmukhi & Indic Typography</h3>
-            <p>Integrated HarfBuzz & Raqm complex text shaping engine ensures 100% flawless Punjabi/Gurmukhi character
-              conjuncts with zero font distortion.</p>
-          </div>
+            <div class="wallet-action-row">
+                <div class="recharge-options-group">
+                    <div class="rec-title">Quick Recharge Top-Up:</div>
+                    <div class="recharge-chips">
+                        <button class="chip active" onclick="selectRechargeAmount(100)">₹100 <small>(6 Cards)</small></button>
+                        <button class="chip" onclick="selectRechargeAmount(250)">₹250 <small>(16 Cards)</small></button>
+                        <button class="chip" onclick="selectRechargeAmount(500)">₹500 <small>(33 Cards)</small></button>
+                        <button class="chip popular" onclick="selectRechargeAmount(1000)">₹1,000 <small>(66 Cards)</small> <span class="pop-tag">Best</span></button>
+                    </div>
+                </div>
+                <button class="btn btn-primary btn-recharge" onclick="initiateRecharge()">
+                    <i class="fa-solid fa-bolt"></i> Recharge Wallet via UPI / QR
+                </button>
+            </div>
 
-          <div class="feature-card">
-            <div class="feature-icon-box">🖨️</div>
-            <h3>300 DPI Print-Ready Output</h3>
-            <p>Produces calibrated 2-page front & back PDF files perfectly sized for standard PVC card tray printing and
-              lamination machines.</p>
-          </div>
-
-          <div class="feature-card">
-            <div class="feature-icon-box">🏁</div>
-            <h3>Denso Wave QR Code</h3>
-            <p>Automatically generates standard, error-corrected QR codes linking to official registry verification
-              records for on-field scanning.</p>
-          </div>
-
-          <div class="feature-card">
-            <div class="feature-icon-box">🔒</div>
-            <h3>100% Client-Side Privacy</h3>
-            <p>All extraction and formatting happen in the browser sandbox. No sensitive farmer data is ever stored,
-              transmitted, or sold to third parties.</p>
-          </div>
-
-          <div class="feature-card">
-            <div class="feature-icon-box">💳</div>
-            <h3>Instant Digital Checkout</h3>
-            <p>Fast, automated payments supporting UPI (Google Pay, PhonePe, Paytm), RuPay / Visa / MasterCard
-              debit/credit cards, and Netbanking.</p>
-          </div>
+            <!-- Transaction Ledger -->
+            <div class="wallet-ledger">
+                <div class="ledger-header">
+                    <h4><i class="fa-solid fa-receipt"></i> Recent Wallet Activity</h4>
+                    <span class="ledger-note">Live synced with MongoDB Atlas</span>
+                </div>
+                <div class="ledger-table-wrap">
+                    <table class="ledger-table">
+                        <thead>
+                            <tr>
+                                <th>Reference / Txn ID</th>
+                                <th>Description</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                                <th>Time</th>
+                            </tr>
+                        </thead>
+                        <tbody id="walletTxnBody">
+                            <tr>
+                                <td><code>WALLET_INIT_BONUS</code></td>
+                                <td>Welcome Partner Top-Up</td>
+                                <td class="credit">+₹1,000.00</td>
+                                <td><span class="badge success">Completed</span></td>
+                                <td>Just now</td>
+                            </tr>
+                            <tr>
+                                <td><code>CARD_GEN_86881808582</code></td>
+                                <td>Punjab Farmer Card Generated</td>
+                                <td class="debit">-₹15.00</td>
+                                <td><span class="badge success">Paid</span></td>
+                                <td>2 mins ago</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
-      </div>
     </section>
 
-    <!-- Full Step-by-Step Product Workflow Section -->
-    <section class="section" id="workflow">
-      <div class="container">
-        <div class="section-header">
-          <span class="section-tag">Complete Product Workflow & Architecture</span>
-          <h2 class="section-title">How AgriStack Helper Works: Step-by-Step</h2>
-          <p class="section-desc">
-            An end-to-end automated pipeline taking you from portal search to physical PVC card printing in seconds.
-          </p>
+    <!-- 36 States AgriStack Portals Directory -->
+    <section class="portals-section container" id="portals">
+        <div class="section-header text-center">
+            <div class="badge-tag"><i class="fa-solid fa-map-location-dot"></i> Nationwide Coverage</div>
+            <h2 class="section-title">Supported State AgriStack Portals</h2>
+            <p class="section-desc">Our extension automatically detects when you browse any of these official state registries and renders the exact state-calibrated PVC card template.</p>
         </div>
 
-
-        <!-- Visual Step Showcase with Real Mockup Visuals -->
-        <div class="workflow-visual-showcase">
-          <!-- Visual 1 -->
-          <div class="showcase-preview-card">
-            <div class="showcase-image-wrapper">
-              <img src="icons/workflow_portal_scan.jpg" alt="AgriStack Portal DOM scanning and automatic record extraction" class="showcase-img" loading="lazy">
-              <span class="showcase-badge">📸 Stage 1 &bull; Portal Scanning & OTP Unlocked Data</span>
-            </div>
-            <div class="showcase-body">
-              <h4 class="showcase-title">1. Automated Portal Record Detection</h4>
-              <p class="showcase-desc">
-                After Aadhaar OTP verification unlocks the farmer record on the government portal, clicking the extension triggers the content script to instantly scan tabular data, Gurmukhi text fields, verification seals, and photograph with zero manual copy-pasting.
-              </p>
-              <div class="showcase-tags">
-                <span class="showcase-tag">⚡ Automated DOM Parser</span>
-                <span class="showcase-tag">🔍 Auto Field Mapping</span>
-                <span class="showcase-tag">⏱️ 0.8s Scan Time</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Visual 2 -->
-          <div class="showcase-preview-card">
-            <div class="showcase-image-wrapper">
-              <img src="icons/workflow_card_generation.jpg" alt="300 DPI High Resolution Digital Farmer Identity Card generated with QR code" class="showcase-img" loading="lazy">
-              <span class="showcase-badge">🖨️ Stage 2 &bull; Card Formatting, ₹22 Pay & PDF</span>
-            </div>
-            <div class="showcase-body">
-              <h4 class="showcase-title">2. 300 DPI Dual-Side Card & QR Generation</h4>
-              <p class="showcase-desc">
-                The local formatting engine produces calibrated CR80 Front and Back ID cards with razor-sharp Punjabi typography, error-corrected QR code, and official verification badge. Upon seamless ₹22 payment, the 300 DPI PDF downloads instantly for PVC tray printing.
-              </p>
-              <div class="showcase-tags">
-                <span class="showcase-tag">📐 Standard CR80 Size</span>
-                <span class="showcase-tag">🔲 Denso QR Checksum</span>
-                <span class="showcase-tag">🖨️ 300 DPI Print Ready</span>
-              </div>
-            </div>
-          </div>
+        <div class="states-grid" id="statesGrid">
+            <!-- Populated dynamically by script.js -->
         </div>
-
-        <div class="workflow-pipeline-grid">
-          <!-- Step 1 -->
-          <div class="workflow-card">
-            <div class="workflow-card-top">
-              <span class="workflow-step-badge">STEP 01</span>
-              <div class="workflow-icon-wrap">🧩</div>
-            </div>
-            <h3>Install & Pin Browser Extension</h3>
-            <p>Add AgriStack Card Helper to your browser in seconds. Pin it to your browser toolbar for instant 1-click access during daily operations.</p>
-            <div class="workflow-keypoints">
-              <div class="workflow-keypoint">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                  <polyline points="20 6 9 17 4 12" />
-                </svg>
-                <span><strong>Firefox:</strong> <a href="https://addons.mozilla.org/firefox/addon/farmer-card/" target="_blank" rel="noopener noreferrer" style="color: #EA580C; font-weight: 700; text-decoration: underline;">Official Add-ons Store (1-Click Install)</a></span>
-              </div>
-              <div class="workflow-keypoint">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                  <polyline points="20 6 9 17 4 12" />
-                </svg>
-                <span><strong>Chrome/Brave/Edge:</strong> Download ZIP, enable Developer Mode & load unpacked.</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Step 2 -->
-          <div class="workflow-card">
-            <div class="workflow-card-top">
-              <span class="workflow-step-badge">STEP 02</span>
-              <div class="workflow-icon-wrap">🏛️</div>
-            </div>
-            <h3>Log in to Government Farmer Portal</h3>
-            <p>Open the official state AgriStack or Punjab Farmer Registry portal in your browser and log in with your authorized CSC / VLE operator credentials.</p>
-            <div class="workflow-keypoints">
-              <div class="workflow-keypoint">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                  <polyline points="20 6 9 17 4 12" />
-                </svg>
-                <span>Compatible with official state AgriStack & Punjab Farmer Registry portals.</span>
-              </div>
-              <div class="workflow-keypoint">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                  <polyline points="20 6 9 17 4 12" />
-                </svg>
-                <span>Ensures access to approved and active farmer database records.</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Step 3 -->
-          <div class="workflow-card">
-            <div class="workflow-card-top">
-              <span class="workflow-step-badge">STEP 03</span>
-              <div class="workflow-icon-wrap">🔍</div>
-            </div>
-            <h3>Enter Farmer's Aadhaar / Registry ID</h3>
-            <p>In the portal's search bar, enter the farmer's 12-digit Aadhaar Number, Application Number, or state Farmer ID to locate their registered profile.</p>
-            <div class="workflow-keypoints">
-              <div class="workflow-keypoint">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                  <polyline points="20 6 9 17 4 12" />
-                </svg>
-                <span>Searches registered central & state landholder databases.</span>
-              </div>
-              <div class="workflow-keypoint">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                  <polyline points="20 6 9 17 4 12" />
-                </svg>
-                <span>Identifies approved applicant data ready for card issuance.</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Step 4 -->
-          <div class="workflow-card">
-            <div class="workflow-card-top">
-              <span class="workflow-step-badge">STEP 04</span>
-              <div class="workflow-icon-wrap">📱</div>
-            </div>
-            <h3>Farmer OTP Verification & Profile Load</h3>
-            <p>The portal dispatches a secure 6-digit OTP to the farmer's Aadhaar-linked mobile phone. Enter the OTP to unlock the full official farmer profile.</p>
-            <div class="workflow-keypoints">
-              <div class="workflow-keypoint">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                  <polyline points="20 6 9 17 4 12" />
-                </svg>
-                <span>UIDAI Aadhaar OTP authentication ensures 100% legal verification.</span>
-              </div>
-              <div class="workflow-keypoint">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                  <polyline points="20 6 9 17 4 12" />
-                </svg>
-                <span>Displays full Punjabi & English name, photograph, DOB, and land record details.</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Step 5 -->
-          <div class="workflow-card">
-            <div class="workflow-card-top">
-              <span class="workflow-step-badge">STEP 05</span>
-              <div class="workflow-icon-wrap">⚡</div>
-            </div>
-            <h3>Launch Extension & Click 'Generate'</h3>
-            <p>While viewing the unlocked farmer profile tab, click the AgriStack Helper icon in your toolbar and press <strong>"🖨️ Format & Generate PDF Card"</strong>.</p>
-            <div class="workflow-keypoints">
-              <div class="workflow-keypoint">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                  <polyline points="20 6 9 17 4 12" />
-                </svg>
-                <span>Zero manual typing or copying required.</span>
-              </div>
-              <div class="workflow-keypoint">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                  <polyline points="20 6 9 17 4 12" />
-                </svg>
-                <span>Automated content script reads active DOM tree instantaneously.</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Step 6 -->
-          <div class="workflow-card">
-            <div class="workflow-card-top">
-              <span class="workflow-step-badge">STEP 06</span>
-              <div class="workflow-icon-wrap">🔤</div>
-            </div>
-            <h3>In-Browser Shaping & QR Checksum</h3>
-            <p>The local engine shapes Punjabi Gurmukhi text conjuncts, renders the farmer photo, and builds an error-corrected Denso Wave QR code in browser memory.</p>
-            <div class="workflow-keypoints">
-              <div class="workflow-keypoint">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                  <polyline points="20 6 9 17 4 12" />
-                </svg>
-                <span>HarfBuzz typography engine eliminates Punjabi font clipping or errors.</span>
-              </div>
-              <div class="workflow-keypoint">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                  <polyline points="20 6 9 17 4 12" />
-                </svg>
-                <span>Prepares dual-side Front & Back CR80 calibrated layout.</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Step 7 -->
-          <div class="workflow-card">
-            <div class="workflow-card-top">
-              <span class="workflow-step-badge">STEP 07</span>
-              <div class="workflow-icon-wrap">💳</div>
-            </div>
-            <h3>Automatic Prepaid Wallet Deduction (₹22)</h3>
-            <p>The ₹22 generation fee is instantly deducted from your in-extension prepaid wallet balance. Top up your balance anytime using UPI QR directly in the extension or on this website.</p>
-            <div class="workflow-keypoints">
-              <div class="workflow-keypoint">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                  <polyline points="20 6 9 17 4 12" />
-                </svg>
-                <span>Instant 0-second balance deduction with live remaining card counter.</span>
-              </div>
-              <div class="workflow-keypoint">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                  <polyline points="20 6 9 17 4 12" />
-                </svg>
-                <span>No manual transaction wait times — pure seamless automated flow.</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Step 8 -->
-          <div class="workflow-card">
-            <div class="workflow-card-top">
-              <span class="workflow-step-badge">STEP 08</span>
-              <div class="workflow-icon-wrap">🖨️</div>
-            </div>
-            <h3>Instant 300 DPI PDF Download & PVC Print</h3>
-            <p>The 2-page print-ready PDF downloads to your computer. Print directly onto CR80 PVC cards using your Epson/Canon tray printer or thermal laminator.</p>
-            <div class="workflow-keypoints">
-              <div class="workflow-keypoint">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                  <polyline points="20 6 9 17 4 12" />
-                </svg>
-                <span>Calibrated 85.60 mm × 53.98 mm (Standard CR80) print dimensions.</span>
-              </div>
-              <div class="workflow-keypoint">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                  <polyline points="20 6 9 17 4 12" />
-                </svg>
-                <span>Compatible with Epson L805/L8050/L850 & Canon PIXMA tray printers.</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
     </section>
 
-    <!-- Dedicated Installation & Setup Guide Section -->
-    <section class="section section-alt" id="install-guide">
-      <div class="container">
-        <div class="section-header">
-          <span class="section-tag">Browser Setup</span>
-          <h2 class="section-title">How to Install Extension in Your Browser</h2>
-          <p class="section-desc">
-            Choose your web browser below for simple, step-by-step installation instructions.
-          </p>
+    <!-- 3-Step Installation Guide -->
+    <section class="install-section container" id="install">
+        <div class="section-header text-center">
+            <div class="badge-tag"><i class="fa-solid fa-puzzle-piece"></i> Quick Setup</div>
+            <h2 class="section-title">Install in Less Than 30 Seconds</h2>
+            <p class="section-desc">No complex configuration. Follow these 3 simple steps to start printing cards right away.</p>
         </div>
 
-        <div class="install-tabs-header">
-          <button type="button" class="install-tab-btn active firefox-tab" onclick="switchInstallTab('firefox')"
-            id="tabBtnFirefox">
-            <span>🦊 Mozilla Firefox (Official AMO Store — 1-Click)</span>
-          </button>
-          <button type="button" class="install-tab-btn" onclick="switchInstallTab('chrome')" id="tabBtnChrome">
-            <span>🌐 Google Chrome / Brave / Edge (.ZIP Unpack)</span>
-          </button>
+        <div class="steps-grid">
+            <div class="step-card">
+                <div class="step-number">01</div>
+                <div class="step-icon"><i class="fa-solid fa-file-zipper"></i></div>
+                <h3 class="step-title">Download & Unzip</h3>
+                <p class="step-desc">Download the <code>agristack-card-helper-v5.0.zip</code> extension package and extract it to a folder on your computer.</p>
+                <a href="agristack-card-helper-v5.0.zip" download class="btn btn-outline btn-sm mt-3">
+                    <i class="fa-solid fa-download"></i> Get ZIP (528 KB)
+                </a>
+            </div>
+
+            <div class="step-card highlight">
+                <div class="step-number">02</div>
+                <div class="step-icon"><i class="fa-brands fa-chrome"></i></div>
+                <h3 class="step-title">Load Unpacked</h3>
+                <p class="step-desc">Open <code>chrome://extensions</code> in Chrome, Edge, or Brave, enable <strong>Developer mode</strong> (top right), and click <strong>"Load unpacked"</strong>.</p>
+                <div class="step-code">chrome://extensions</div>
+            </div>
+
+            <div class="step-card">
+                <div class="step-number">03</div>
+                <div class="step-icon"><i class="fa-solid fa-print"></i></div>
+                <h3 class="step-title">1-Click Card Printing</h3>
+                <p class="step-desc">Open any verified farmer page on your state portal, click the AgriStack Extension, and get instant high-resolution printable PDF cards!</p>
+                <div class="step-badge-ready"><i class="fa-solid fa-circle-check"></i> Ready to Print</div>
+            </div>
         </div>
-
-        <!-- Tab 1: Mozilla Firefox Guide -->
-        <div class="install-tab-pane active" id="paneFirefox">
-          <div class="install-cards-grid">
-            <div class="install-step-card firefox-card">
-              <div class="install-step-badge">1</div>
-              <h4>Open Add-on Page</h4>
-              <p>Click below to open our official Mozilla listing at <a
-                  href="https://addons.mozilla.org/firefox/addon/farmer-card/" target="_blank" rel="noopener noreferrer"
-                  style="color: #C2410C; font-weight: 700; text-decoration: underline;">addons.mozilla.org</a> in
-                Firefox.</p>
-            </div>
-            <div class="install-step-card firefox-card">
-              <div class="install-step-badge">2</div>
-              <h4>Click "+ Add to Firefox"</h4>
-              <p>Click the blue <strong>"+ Add to Firefox"</strong> button on the official listing to start automatic
-                installation.</p>
-            </div>
-            <div class="install-step-card firefox-card">
-              <div class="install-step-badge">3</div>
-              <h4>Confirm Permission</h4>
-              <p>When the Firefox browser dialog appears, click <strong>"Add"</strong> to approve browser extension
-                permissions.</p>
-            </div>
-            <div class="install-step-card firefox-card">
-              <div class="install-step-badge">4</div>
-              <h4>Pin to Toolbar</h4>
-              <p>Click the puzzle icon in Firefox toolbar and pin <strong>Farmer Card</strong> for quick 1-click
-                generation anytime!</p>
-            </div>
-          </div>
-
-          <div class="install-callout-box">
-            <div class="install-callout-content">
-              <h4>🦊 Official Mozilla Firefox Add-on Store</h4>
-              <p>Direct installation with automatic updates verified by Mozilla.</p>
-            </div>
-            <a href="https://addons.mozilla.org/firefox/addon/farmer-card/" target="_blank" rel="noopener noreferrer"
-              class="btn btn-firefox btn-lg">
-              <span>🚀 Open Mozilla Add-ons Store (1-Click Install)</span>
-            </a>
-          </div>
-        </div>
-
-        <!-- Tab 2: Chrome / Brave / Edge Guide -->
-        <div class="install-tab-pane" id="paneChrome">
-          <div class="install-cards-grid">
-            <div class="install-step-card">
-              <div class="install-step-badge">1</div>
-              <h4>Extract ZIP Package</h4>
-              <p>Download <span class="step-code-highlight">agristack-card-helper-v5.0.zip</span> and extract the folder
-                onto your computer.</p>
-            </div>
-            <div class="install-step-card">
-              <div class="install-step-badge">2</div>
-              <h4>Open chrome://extensions</h4>
-              <p>In Chrome, Brave, or Edge, navigate to <span class="step-code-highlight">chrome://extensions</span> in
-                the address bar.</p>
-            </div>
-            <div class="install-step-card">
-              <div class="install-step-badge">3</div>
-              <h4>Enable Developer Mode</h4>
-              <p>Turn ON the <strong>Developer mode</strong> toggle switch located at the top-right corner.</p>
-            </div>
-            <div class="install-step-card">
-              <div class="install-step-badge">4</div>
-              <h4>Click "Load Unpacked"</h4>
-              <p>Click <strong>"Load unpacked"</strong> in top-left and select your extracted folder. Done!</p>
-            </div>
-          </div>
-
-          <div class="install-callout-box" style="background: #F0FDF4; border-color: #86EFAC;">
-            <div class="install-callout-content">
-              <h4 style="color: #166536;">⚡ Ready to install on Google Chrome / Brave / Edge?</h4>
-              <p style="color: #15803D;">Download the complete extension ZIP for free and start generating cards.</p>
-            </div>
-            <a href="agristack-card-helper-v5.0.zip" download="agristack-card-helper-v5.0.zip"
-              class="btn btn-primary btn-lg">
-              <span>⬇️ Download Extension (.ZIP)</span>
-            </a>
-          </div>
-        </div>
-      </div>
     </section>
 
-
-    <!-- Transparent Pricing & Prepaid Wallet Section -->
-    <section class="section" id="pricing">
-      <div class="container">
-        <div class="section-header">
-          <span class="section-tag">Prepaid Wallet & Recharge Packs</span>
-          <h2 class="section-title">Transparent Prepaid Wallet — Just ₹22 Per Card</h2>
-          <p class="section-desc">
-            No expensive monthly subscriptions or license keys. Download and install the browser extension 100% free.
-            Keep a prepaid balance in your built-in digital wallet and generate print-ready cards for ₹22 each.
-          </p>
+    <!-- Pricing Section -->
+    <section class="pricing-section container" id="pricing">
+        <div class="section-header text-center">
+            <div class="badge-tag"><i class="fa-solid fa-tags"></i> Transparent Pricing</div>
+            <h2 class="section-title">Zero Subscription, Pay Only What You Print</h2>
+            <p class="section-desc">Simple, transparent, and fair pricing built specifically for CSC Centers, VLEs, and Printing Operators.</p>
         </div>
 
-        <!-- Wallet Feature Highlights -->
-        <div class="wallet-overview-grid">
-          <div class="wallet-feature-pill">
-            <div class="wallet-pill-icon">🆓</div>
-            <div class="wallet-pill-text">
-              <h4>100% Free Extension</h4>
-              <p>Free to download & install on Chrome, Brave, Edge & Firefox.</p>
-            </div>
-          </div>
-          <div class="wallet-feature-pill">
-            <div class="wallet-pill-icon">⚡</div>
-            <div class="wallet-pill-text">
-              <h4>₹22 Flat Per Card</h4>
-              <p>Automatic micro-deduction per 300 DPI dual-side PDF card generated.</p>
-            </div>
-          </div>
-          <div class="wallet-feature-pill">
-            <div class="wallet-pill-icon">♾️</div>
-            <div class="wallet-pill-text">
-              <h4>Lifetime Balance Validity</h4>
-              <p>Your wallet balance never expires. Use anytime when farmers visit.</p>
-            </div>
-          </div>
-          <div class="wallet-feature-pill">
-            <div class="wallet-pill-icon">🔒</div>
-            <div class="wallet-pill-text">
-              <h4>Instant Live PG</h4>
-              <p>Instant UPI (GPay, PhonePe, Paytm, BHIM), NetBanking & Cards.</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Wallet Top-Up Packs Grid -->
-        <div class="wallet-packs-grid">
-          <!-- Pack 1: ₹100 -->
-          <div class="wallet-pack-card">
-            <div>
-              <h3 class="pack-title">Starter Pack</h3>
-              <div class="pack-price">₹100</div>
-              <div class="pack-cards-est">~4 Cards Generated</div>
-              <p class="pack-desc">Ideal for trial runs, individual farmers, or occasional registration needs.</p>
-            </div>
-            <button type="button" class="btn btn-secondary btn-sm" style="width: 100%; justify-content: center;"
-              onclick="openRechargeModal(100, 'Starter Pack')">
-              <span>⚡ Recharge ₹100</span>
-            </button>
-          </div>
-
-          <!-- Pack 2: ₹250 -->
-          <div class="wallet-pack-card">
-            <div>
-              <h3 class="pack-title">Standard Pack</h3>
-              <div class="pack-price">₹250</div>
-              <div class="pack-cards-est">~11 Cards Generated</div>
-              <p class="pack-desc">Great for small village CSC centers & local Panchayat seva kendras.</p>
-            </div>
-            <button type="button" class="btn btn-secondary btn-sm" style="width: 100%; justify-content: center;"
-              onclick="openRechargeModal(250, 'Standard Pack')">
-              <span>⚡ Recharge ₹250</span>
-            </button>
-          </div>
-
-          <!-- Pack 3: ₹500 (Popular) -->
-          <div class="wallet-pack-card popular">
-            <span class="wallet-pack-badge">🔥 MOST POPULAR</span>
-            <div>
-              <h3 class="pack-title">Value Pro Pack</h3>
-              <div class="pack-price">₹500</div>
-              <div class="pack-cards-est" style="background:#DCFCE7; color:#166536; font-weight:800;">~22 Cards Generated</div>
-              <p class="pack-desc">The top choice for busy cyber cafes & CSC operators during active registry camps.</p>
-            </div>
-            <button type="button" class="btn btn-primary btn-sm" style="width: 100%; justify-content: center;"
-              onclick="openRechargeModal(500, 'Value Pro Pack')">
-              <span>⚡ Recharge ₹500</span>
-            </button>
-          </div>
-
-          <!-- Pack 4: ₹1,000 -->
-          <div class="wallet-pack-card">
-            <div>
-              <h3 class="pack-title">Cyber Cafe Pack</h3>
-              <div class="pack-price">₹1,000</div>
-              <div class="pack-cards-est">~45 Cards Generated</div>
-              <p class="pack-desc">Designed for high-volume commercial printing hubs with daily farmer queues.</p>
-            </div>
-            <button type="button" class="btn btn-secondary btn-sm" style="width: 100%; justify-content: center;"
-              onclick="openRechargeModal(1000, 'Cyber Cafe Pack')">
-              <span>⚡ Recharge ₹1,000</span>
-            </button>
-          </div>
-
-          <!-- Pack 5: ₹2,000 -->
-          <div class="wallet-pack-card">
-            <div>
-              <h3 class="pack-title">Bulk CSC Center</h3>
-              <div class="pack-price">₹2,000</div>
-              <div class="pack-cards-est">~90 Cards Generated</div>
-              <p class="pack-desc">Heavy duty pack for block-level CSC hubs, societies, and intensive campaigns.</p>
-            </div>
-            <button type="button" class="btn btn-secondary btn-sm" style="width: 100%; justify-content: center;"
-              onclick="openRechargeModal(2000, 'Bulk CSC Center')">
-              <span>⚡ Recharge ₹2,000</span>
-            </button>
-          </div>
-        </div>
-
-        <!-- Interactive Online Wallet Recharge & Balance Checker Hub -->
-        <div class="online-recharge-hub" id="walletRechargeHub">
-          <div class="recharge-hub-header">
-            <h3>⚡ Online Wallet Recharge & Balance Checker</h3>
-            <p>Recharge your wallet balance or check active cards remaining using your registered mobile number.</p>
-          </div>
-
-          <div class="recharge-tabs">
-            <button type="button" class="recharge-tab-btn active" id="tabRechargeBtn" onclick="switchRechargeTab('recharge')">
-              ⚡ Quick Wallet Top-Up
-            </button>
-            <button type="button" class="recharge-tab-btn" id="tabBalanceBtn" onclick="switchRechargeTab('balance')">
-              🔍 Check Live Balance
-            </button>
-          </div>
-
-          <!-- Pane 1: Instant Top-Up -->
-          <div class="recharge-tab-pane active" id="paneRecharge">
-            <form id="onlineRechargeForm" onsubmit="event.preventDefault(); submitWebsiteWalletRecharge();">
-              <div class="recharge-form-group">
-                <label for="hubCustomerPhone">Operator Registered Mobile / Wallet ID *</label>
-                <input type="text" id="hubCustomerPhone" class="recharge-input" placeholder="e.g. 9876543210 or Wallet ID" required>
-              </div>
-
-              <div class="recharge-form-group">
-                <label for="hubRechargeAmount">Select or Enter Recharge Amount (₹) *</label>
-                <input type="number" id="hubRechargeAmount" class="recharge-input" min="10" value="500" required>
-                <div class="quick-amount-chips">
-                  <button type="button" class="amount-chip" onclick="setHubAmount(100)">₹100</button>
-                  <button type="button" class="amount-chip" onclick="setHubAmount(250)">₹250</button>
-                  <button type="button" class="amount-chip active" onclick="setHubAmount(500)">₹500</button>
-                  <button type="button" class="amount-chip" onclick="setHubAmount(1000)">₹1,000</button>
-                  <button type="button" class="amount-chip" onclick="setHubAmount(2000)">₹2,000</button>
+        <div class="pricing-card-wrapper">
+            <div class="pricing-card featured">
+                <div class="pricing-badge">Official Operator Rate</div>
+                <h3 class="plan-name">Pay-As-You-Go Operator Wallet</h3>
+                <div class="plan-price">
+                    <span class="currency">₹</span>
+                    <span class="amount">15</span>
+                    <span class="unit">/ card</span>
                 </div>
-              </div>
+                <p class="plan-desc">Prepaid wallet deduction. Instant PDF generation with zero monthly commitments.</p>
 
-              <button type="submit" class="btn-cashfree-submit" id="btnHubPay">
-                <span>🔒 Proceed to Payment</span>
-              </button>
+                <ul class="plan-features">
+                    <li><i class="fa-solid fa-check"></i> All 36 Indian States & UTs Supported</li>
+                    <li><i class="fa-solid fa-check"></i> Authentic FreeType + HarfBuzz Indic Typography</li>
+                    <li><i class="fa-solid fa-check"></i> Dual-Sided 1145×725 High-DPI Print Ready Canvas</li>
+                    <li><i class="fa-solid fa-check"></i> Scannable Compact QR Code Embedding</li>
+                    <li><i class="fa-solid fa-check"></i> Automatic State Registry URL & Helpline Integration</li>
+                    <li><i class="fa-solid fa-check"></i> Instant UPI / QR Wallet Recharge via Cashfree</li>
+                    <li><i class="fa-solid fa-check"></i> Lifetime Extension Updates & Support</li>
+                </ul>
 
-              <div id="hubRechargeAlert" class="recharge-status-alert"></div>
-            </form>
-          </div>
-
-          <!-- Pane 2: Check Balance -->
-          <div class="recharge-tab-pane" id="paneBalance">
-            <form id="checkBalanceForm" onsubmit="event.preventDefault(); checkWebsiteWalletBalance();">
-              <div class="recharge-form-group">
-                <label for="hubCheckPhone">Enter Mobile Number / Wallet ID *</label>
-                <input type="text" id="hubCheckPhone" class="recharge-input" placeholder="e.g. 9876543210 or Wallet ID" required>
-              </div>
-
-              <button type="submit" class="btn-cashfree-submit" id="btnHubCheck" style="background: linear-gradient(135deg, #0284C7 0%, #0369A1 100%);">
-                <span>🔍 Check Live Wallet Balance</span>
-              </button>
-
-              <div id="hubBalanceAlert" class="recharge-status-alert"></div>
-
-              <div id="hubBalanceResult" class="balance-result-card">
-                <span style="font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; color: #94A3B8;">Current Available Balance</span>
-                <div class="bal-amount" id="dispBalAmount">₹0.00</div>
-                <div class="bal-cards" id="dispBalCards">0 cards remaining (@ ₹22 / card)</div>
-              </div>
-            </form>
-          </div>
+                <a href="agristack-card-helper-v5.0.zip" download class="btn btn-primary btn-block btn-lg">
+                    <i class="fa-solid fa-download"></i> Get Extension Now
+                </a>
+            </div>
         </div>
-
-        <p class="pricing-disclaimer" style="margin-top: 24px;">
-          🔒 Zero upfront software charges. Extension is free to install. Wallet balance has lifetime validity and is powered by 256-bit encrypted secure payments.
-        </p>
-      </div>
     </section>
 
-    <!-- Mandatory Compliance & Policies Section -->
-    <section class="section compliance-section" id="compliance">
-      <div class="container">
-        <div class="section-header">
-          <span class="section-tag">Legal & Compliance</span>
-          <h2 class="section-title">Merchant Policies & Software Agreements</h2>
-          <p class="section-desc">
-            In compliance with Payment Aggregator guidelines (RBI regulations), please review our transparent terms,
-            data privacy protocols, refund window, and digital shipping policies below.
-          </p>
+    <!-- FAQ Section -->
+    <section class="faq-section container" id="faq">
+        <div class="section-header text-center">
+            <div class="badge-tag"><i class="fa-solid fa-circle-question"></i> Help & Questions</div>
+            <h2 class="section-title">Frequently Asked Questions</h2>
         </div>
 
-        <!-- Policy Summary Cards -->
-        <div class="legal-cards-grid">
-          <div class="legal-summary-card">
-            <div>
-              <div class="legal-card-header">
-                <div class="legal-card-icon">📜</div>
-                <h4>Terms & Conditions</h4>
-              </div>
-              <p>Users utilize a free browser extension with a prepaid digital wallet to format official farmer registry records at ₹22 per card.</p>
+        <div class="faq-list">
+            <div class="faq-item active">
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    <span>Which Indian states are supported?</span>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </button>
+                <div class="faq-answer">
+                    All 36 Indian States and Union Territories are 100% supported, including Punjab, Rajasthan, Uttar Pradesh, Maharashtra, Gujarat, Tamil Nadu, Andhra Pradesh, Kerala, Assam, Odisha, Karnataka, West Bengal, and all others.
+                </div>
             </div>
-            <button type="button" class="legal-read-btn" data-policy="terms">Read Full Terms &rarr;</button>
-          </div>
 
-          <div class="legal-summary-card">
-            <div>
-              <div class="legal-card-header">
-                <div class="legal-card-icon">🔒</div>
-                <h4>Privacy Policy</h4>
-              </div>
-              <p>Farmer registry data is processed 100% locally on your machine. Payment transactions are secured by PCI-DSS Level 1 encryption.</p>
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    <span>How does regional language translation work?</span>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </button>
+                <div class="faq-answer">
+                    The backend uses an advanced FreeType and HarfBuzz text shaping engine with Google Noto Indic fonts, ensuring flawless ligatures and exact pronunciation rendering across Gurmukhi, Devanagari, Gujarati, Telugu, Tamil, Malayalam, Bengali, Kannada, and Odia.
+                </div>
             </div>
-            <button type="button" class="legal-read-btn" data-policy="privacy">Read Privacy Policy &rarr;</button>
-          </div>
 
-          <div class="legal-summary-card">
-            <div>
-              <div class="legal-card-header">
-                <div class="legal-card-icon">🔄</div>
-                <h4>Refund & Cancellation</h4>
-              </div>
-              <p>7-day refund guarantee on unused prepaid wallet balance. Contact support via WhatsApp or email with your registered mobile number.</p>
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    <span>How do I recharge my digital wallet?</span>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </button>
+                <div class="faq-answer">
+                    Click the "Recharge" button in the extension popup or web dashboard. You can pay via any UPI app (GPay, PhonePe, Paytm), QR Code, or NetBanking. Once payment succeeds, your balance is updated instantaneously.
+                </div>
             </div>
-            <button type="button" class="legal-read-btn" data-policy="refund">Read Refund Policy &rarr;</button>
-          </div>
 
-          <div class="legal-summary-card">
-            <div>
-              <div class="legal-card-header">
-                <div class="legal-card-icon">⚡</div>
-                <h4>Shipping & Delivery</h4>
-              </div>
-              <p><strong>Digital Product:</strong> Browser extension download and wallet credits are delivered instantly via browser upon payment confirmation.</p>
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    <span>Is the generated card official standard?</span>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </button>
+                <div class="faq-answer">
+                    Yes. The cards follow the exact standard layout published on official Government of India AgriStack portals, including the National Emblem, Ministry header, farmer photo, cadastral land details table, helpline number, and scannable QR verification code.
+                </div>
             </div>
-            <button type="button" class="legal-read-btn" data-policy="shipping">Read Delivery Policy &rarr;</button>
-          </div>
         </div>
-
-        <!-- Interactive Full Legal Documents Accordion -->
-        <div class="legal-full-accordion">
-          <!-- Section 1: Terms & Conditions -->
-          <div class="legal-accordion-item" id="terms">
-            <button class="legal-accordion-trigger" aria-expanded="false">
-              <span>1. Terms & Conditions (Digital Software License Agreement)</span>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <polyline points="6 9 12 15 18 9" />
-              </svg>
-            </button>
-            <div class="legal-accordion-content">
-              <h5>1.1 Overview & Legal Entity</h5>
-              <p>AgriStack Card Generator Helper ("Software", "Extension") is owned and operated by <strong>GURINDER
-                  SINGH</strong> (Individual Proprietor), located at Bathinda, Punjab, India. By installing, accessing,
-                or purchasing a subscription/license for AgriStack Card Generator Helper, you agree to be bound by these
-                Terms and Conditions. If you do not agree, please do not use the extension.</p>
-
-              <h5>1.2 Digital Software License</h5>
-              <p>We grant you a non-exclusive, non-transferable, revocable license to use the AgriStack Card Generator
-                Helper solely for formatting and generating farmer identity card documents from authorized government
-                agricultural registries (such as Punjab Farmer Registry).</p>
-
-              <h5>1.3 Permitted Use & User Responsibility</h5>
-              <ul>
-                <li>You agree to use this software only on records and data you are authorized to view and print.</li>
-                <li>You shall not use the software for fraudulent, misleading, or unauthorized alteration of government
-                  identity records.</li>
-                <li>The software acts as a layout formatting utility; it does not issue legal identities. Verification
-                  of underlying record authenticity remains with the issuing authority.</li>
-              </ul>
-
-              <h5>1.4 Pricing & Payments</h5>
-              <p>Payments for digital license access are processed securely in Indian Rupees (INR). Pricing is
-                transparently set at ₹22 per card before checkout with zero hidden fees.</p>
-
-              <h5>1.5 Limitation of Liability & Governing Law</h5>
-              <p>The software is provided "as is". In no event shall GURINDER SINGH or AgriStack Card Helper or its
-                creators be liable for
-                indirect, incidental, or consequential damages. These terms are governed by the laws of India, under the
-                jurisdiction of competent courts in Bathinda, Punjab, India.</p>
-            </div>
-          </div>
-
-          <!-- Section 2: Privacy Policy -->
-          <div class="legal-accordion-item" id="privacy">
-            <button class="legal-accordion-trigger" aria-expanded="false">
-              <span>2. Privacy Policy (Zero Data Harvesting & Secure Payments)</span>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <polyline points="6 9 12 15 18 9" />
-              </svg>
-            </button>
-            <div class="legal-accordion-content">
-              <h5>2.1 Client-Side Local Processing</h5>
-              <p>We take privacy with utmost seriousness. All farmer registry details, names, photographs, and land
-                record parameters parsed by the extension are processed <strong>100% locally on your own machine /
-                  browser sandbox</strong>. We do not store, copy, upload, or sell any applicant or farmer personal data
-                to remote servers.</p>
-
-              <h5>2.2 Payment Information Security</h5>
-              <p>All payment transactions are conducted directly through authorized, PCI-DSS Level 1 compliant payment
-                gateways. We do not collect, store, or have access to your credit/debit card numbers, UPI PINs, CVVs, or
-                Netbanking passwords.</p>
-
-              <h5>2.3 Data We May Collect</h5>
-              <ul>
-                <li><strong>Order & Transaction Identifiers:</strong> Gateway Payment ID, Order ID, and associated email
-                  for licensing verification, invoice issuance, and refund management.</li>
-                <li><strong>Anonymous Error Logs:</strong> Crash reports or formatting telemetry (if opted in) to
-                  diagnose browser layout compatibility bugs.</li>
-              </ul>
-
-              <h5>2.4 Contact Regarding Privacy</h5>
-              <p>If you have any privacy concerns or request removal of transaction records, email GURINDER SINGH at <a
-                  href="mailto:igxrry@gmail.com">igxrry@gmail.com</a> or WhatsApp <a href="tel:+917009980800">+91 70099
-                  80800</a>.</p>
-            </div>
-          </div>
-
-          <!-- Section 3: Refund & Cancellation Policy -->
-          <div class="legal-accordion-item" id="refund">
-            <button class="legal-accordion-trigger" aria-expanded="false">
-              <span>3. Refund & Cancellation Policy (7-Day Digital Goods SLA)</span>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <polyline points="6 9 12 15 18 9" />
-              </svg>
-            </button>
-            <div class="legal-accordion-content">
-              <h5>3.1 Digital Goods Policy</h5>
-              <p>Since AgriStack Card Generator Helper is a digital software tool providing instant access and card
-                generation upon payment, standard physical return processes do not apply.</p>
-
-              <h5>3.2 Refund Eligibility Window</h5>
-              <ul>
-                <li><strong>7-Day Guarantee:</strong> If the extension fails to format your card due to technical
-                  defects, portal layout changes, or payment double-deductions, you can raise a full refund request
-                  within <strong>7 days</strong> of the transaction.</li>
-                <li><strong>Double Charges:</strong> Any duplicate payments caused by network timeouts will be refunded
-                  automatically or upon email notification.</li>
-              </ul>
-
-              <h5>3.3 How to Request a Refund</h5>
-              <p>To initiate a refund, please send an email to <a href="mailto:igxrry@gmail.com">igxrry@gmail.com</a> or
-                WhatsApp <a href="tel:+917009980800">+91 70099 80800</a> with the subject <em>"Refund Request -
-                  [Your Payment ID]"</em> along with a brief description of the issue encountered.</p>
-
-              <h5>3.4 Processing & Turnaround Time</h5>
-              <p>Refund requests are verified within 24–48 hours. Once approved, the refunded amount is credited back to
-                your original payment method (Bank Account, UPI, or Card) within <strong>5–7 business days</strong> as
-                per banking network standards.</p>
-            </div>
-          </div>
-
-          <!-- Section 4: Shipping & Delivery Policy -->
-          <div class="legal-accordion-item" id="shipping">
-            <button class="legal-accordion-trigger" aria-expanded="false">
-              <span>4. Shipping & Delivery Policy (Instant Digital Delivery)</span>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <polyline points="6 9 12 15 18 9" />
-              </svg>
-            </button>
-            <div class="legal-accordion-content">
-              <h5>4.1 Digital Product — No Physical Shipping</h5>
-              <p><strong>Explicit Declaration:</strong> AgriStack Card Generator Helper (operated by GURINDER SINGH) is
-                a purely digital software
-                product and workflow service. No physical goods or packages are shipped to your postal address.</p>
-
-              <h5>4.2 Instant Delivery Mechanism</h5>
-              <ul>
-                <li><strong>Instant Generation:</strong> The generated print-ready 300 DPI PDF file is compiled and
-                  triggered for immediate download in your web browser within seconds of successful payment
-                  verification.</li>
-                <li><strong>License & Receipt:</strong> Digital license keys and payment confirmation receipts are
-                  delivered instantaneously via on-screen notification and emailed to the user's provided email address.
-                </li>
-              </ul>
-
-              <h5>4.3 Delivery Timeline & Shipping Fees</h5>
-              <p><strong>Timeline:</strong> Instantaneous (0 to 60 seconds post-transaction).<br><strong>Shipping
-                  Charges:</strong> ₹0.00 (Free digital electronic delivery).<br><strong>Support Contact:</strong> <a
-                  href="mailto:igxrry@gmail.com">igxrry@gmail.com</a> | <a href="tel:+917009980800">+91 70099 80800</a>.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
     </section>
 
-    <!-- Mandatory Contact Us & Order Inquiry Section -->
-    <section class="section" id="contact">
-      <div class="container">
-        <div class="section-header">
-          <span class="section-tag">Order & Support</span>
-          <h2 class="section-title">Contact & Licensing Inquiries</h2>
-          <p class="section-desc">
-            Select your plan or reach out directly for custom operator licensing, technical setup assistance, and
-            queries.
-          </p>
-        </div>
-
-        <div class="contact-grid">
-          <!-- Contact Details Card -->
-          <div class="contact-info-card">
-            <h3>Merchant & Support Details</h3>
-            <p class="intro">Reach out directly via email, phone, or visit our operating office below.</p>
-
-            <div class="contact-detail-items">
-              <div class="contact-item">
-                <div class="contact-icon-wrapper">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-                    <circle cx="12" cy="7" r="4" />
-                  </svg>
+    <!-- Footer -->
+    <footer class="footer-wrapper">
+        <div class="container footer-content">
+            <div class="footer-brand">
+                <div class="nav-logo">
+                    <div class="logo-icon-box"><i class="fa-solid fa-seedling"></i></div>
+                    <span class="brand-title">Agri<span>Stack</span> Farmer Hub</span>
                 </div>
-                <div class="contact-meta">
-                  <span class="contact-label">Legal Name / Proprietor</span>
-                  <span class="contact-val">
-                    <strong style="color: var(--text-primary); font-size: 15px;">GURINDER SINGH</strong>
-                  </span>
+                <p class="footer-tagline">Nationwide Official Farmer Identity Card Generation & Prepaid Wallet Platform.</p>
+                <div class="footer-helpline">
+                    <i class="fa-solid fa-headset"></i> Official Kisan Helpline: <strong>1800-180-1551</strong>
                 </div>
-              </div>
-
-              <div class="contact-item">
-                <div class="contact-icon-wrapper">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-                    <polyline points="22,6 12,13 2,6" />
-                  </svg>
-                </div>
-                <div class="contact-meta">
-                  <span class="contact-label">Official Support Email</span>
-                  <span class="contact-val">
-                    <a href="mailto:igxrry@gmail.com" id="supportEmailLink">igxrry@gmail.com</a>
-                    <button type="button" class="copy-btn" data-copy="igxrry@gmail.com">Copy</button>
-                  </span>
-                </div>
-              </div>
-
-              <div class="contact-item">
-                <div class="contact-icon-wrapper">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path
-                      d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
-                  </svg>
-                </div>
-                <div class="contact-meta">
-                  <span class="contact-label">Phone & WhatsApp Support</span>
-                  <span class="contact-val">
-                    <a href="tel:+917009980800">+91 70099 80800</a>
-                    <button type="button" class="copy-btn" data-copy="7009980800">Copy</button>
-                  </span>
-                </div>
-              </div>
-
-              <div class="contact-item">
-                <div class="contact-icon-wrapper">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
-                    <circle cx="12" cy="10" r="3" />
-                  </svg>
-                </div>
-                <div class="contact-meta">
-                  <span class="contact-label">Operating Location / City & State</span>
-                  <span class="contact-val">Bathinda, Punjab, India - 151001</span>
-                </div>
-              </div>
-
-              <div class="contact-item">
-                <div class="contact-icon-wrapper">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <circle cx="12" cy="12" r="10" />
-                    <polyline points="12 6 12 12 16 14" />
-                  </svg>
-                </div>
-                <div class="contact-meta">
-                  <span class="contact-label">Operating & Support Hours</span>
-                  <span class="contact-val">Monday – Saturday: 9:00 AM – 7:00 PM IST</span>
-                  <span style="font-size:          <!-- Support & Inquiry Form -->
-          <div class=" contact-form-card">
-                    <h3>Customer Support & Inquiries</h3>
-                    <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 16px;">Have questions about
-                      installing the extension or formatting cards? Contact us below.</p>
-
-                    <form id="contactForm" onsubmit="event.preventDefault(); handleContactSubmit();">
-                      <div class="form-group">
-                        <label class="form-label" for="senderName">Your Full Name / CSC Center Name *</label>
-                        <input type="text" id="senderName" class="form-control"
-                          placeholder="e.g. Gurpreet Singh (VLE Center)" required>
-                      </div>
-
-                      <div class="form-group">
-                        <label class="form-label" for="senderEmail">Email Address *</label>
-                        <input type="email" id="senderEmail" class="form-control"
-                          placeholder="e.g. gurpreet@example.com" required>
-                      </div>
-
-                      <div class="form-group">
-                        <label class="form-label" for="senderPhone">Mobile / WhatsApp Number *</label>
-                        <input type="tel" id="senderPhone" class="form-control" placeholder="e.g. +91 70099 80800"
-                          required>
-                      </div>
-
-                      <div class="form-group">
-                        <label class="form-label" for="senderMessage">Message / Assistance Required *</label>
-                        <textarea id="senderMessage" class="form-control"
-                          placeholder="How can we help you with AgriStack Card Helper?" required></textarea>
-                      </div>
-
-                      <button type="submit" class="btn btn-primary btn-block" id="sendInquiryBtn">
-                        <span>📩 Send Support Message</span>
-                      </button>
-
-                      <div id="toastMessage" class="toast-msg toast-success">
-                        ✅ <strong>Success!</strong> Your message has been submitted to <code>igxrry@gmail.com</code>. We
-                        will get back to you promptly.
-                      </div>
-                    </form>
-                </div>
-              </div>
             </div>
-    </section>
 
-    <!-- Frequently Asked Questions -->
-    <section class="section section-alt" id="faq">
-      <div class="container">
-        <div class="section-header">
-          <span class="section-tag">FAQ</span>
-          <h2 class="section-title">Frequently Asked Questions</h2>
-          <p class="section-desc">Quick answers regarding extension installation, features, and in-extension card
-            generation.</p>
-        </div>
-
-        <div class="faq-grid">
-          <div class="faq-item active">
-            <button type="button" class="faq-question">
-              <span>Is downloading and installing the extension free?</span>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <polyline points="6 9 12 15 18 9" />
-              </svg>
-            </button>
-            <div class="faq-answer">
-              Yes! You can download the Chrome extension ZIP file or install the official Mozilla Firefox Add-on
-              completely free. You only pay ₹22 per card directly inside the extension when formatting and downloading a
-              print-ready 300 DPI ID card.
+            <div class="footer-links">
+                <h4>Quick Navigation</h4>
+                <ul>
+                    <li><a href="#card-preview">Interactive Card Demo</a></li>
+                    <li><a href="#wallet">Prepaid Wallet Top-Up</a></li>
+                    <li><a href="#portals">36 State Portals</a></li>
+                    <li><a href="#install">Installation Guide</a></li>
+                    <li><a href="agristack-card-helper-v5.0.zip" download>Download Extension v5.0</a></li>
+                </ul>
             </div>
-          </div>
 
-          <div class="faq-item">
-            <button type="button" class="faq-question">
-              <span>How do I install the extension in Mozilla Firefox?</span>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <polyline points="6 9 12 15 18 9" />
-              </svg>
-            </button>
-            <div class="faq-answer">
-              Installing on Mozilla Firefox is 100% automatic in 1 click:
-              <ol style="margin-left: 20px; margin-top: 8px; line-height: 1.8;">
-                <li>Open our official Mozilla Add-ons page at <a
-                    href="https://addons.mozilla.org/firefox/addon/farmer-card/" target="_blank"
-                    rel="noopener noreferrer"
-                    style="color: #EA580C; font-weight: 700; text-decoration: underline;">addons.mozilla.org/firefox/addon/farmer-card/</a>.
-                </li>
-                <li>Click the blue <strong>"+ Add to Firefox"</strong> button.</li>
-                <li>Confirm the security prompt by clicking <strong>"Add"</strong>.</li>
-                <li>The extension is installed and ready to format Farmer ID cards immediately!</li>
-              </ol>
+            <div class="footer-secure">
+                <h4>Security & Standards</h4>
+                <div class="security-badges">
+                    <div class="sec-badge"><i class="fa-solid fa-lock"></i> 256-Bit SSL Encryption</div>
+                    <div class="sec-badge"><i class="fa-solid fa-shield-halved"></i> Zero-Bypass Cashfree PG</div>
+                    <div class="sec-badge"><i class="fa-solid fa-certificate"></i> Standard 1145×725 PVC Dimensions</div>
+                </div>
             </div>
-          </div>
+        </div>
 
-          <div class="faq-item">
-            <button type="button" class="faq-question">
-              <span>How do I install the extension in Google Chrome / Brave / Edge?</span>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <polyline points="6 9 12 15 18 9" />
-              </svg>
-            </button>
-            <div class="faq-answer">
-              Installing takes less than 30 seconds:
-              <ol style="margin-left: 20px; margin-top: 8px; line-height: 1.8;">
-                <li>Download the free <a href="agristack-card-helper-v5.0.zip" download="agristack-card-helper-v5.0.zip"
-                    style="color: #166536; font-weight: 700; text-decoration: underline;">agristack-card-helper-v5.0.zip</a>
-                    file.</li>
-                <li>Extract the downloaded ZIP file onto your computer.</li>
-                <li>Open Google Chrome and navigate to <code>chrome://extensions</code>.</li>
-                <li>Turn ON the <strong>Developer mode</strong> switch in the top right corner.</li>
-                <li>Click <strong>Load unpacked</strong> and choose the extracted folder. Done!</li>
-              </ol>
+        <div class="footer-bottom text-center">
+            <p>© 2026 AgriStack Farmer Registry Companion Platform • All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Recharge Modal -->
+    <div class="modal-backdrop" id="rechargeModal" onclick="closeWalletModal(event)">
+        <div class="modal-card" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h3><i class="fa-solid fa-bolt"></i> Instant Wallet Recharge</h3>
+                <button class="modal-close" onclick="closeWalletModal()">&times;</button>
             </div>
-          </div>
-
-          <div class="faq-item">
-            <button type="button" class="faq-question">
-              <span>How does the Prepaid Digital Wallet work?</span>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <polyline points="6 9 12 15 18 9" />
-              </svg>
-            </button>
-            <div class="faq-answer">
-              The extension comes with a built-in prepaid digital wallet. Fresh installs start at ₹0.00 balance with zero upfront fee.
-              You can recharge your balance with ₹100, ₹250, ₹500, or ₹1,000 anytime using UPI QR (GPay, PhonePe, Paytm), NetBanking, or Cards.
-              Each time you format and download an official 300 DPI Farmer ID card, ₹22 is automatically deducted from your wallet balance.
+            <div class="modal-body">
+                <p class="modal-sub">Select top-up amount to recharge your mobile-linked wallet instantly via UPI QR code or NetBanking.</p>
+                <div class="modal-amounts">
+                    <button class="modal-amt-btn" onclick="setModalAmount(100)">₹100</button>
+                    <button class="modal-amt-btn" onclick="setModalAmount(250)">₹250</button>
+                    <button class="modal-amt-btn" onclick="setModalAmount(500)">₹500</button>
+                    <button class="modal-amt-btn active" onclick="setModalAmount(1000)">₹1,000</button>
+                </div>
+                <div class="form-group mt-3">
+                    <label>Mobile Number</label>
+                    <input type="tel" id="rechargeMobileInput" class="form-input" value="7009980800" maxlength="10">
+                </div>
+                <div class="modal-summary-box">
+                    <div class="summary-row">
+                        <span>Recharge Amount:</span>
+                        <strong id="modalSummaryAmount">₹1,000.00</strong>
+                    </div>
+                    <div class="summary-row">
+                        <span>Cards Available:</span>
+                        <strong id="modalSummaryCards">66 Cards (@ ₹15/card)</strong>
+                    </div>
+                </div>
+                <button class="btn btn-primary btn-block btn-lg mt-3" onclick="proceedPayment()">
+                    <i class="fa-solid fa-lock"></i> Pay Securely via Cashfree
+                </button>
             </div>
-          </div>
-
-          <div class="faq-item">
-            <button type="button" class="faq-question">
-              <span>Does my wallet balance expire?</span>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <polyline points="6 9 12 15 18 9" />
-              </svg>
-            </button>
-            <div class="faq-answer">
-              No, your prepaid wallet balance has lifetime validity and never expires. Any unused balance remains securely in your account ready for when the next farmer visits your CSC center.
-            </div>
-          </div>
-
-          <div class="faq-item">
-            <button type="button" class="faq-question">
-              <span>Need developer or technical assistance?</span>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <polyline points="6 9 12 15 18 9" />
-              </svg>
-            </button>
-            <div class="faq-answer">
-              You can reach out directly via WhatsApp at <a href="https://wa.me/917009980800" target="_blank"
-                style="font-weight: 700; color: #166536;">+91 70099 80800</a> or email <a href="mailto:igxrry@gmail.com"
-                style="font-weight: 700; color: #166536;">igxrry@gmail.com</a> for instant guidance.
-            </div>
-          </div>
         </div>
-      </div>
-    </section>
-  </main>
-
-  <!-- Clean Security Footer -->
-  <footer class="site-footer" id="siteFooter">
-    <div class="container">
-      <div class="footer-trust-strip">
-        <span class="trust-pill-tag">🔒 256-Bit SSL Encrypted</span> &bull;
-        <span class="trust-pill-tag">⚡ Free Direct Download (.ZIP)</span> &bull;
-        <span class="trust-pill-tag">🛡️ 100% Client-Side Local Privacy</span> &bull;
-        <span class="trust-pill-tag">💳 ₹22 Per Card inside Extension</span>
-      </div>
-
-      <div class="footer-grid">
-        <div class="footer-brand">
-          <h4>AgriStack Extension Helper</h4>
-          <p>
-            Automated Farmer ID Digital Identity formatting extension for Punjab Farmer Registry and CSC / VLE
-            operators.
-          </p>
-          <p style="margin-top: 8px; font-size: 12px; color: #64748B;">
-            Operated by <strong>GURINDER SINGH</strong> &bull; Bathinda, Punjab, India &bull; Official Support: <a
-              href="mailto:igxrry@gmail.com" style="color: #94A3B8;">igxrry@gmail.com</a> &bull; <a
-              href="tel:+917009980800" style="color: #94A3B8;">+91 70099 80800</a>
-          </p>
-        </div>
-
-        <div class="footer-col">
-          <h5>Quick Links</h5>
-          <div class="footer-links">
-            <a href="#hero">Home</a>
-            <a href="#features">Features</a>
-            <a href="#workflow">Product Workflow</a>
-            <a href="#install-guide">Install Guide</a>
-            <a href="agristack-card-helper-v5.0.zip" download="agristack-card-helper-v5.0.zip"
-              style="color: #22C55E; font-weight: 700;">⬇️ Download (.ZIP)</a>
-            <a href="https://addons.mozilla.org/firefox/addon/farmer-card/" target="_blank" rel="noopener noreferrer"
-              style="color: #F97316; font-weight: 700;">🦊 Firefox Add-on</a>
-            <a href="#pricing">Plan Details</a>
-            <a href="#faq">FAQ</a>
-          </div>
-        </div>
-
-        <div class="footer-col">
-          <h5>Mandatory Legal</h5>
-          <div class="footer-links">
-            <a href="#terms" onclick="openPolicyModal('terms'); return false;">Terms & Conditions</a>
-            <a href="#privacy" onclick="openPolicyModal('privacy'); return false;">Privacy Policy</a>
-            <a href="#refund" onclick="openPolicyModal('refund'); return false;">Refund & Cancellation</a>
-            <a href="#shipping" onclick="openPolicyModal('shipping'); return false;">Shipping & Delivery</a>
-            <a href="#contact">Contact Support</a>
-          </div>
-        </div>
-
-        <div class="footer-col">
-          <h5>Contact Support</h5>
-          <div class="footer-links">
-            <a href="mailto:igxrry@gmail.com">igxrry@gmail.com</a>
-            <a href="tel:+917009980800">+91 70099 80800</a>
-            <span style="font-size: 12px; color: #64748B;">Mon - Sat (9am - 7pm IST)</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="footer-bottom">
-        <div>
-          &copy; <span id="currentYear">2026</span> GURINDER SINGH — AgriStack Card Helper. All rights reserved. Built
-          for CSC & AgriStack Operators.
-        </div>
-        <div style="font-size: 12px;">
-          <span>Compliant with Indian IT Act 2000 & Payment Aggregator Guidelines</span>
-        </div>
-      </div>
     </div>
-  </footer>
 
-  <!-- Online Wallet Recharge Modal -->
-  <div class="modal-overlay" id="rechargeModal" aria-hidden="true" role="dialog" aria-modal="true">
-    <div class="modal-box" style="max-width: 460px;">
-      <div class="modal-header">
-        <h3 id="modalRechargeTitle">⚡ Top-Up Prepaid Wallet</h3>
-        <button type="button" class="modal-close-btn" onclick="closeRechargeModal()" aria-label="Close modal">&times;</button>
-      </div>
-      <div class="modal-body">
-        <form id="modalRechargeForm" onsubmit="event.preventDefault(); submitModalRecharge();">
-          <div class="recharge-form-group">
-            <label for="modalWalletId" style="color: var(--text-secondary);">Operator Mobile Number / Wallet ID *</label>
-            <input type="text" id="modalWalletId" class="recharge-input" style="color: var(--text-primary); background: #F8FAFC; border: 1.5px solid var(--border);" placeholder="e.g. 9876543210" required>
-          </div>
-          <div class="recharge-form-group">
-            <label for="modalRechargeAmount" style="color: var(--text-secondary);">Recharge Amount (₹) *</label>
-            <input type="number" id="modalRechargeAmount" class="recharge-input" style="color: var(--text-primary); background: #F8FAFC; border: 1.5px solid var(--border);" min="10" value="500" required>
-            <div class="quick-amount-chips" style="margin-top: 8px;">
-              <button type="button" class="amount-chip" style="background: #F1F5F9; color: var(--text-primary); border: 1px solid var(--border);" onclick="setModalAmount(100)">₹100</button>
-              <button type="button" class="amount-chip" style="background: #F1F5F9; color: var(--text-primary); border: 1px solid var(--border);" onclick="setModalAmount(250)">₹250</button>
-              <button type="button" class="amount-chip active" onclick="setModalAmount(500)">₹500</button>
-              <button type="button" class="amount-chip" style="background: #F1F5F9; color: var(--text-primary); border: 1px solid var(--border);" onclick="setModalAmount(1000)">₹1,000</button>
-              <button type="button" class="amount-chip" style="background: #F1F5F9; color: var(--text-primary); border: 1px solid var(--border);" onclick="setModalAmount(2000)">₹2,000</button>
-            </div>
-          </div>
-          <div style="background: #F0FDF4; border: 1px solid #BBF7D0; border-radius: 8px; padding: 12px; margin: 16px 0; font-size: 13px; color: #166536;">
-            <span>💡 <strong>Pay-As-You-Go:</strong> Balance is credited instantly to your extension wallet. Print-ready cards cost ₹22 each deducted automatically.</span>
-          </div>
-          <button type="submit" class="btn-cashfree-submit" id="btnModalPay">
-            <span>🔒 Proceed to Payment</span>
-          </button>
-          <div id="modalRechargeAlert" class="recharge-status-alert"></div>
-        </form>
-      </div>
-    </div>
-  </div>
-
-  <!-- Recharge Success Modal -->
-  <div class="modal-overlay" id="rechargeSuccessModal" aria-hidden="true" role="dialog" aria-modal="true">
-    <div class="modal-box" style="max-width: 440px; text-align: center;">
-      <div class="modal-header" style="justify-content: flex-end; border-bottom: none; padding-bottom: 0;">
-        <button type="button" class="modal-close-btn" onclick="closeRechargeSuccessModal()" aria-label="Close modal">&times;</button>
-      </div>
-      <div class="modal-body" style="padding-top: 0;">
-        <div style="width: 60px; height: 60px; background: #DCFCE7; color: #166536; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 28px; margin: 0 auto 16px;">
-          ✓
-        </div>
-        <h3 style="font-size: 20px; font-weight: 800; color: var(--text-primary); margin-bottom: 6px;">
-          Recharge Successful!
-        </h3>
-        <p style="font-size: 14px; color: var(--text-secondary); margin-bottom: 20px;">
-          Your prepaid wallet has been credited successfully.
-        </p>
-        <div style="background: #F8FAFC; border: 1.5px solid var(--border); border-radius: 12px; padding: 16px; margin-bottom: 20px;">
-          <div style="display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 13px;">
-            <span style="color: var(--text-muted);">Amount Added:</span>
-            <strong style="color: #166536; font-size: 16px;" id="succAmount">₹500.00</strong>
-          </div>
-          <div style="display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 13px;">
-            <span style="color: var(--text-muted);">Registered Mobile / ID:</span>
-            <strong style="color: var(--text-primary);" id="succMobile">9876543210</strong>
-          </div>
-          <div style="display: flex; justify-content: space-between; font-size: 13px;">
-            <span style="color: var(--text-muted);">Estimated Cards:</span>
-            <strong style="color: var(--primary);" id="succCards">~22 Cards</strong>
-          </div>
-        </div>
-        <button type="button" class="btn btn-primary btn-block" onclick="closeRechargeSuccessModal()">
-          <span>Done</span>
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Interactive Policy Modal Reader -->
-  <div class="modal-overlay" id="policyModal" aria-hidden="true" role="dialog" aria-modal="true">
-    <div class="modal-box">
-      <div class="modal-header">
-        <h3 id="modalTitle">Policy Document</h3>
-        <button type="button" class="modal-close-btn" onclick="closePolicyModal()"
-          aria-label="Close modal">&times;</button>
-      </div>
-      <div class="modal-body" id="modalBody">
-        <!-- Injected via JavaScript -->
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary btn-sm" onclick="closePolicyModal()">Close</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Core JavaScript -->
-  <script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
-
 </html>

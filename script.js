@@ -1,18 +1,676 @@
-/* ==========================================================================
-   AgriStack Card Helper - Official Digital Prepaid Wallet & Landing Page
-   ========================================================================== */
+/**
+ * AgriStack Farmer Card & Digital Wallet Hub
+ * Frontend Interactive Controller v5.0
+ * Supports all 36 Indian States & UTs with Real-Time 3D Card Preview
+ */
 
-const WALLET_BACKEND_URL = 'https://farmer-wallet-extension.onrender.com';
-const CARD_FEE = 22;
+// 36 States & UTs Comprehensive Database
+const STATES_DATA = [
+  {
+    code: 'PB',
+    name: 'Punjab',
+    regionalName: 'ਪੰਜਾਬ',
+    lang: 'Gurmukhi (Punjabi)',
+    regionalBharat: 'ਭਾਰਤ ਸਰਕਾਰ',
+    regionalMinistry: 'ਖੇਤੀਬਾੜੀ ਅਤੇ ਕਿਸਾਨ ਭਲਾਈ ਮੰਤਰਾਲਾ',
+    footerRegistry: 'Punjab Farmer Registry',
+    sampleFarmer: { regName: 'ਹਰਵਿੰਦਰ ਸਿੰਘ', engName: 'Harvinder Singh', address: 'C/o Balveer Singh, 104, Shergarh (95), Talwandi Sabo, Bathinda, PUNJAB, 151301', regLabel: 'ਨਾਮ' },
+    portalUrl: 'https://pbfr.agristack.gov.in/farmer-registry-pb/#/',
+    displayPortal: 'www.pbfr.agristack.gov.in',
+    helpline: '1800-180-1551',
+    status: 'Active'
+  },
+  {
+    code: 'RJ',
+    name: 'Rajasthan',
+    regionalName: 'राजस्थान',
+    lang: 'Devanagari (Hindi)',
+    regionalBharat: 'भारत सरकार',
+    regionalMinistry: 'कृषि एवं किसान कल्याण मंत्रालय',
+    footerRegistry: 'Rajasthan Farmer Registry',
+    sampleFarmer: { regName: 'सुरेश कुमार', engName: 'Suresh Kumar', address: 'Gram Panchayat Bassi, Tehsil Bassi, Jaipur, RAJASTHAN, 303301', regLabel: 'नाम' },
+    portalUrl: 'https://rjfr.agristack.gov.in/farmer-registry-rj/#/',
+    displayPortal: 'www.rjfr.agristack.gov.in',
+    helpline: '1800-180-1551',
+    status: 'Active'
+  },
+  {
+    code: 'UP',
+    name: 'Uttar Pradesh',
+    regionalName: 'उत्तर प्रदेश',
+    lang: 'Devanagari (Hindi)',
+    regionalBharat: 'भारत सरकार',
+    regionalMinistry: 'कृषि एवं किसान कल्याण मंत्रालय',
+    footerRegistry: 'Uttar Pradesh Farmer Registry',
+    sampleFarmer: { regName: 'राम प्रकाश यादव', engName: 'Ram Prakash Yadav', address: 'Vill Kalyanpur, Post Bithoor, Kanpur Nagar, UTTAR PRADESH, 209217', regLabel: 'नाम' },
+    portalUrl: 'https://upfr.agristack.gov.in/farmer-registry-up/#/',
+    displayPortal: 'www.upfr.agristack.gov.in',
+    helpline: '1800-180-1551',
+    status: 'Active'
+  },
+  {
+    code: 'MH',
+    name: 'Maharashtra',
+    regionalName: 'महाराष्ट्र',
+    lang: 'Devanagari (Marathi)',
+    regionalBharat: 'भारत सरकार',
+    regionalMinistry: 'कृषी आणि शेतकरी कल्याण मंत्रालय',
+    footerRegistry: 'Maharashtra Farmer Registry',
+    sampleFarmer: { regName: 'अमोल विठ्ठल पाटील', engName: 'Amol Vitthal Patil', address: 'Post Baramati, Taluka Baramati, Pune, MAHARASHTRA, 413102', regLabel: 'नाव' },
+    portalUrl: 'https://mhfr.agristack.gov.in/farmer-registry-mh/#/',
+    displayPortal: 'www.mhfr.agristack.gov.in',
+    helpline: '1800-180-1551',
+    status: 'Active'
+  },
+  {
+    code: 'GJ',
+    name: 'Gujarat',
+    regionalName: 'ગુજરાત',
+    lang: 'Gujarati',
+    regionalBharat: 'ભારત સરકાર',
+    regionalMinistry: 'કૃષિ અને ખેડૂત કલ્યાણ મંત્રાલય',
+    footerRegistry: 'Gujarat Farmer Registry',
+    sampleFarmer: { regName: 'પરેશભાઈ પટેલ', engName: 'Pareshbhai Patel', address: 'At & Post Anand, Taluka Anand, Dist Anand, GUJARAT, 388001', regLabel: 'નામ' },
+    portalUrl: 'https://gjfr.agristack.gov.in/farmer-registry-gj/#/',
+    displayPortal: 'www.gjfr.agristack.gov.in',
+    helpline: '1800-180-1551',
+    status: 'Active'
+  },
+  {
+    code: 'TN',
+    name: 'Tamil Nadu',
+    regionalName: 'தமிழ்நாடு',
+    lang: 'Tamil',
+    regionalBharat: 'இந்திய அரசு',
+    regionalMinistry: 'விவசாயம் மற்றும் விவசாயிகள் நல அமைச்சகம்',
+    footerRegistry: 'Tamil Nadu Farmer Registry',
+    sampleFarmer: { regName: 'முருகன் சுப்பிரமணியன்', engName: 'Murugan Subramanian', address: 'South Street, Thanjavur, TAMIL NADU, 613001', regLabel: 'பெயர்' },
+    portalUrl: 'https://tnfr.agristack.gov.in/farmer-registry-tn/#/',
+    displayPortal: 'www.tnfr.agristack.gov.in',
+    helpline: '1800-180-1551',
+    status: 'Active'
+  },
+  {
+    code: 'AP',
+    name: 'Andhra Pradesh',
+    regionalName: 'ఆంధ్రప్రదేశ్',
+    lang: 'Telugu',
+    regionalBharat: 'భారత ప్రభుత్వం',
+    regionalMinistry: 'వ్యవసాయ మరియు రైతు సంక్షేమ మంత్రిత్వ శాఖ',
+    footerRegistry: 'Andhra Pradesh Farmer Registry',
+    sampleFarmer: { regName: 'వెంకటేశ్వరరావు', engName: 'Venkateswara Rao', address: 'Main Road, Guntur District, ANDHRA PRADESH, 522002', regLabel: 'పేరు' },
+    portalUrl: 'https://apfr.agristack.gov.in/farmer-registry-ap/#/',
+    displayPortal: 'www.apfr.agristack.gov.in',
+    helpline: '1800-180-1551',
+    status: 'Active'
+  },
+  {
+    code: 'TS',
+    name: 'Telangana',
+    regionalName: 'తెలంగాణ',
+    lang: 'Telugu',
+    regionalBharat: 'భారత ప్రభుత్వం',
+    regionalMinistry: 'వ్యవసాయ మరియు రైతు సంక్షేమ మంత్రిత్వ శాఖ',
+    footerRegistry: 'Telangana Farmer Registry',
+    sampleFarmer: { regName: 'శ్రీనివాస్ రెడ్డి', engName: 'Srinivas Reddy', address: 'Warangal Rural, TELANGANA, 506002', regLabel: 'పేరు' },
+    portalUrl: 'https://tsfr.agristack.gov.in/farmer-registry-ts/#/',
+    displayPortal: 'www.tsfr.agristack.gov.in',
+    helpline: '1800-180-1551',
+    status: 'Active'
+  },
+  {
+    code: 'MP',
+    name: 'Madhya Pradesh',
+    regionalName: 'मध्य प्रदेश',
+    lang: 'Devanagari (Hindi)',
+    regionalBharat: 'भारत सरकार',
+    regionalMinistry: 'कृषि एवं किसान कल्याण मंत्रालय',
+    footerRegistry: 'Madhya Pradesh Farmer Registry',
+    sampleFarmer: { regName: 'कमल सिंह राजपूत', engName: 'Kamal Singh Rajput', address: 'Village Pipariya, Tehsil Hoshangabad, MADHYA PRADESH, 461775', regLabel: 'नाम' },
+    portalUrl: 'https://mpfr.agristack.gov.in/farmer-registry-mp/#/',
+    displayPortal: 'www.mpfr.agristack.gov.in',
+    helpline: '1800-180-1551',
+    status: 'Active'
+  },
+  {
+    code: 'KA',
+    name: 'Karnataka',
+    regionalName: 'ಕರ್ನಾಟಕ',
+    lang: 'Kannada',
+    regionalBharat: 'ಭಾರತ ಸರ್ಕಾರ',
+    regionalMinistry: 'ಕೃಷಿ ಮತ್ತು ರೈತರ ಕಲ್ಯಾಣ ಸಚಿವಾಲಯ',
+    footerRegistry: 'Karnataka Farmer Registry',
+    sampleFarmer: { regName: 'ಮಂಜುನಾಥ್ ಗೌಡ', engName: 'Manjunath Gowda', address: 'Mandya Taluk, Mandya, KARNATAKA, 571401', regLabel: 'ಹೆಸರು' },
+    portalUrl: 'https://kafr.agristack.gov.in/farmer-registry-ka/#/',
+    displayPortal: 'www.kafr.agristack.gov.in',
+    helpline: '1800-180-1551',
+    status: 'Active'
+  },
+  {
+    code: 'KL',
+    name: 'Kerala',
+    regionalName: 'കേരളം',
+    lang: 'Malayalam',
+    regionalBharat: 'ഭാരത സർക്കാർ',
+    regionalMinistry: 'കൃഷി, കർഷകക്ഷേമ മന്ത്രാലയം',
+    footerRegistry: 'Kerala Farmer Registry',
+    sampleFarmer: { regName: 'രമേഷ് കുമാർ', engName: 'Ramesh Kumar', address: 'Kuttanad, Alappuzha, KERALA, 688504', regLabel: 'പേര്' },
+    portalUrl: 'https://klfr.agristack.gov.in/farmer-registry-kl/#/',
+    displayPortal: 'www.klfr.agristack.gov.in',
+    helpline: '1800-180-1551',
+    status: 'Active'
+  },
+  {
+    code: 'OR',
+    name: 'Odisha',
+    regionalName: 'ଓଡ଼ିଶା',
+    lang: 'Odia',
+    regionalBharat: 'ଭାରତ ସରକାର',
+    regionalMinistry: 'କୃଷି ଓ କୃଷକ କଲ୍ୟାଣ ମନ୍ତ୍ରଣାଳୟ',
+    footerRegistry: 'Odisha Farmer Registry',
+    sampleFarmer: { regName: 'ବିଜୟ କୁମାର ପ୍ରଧାନ', engName: 'Bijay Kumar Pradhan', address: 'Bargarh, ODISHA, 768028', regLabel: 'ନାମ' },
+    portalUrl: 'https://orfr.agristack.gov.in/farmer-registry-or/#/',
+    displayPortal: 'www.orfr.agristack.gov.in',
+    helpline: '1800-180-1551',
+    status: 'Active'
+  },
+  {
+    code: 'WB',
+    name: 'West Bengal',
+    regionalName: 'পশ্চিমবঙ্গ',
+    lang: 'Bengali',
+    regionalBharat: 'ভারত সরকার',
+    regionalMinistry: 'কৃষি ও কৃষক কল্যাণ মন্ত্রক',
+    footerRegistry: 'West Bengal Farmer Registry',
+    sampleFarmer: { regName: 'শুভাশিস রায়', engName: 'Subhasish Roy', address: 'Burdwan, WEST BENGAL, 713101', regLabel: 'নাম' },
+    portalUrl: 'https://wbfr.agristack.gov.in/farmer-registry-wb/#/',
+    displayPortal: 'www.wbfr.agristack.gov.in',
+    helpline: '1800-180-1551',
+    status: 'Active'
+  },
+  {
+    code: 'AS',
+    name: 'Assam',
+    regionalName: 'অসম',
+    lang: 'Assamese',
+    regionalBharat: 'ভাৰত চৰকাৰ',
+    regionalMinistry: 'কৃষি আৰু কৃষক কল্যাণ মন্ত্ৰালয়',
+    footerRegistry: 'Assam Farmer Registry',
+    sampleFarmer: { regName: 'প্ৰণৱ শইকীয়া', engName: 'Pranab Saikia', address: 'Nagaon, ASSAM, 782001', regLabel: 'নাম' },
+    portalUrl: 'https://asfr.agristack.gov.in/farmer-registry-as/#/',
+    displayPortal: 'www.asfr.agristack.gov.in',
+    helpline: '1800-180-1551',
+    status: 'Active'
+  },
+  {
+    code: 'BR',
+    name: 'Bihar',
+    regionalName: 'बिहार',
+    lang: 'Devanagari (Hindi)',
+    regionalBharat: 'भारत सरकार',
+    regionalMinistry: 'कृषि एवं किसान कल्याण मंत्रालय',
+    footerRegistry: 'Bihar Farmer Registry',
+    sampleFarmer: { regName: 'संजय कुमार सिंह', engName: 'Sanjay Kumar Singh', address: 'Vill Bela, Muzaffarpur, BIHAR, 842001', regLabel: 'नाम' },
+    portalUrl: 'https://brfr.agristack.gov.in/farmer-registry-br/#/',
+    displayPortal: 'www.brfr.agristack.gov.in',
+    helpline: '1800-180-1551',
+    status: 'Active'
+  },
+  {
+    code: 'CG',
+    name: 'Chhattisgarh',
+    regionalName: 'छत्तीसगढ़',
+    lang: 'Devanagari (Hindi)',
+    regionalBharat: 'भारत सरकार',
+    regionalMinistry: 'कृषि एवं किसान कल्याण मंत्रालय',
+    footerRegistry: 'Chhattisgarh Farmer Registry',
+    sampleFarmer: { regName: 'देवेंद्र वर्मा', engName: 'Devendra Verma', address: 'Dhamtari, CHHATTISGARH, 493773', regLabel: 'नाम' },
+    portalUrl: 'https://cgfr.agristack.gov.in/farmer-registry-cg/#/',
+    displayPortal: 'www.cgfr.agristack.gov.in',
+    helpline: '1800-180-1551',
+    status: 'Active'
+  },
+  {
+    code: 'HR',
+    name: 'Haryana',
+    regionalName: 'हरियाणा',
+    lang: 'Devanagari (Hindi)',
+    regionalBharat: 'भारत सरकार',
+    regionalMinistry: 'कृषि एवं किसान कल्याण मंत्रालय',
+    footerRegistry: 'Haryana Farmer Registry',
+    sampleFarmer: { regName: 'कुलदीप सिंह', engName: 'Kuldeep Singh', address: 'Karnal, HARYANA, 132001', regLabel: 'नाम' },
+    portalUrl: 'https://hrfr.agristack.gov.in/farmer-registry-hr/#/',
+    displayPortal: 'www.hrfr.agristack.gov.in',
+    helpline: '1800-180-1551',
+    status: 'Active'
+  },
+  {
+    code: 'HP',
+    name: 'Himachal Pradesh',
+    regionalName: 'हिमाचल प्रदेश',
+    lang: 'Devanagari (Hindi)',
+    regionalBharat: 'भारत सरकार',
+    regionalMinistry: 'कृषि एवं किसान कल्याण मंत्रालय',
+    footerRegistry: 'Himachal Pradesh Farmer Registry',
+    sampleFarmer: { regName: 'राकेश शर्मा', engName: 'Rakesh Sharma', address: 'Kangra, HIMACHAL PRADESH, 176001', regLabel: 'नाम' },
+    portalUrl: 'https://hpfr.agristack.gov.in/farmer-registry-hp/#/',
+    displayPortal: 'www.hpfr.agristack.gov.in',
+    helpline: '1800-180-1551',
+    status: 'Active'
+  },
+  {
+    code: 'JK',
+    name: 'Jammu and Kashmir',
+    regionalName: 'जम्मू और कश्मीर',
+    lang: 'Hindi / Urdu',
+    regionalBharat: 'भारत सरकार',
+    regionalMinistry: 'कृषि एवं किसान कल्याण मंत्रालय',
+    footerRegistry: 'Jammu and Kashmir Farmer Registry',
+    sampleFarmer: { regName: 'तारिक अहमद', engName: 'Tariq Ahmad', address: 'Anantnag, JAMMU & KASHMIR, 192101', regLabel: 'नाम' },
+    portalUrl: 'https://jkfr.agristack.gov.in/farmer-registry-jk/#/',
+    displayPortal: 'www.jkfr.agristack.gov.in',
+    helpline: '1800-180-1551',
+    status: 'Active'
+  },
+  {
+    code: 'JH',
+    name: 'Jharkhand',
+    regionalName: 'झारखंड',
+    lang: 'Devanagari (Hindi)',
+    regionalBharat: 'भारत सरकार',
+    regionalMinistry: 'कृषि एवं किसान कल्याण मंत्रालय',
+    footerRegistry: 'Jharkhand Farmer Registry',
+    sampleFarmer: { regName: 'अनिल मुंडा', engName: 'Anil Munda', address: 'Ranchi, JHARKHAND, 834001', regLabel: 'नाम' },
+    portalUrl: 'https://jhfr.agristack.gov.in/farmer-registry-jh/#/',
+    displayPortal: 'www.jhfr.agristack.gov.in',
+    helpline: '1800-180-1551',
+    status: 'Active'
+  },
+  {
+    code: 'UK',
+    name: 'Uttarakhand',
+    regionalName: 'उत्तराखंड',
+    lang: 'Devanagari (Hindi)',
+    regionalBharat: 'भारत सरकार',
+    regionalMinistry: 'कृषि एवं किसान कल्याण मंत्रालय',
+    footerRegistry: 'Uttarakhand Farmer Registry',
+    sampleFarmer: { regName: 'दीपक सिंह नेगी', engName: 'Deepak Singh Negi', address: 'Dehradun, UTTARAKHAND, 248001', regLabel: 'नाम' },
+    portalUrl: 'https://ukfr.agristack.gov.in/farmer-registry-uk/#/',
+    displayPortal: 'www.ukfr.agristack.gov.in',
+    helpline: '1800-180-1551',
+    status: 'Active'
+  },
+  {
+    code: 'TR',
+    name: 'Tripura',
+    regionalName: 'ত্রিপুরা',
+    lang: 'Bengali',
+    regionalBharat: 'ভারত সরকার',
+    regionalMinistry: 'কৃষি ও কৃষক কল্যাণ মন্ত্রক',
+    footerRegistry: 'Tripura Farmer Registry',
+    sampleFarmer: { regName: 'দেবাশীষ দেববর্মা', engName: 'Debashis Debbarma', address: 'Agartala, TRIPURA, 799001', regLabel: 'নাম' },
+    portalUrl: 'https://trfr.agristack.gov.in/farmer-registry-tr/#/',
+    displayPortal: 'www.trfr.agristack.gov.in',
+    helpline: '1800-180-1551',
+    status: 'Active'
+  },
+  {
+    code: 'GA',
+    name: 'Goa',
+    regionalName: 'गोवा',
+    lang: 'Konkani / Marathi',
+    regionalBharat: 'भारत सरकार',
+    regionalMinistry: 'कृषि एवं किसान कल्याण मंत्रालय',
+    footerRegistry: 'Goa Farmer Registry',
+    sampleFarmer: { regName: 'रोहन कामत', engName: 'Rohan Kamat', address: 'Ponda, GOA, 403401', regLabel: 'नाम' },
+    portalUrl: 'https://gafr.agristack.gov.in/farmer-registry-ga/#/',
+    displayPortal: 'www.gafr.agristack.gov.in',
+    helpline: '1800-180-1551',
+    status: 'Active'
+  },
+  {
+    code: 'ML',
+    name: 'Meghalaya',
+    regionalName: 'Meghalaya',
+    lang: 'English / Hindi',
+    regionalBharat: 'भारत सरकार',
+    regionalMinistry: 'कृषि एवं किसान कल्याण मंत्रालय',
+    footerRegistry: 'Meghalaya Farmer Registry',
+    sampleFarmer: { regName: 'मेघालय किसान', engName: 'Banteilang Marbaniang', address: 'East Khasi Hills, MEGHALAYA, 793001', regLabel: 'Name' },
+    portalUrl: 'https://mlfr.agristack.gov.in/farmer-registry-ml/#/',
+    displayPortal: 'www.mlfr.agristack.gov.in',
+    helpline: '1800-180-1551',
+    status: 'Active'
+  },
+  {
+    code: 'MN',
+    name: 'Manipur',
+    regionalName: 'মণিপুর',
+    lang: 'Manipuri',
+    regionalBharat: 'ভারত সরকার',
+    regionalMinistry: 'কৃষি ও কৃষক কল্যাণ মন্ত্রক',
+    footerRegistry: 'Manipur Farmer Registry',
+    sampleFarmer: { regName: 'ইবোমচা সিং', engName: 'Ibomcha Singh', address: 'Imphal, MANIPUR, 795001', regLabel: 'নাম' },
+    portalUrl: 'https://mnfr.agristack.gov.in/farmer-registry-mn/#/',
+    displayPortal: 'www.mnfr.agristack.gov.in',
+    helpline: '1800-180-1551',
+    status: 'Active'
+  },
+  {
+    code: 'MZ',
+    name: 'Mizoram',
+    regionalName: 'Mizoram',
+    lang: 'English / Mizo',
+    regionalBharat: 'भारत सरकार',
+    regionalMinistry: 'कृषि एवं किसान कल्याण मंत्रालय',
+    footerRegistry: 'Mizoram Farmer Registry',
+    sampleFarmer: { regName: 'Lalrintluanga', engName: 'Lalrintluanga', address: 'Aizawl, MIZORAM, 796001', regLabel: 'Name' },
+    portalUrl: 'https://mzfr.agristack.gov.in/farmer-registry-mz/#/',
+    displayPortal: 'www.mzfr.agristack.gov.in',
+    helpline: '1800-180-1551',
+    status: 'Active'
+  },
+  {
+    code: 'NL',
+    name: 'Nagaland',
+    regionalName: 'Nagaland',
+    lang: 'English / Hindi',
+    regionalBharat: 'भारत सरकार',
+    regionalMinistry: 'कृषि एवं किसान कल्याण मंत्रालय',
+    footerRegistry: 'Nagaland Farmer Registry',
+    sampleFarmer: { regName: 'Kevichusa', engName: 'Kevichusa', address: 'Kohima, NAGALAND, 797001', regLabel: 'Name' },
+    portalUrl: 'https://nlfr.agristack.gov.in/farmer-registry-nl/#/',
+    displayPortal: 'www.nlfr.agristack.gov.in',
+    helpline: '1800-180-1551',
+    status: 'Active'
+  },
+  {
+    code: 'SK',
+    name: 'Sikkim',
+    regionalName: 'सिक्किम',
+    lang: 'Nepali / Hindi',
+    regionalBharat: 'भारत सरकार',
+    regionalMinistry: 'कृषि एवं किसान कल्याण मंत्रालय',
+    footerRegistry: 'Sikkim Farmer Registry',
+    sampleFarmer: { regName: 'तेन्जिङ शेर्पा', engName: 'Tenzing Sherpa', address: 'Gangtok, SIKKIM, 737101', regLabel: 'नाम' },
+    portalUrl: 'https://skfr.agristack.gov.in/farmer-registry-sk/#/',
+    displayPortal: 'www.skfr.agristack.gov.in',
+    helpline: '1800-180-1551',
+    status: 'Active'
+  },
+  {
+    code: 'AR',
+    name: 'Arunachal Pradesh',
+    regionalName: 'अरुणाचल प्रदेश',
+    lang: 'Hindi / English',
+    regionalBharat: 'भारत सरकार',
+    regionalMinistry: 'कृषि एवं किसान कल्याण मंत्रालय',
+    footerRegistry: 'Arunachal Pradesh Farmer Registry',
+    sampleFarmer: { regName: 'तागा पादो', engName: 'Taga Pado', address: 'Itanagar, ARUNACHAL PRADESH, 791111', regLabel: 'नाम' },
+    portalUrl: 'https://arfr.agristack.gov.in/farmer-registry-ar/#/',
+    displayPortal: 'www.arfr.agristack.gov.in',
+    helpline: '1800-180-1551',
+    status: 'Active'
+  },
+  {
+    code: 'DL',
+    name: 'Delhi',
+    regionalName: 'दिल्ली',
+    lang: 'Hindi',
+    regionalBharat: 'भारत सरकार',
+    regionalMinistry: 'कृषि एवं किसान कल्याण मंत्रालय',
+    footerRegistry: 'Delhi Farmer Registry',
+    sampleFarmer: { regName: 'राजेंद्र कुमार', engName: 'Rajendra Kumar', address: 'Najafgarh, New Delhi, DELHI, 110043', regLabel: 'नाम' },
+    portalUrl: 'https://dlfr.agristack.gov.in/farmer-registry-dl/#/',
+    displayPortal: 'www.dlfr.agristack.gov.in',
+    helpline: '1800-180-1551',
+    status: 'Active'
+  },
+  {
+    code: 'CH',
+    name: 'Chandigarh',
+    regionalName: 'ਚੰਡੀਗੜ੍ਹ / चंडीगढ़',
+    lang: 'Punjabi / Hindi',
+    regionalBharat: 'ਭਾਰਤ ਸਰਕਾਰ / भारत सरकार',
+    regionalMinistry: 'ਖੇਤੀਬਾੜੀ ਅਤੇ ਕਿਸਾਨ ਭਲਾਈ ਮੰਤਰਾਲਾ',
+    footerRegistry: 'Chandigarh Farmer Registry',
+    sampleFarmer: { regName: 'ਗੁਰਪ੍ਰੀਤ ਸਿੰਘ', engName: 'Gurpreet Singh', address: 'Manimajra, CHANDIGARH, 160101', regLabel: 'ਨਾਮ' },
+    portalUrl: 'https://chfr.agristack.gov.in/farmer-registry-ch/#/',
+    displayPortal: 'www.chfr.agristack.gov.in',
+    helpline: '1800-180-1551',
+    status: 'Active'
+  },
+  {
+    code: 'LA',
+    name: 'Ladakh',
+    regionalName: 'ལ་དྭགས / लद्दाख',
+    lang: 'Ladakhi / Hindi',
+    regionalBharat: 'भारत सरकार',
+    regionalMinistry: 'कृषि एवं किसान कल्याण मंत्रालय',
+    footerRegistry: 'Ladakh Farmer Registry',
+    sampleFarmer: { regName: 'Sonam Norboo', engName: 'Sonam Norboo', address: 'Leh, LADAKH, 194101', regLabel: 'Name' },
+    portalUrl: 'https://lafr.agristack.gov.in/farmer-registry-la/#/',
+    displayPortal: 'www.lafr.agristack.gov.in',
+    helpline: '1800-180-1551',
+    status: 'Active'
+  },
+  {
+    code: 'PY',
+    name: 'Puducherry',
+    regionalName: 'புதுச்சேரி',
+    lang: 'Tamil',
+    regionalBharat: 'இந்திய அரசு',
+    regionalMinistry: 'விவசாயம் மற்றும் விவசாயிகள் நல அமைச்சகம்',
+    footerRegistry: 'Puducherry Farmer Registry',
+    sampleFarmer: { regName: 'கண்ணன்', engName: 'Kannan', address: 'Villianur, PUDUCHERRY, 605110', regLabel: 'பெயர்' },
+    portalUrl: 'https://pyfr.agristack.gov.in/farmer-registry-py/#/',
+    displayPortal: 'www.pyfr.agristack.gov.in',
+    helpline: '1800-180-1551',
+    status: 'Active'
+  },
+  {
+    code: 'DN',
+    name: 'Dadra and Nagar Haveli',
+    regionalName: 'दादरा एवं नगर हवेली',
+    lang: 'Gujarati / Hindi',
+    regionalBharat: 'ભારત સરકાર / भारत सरकार',
+    regionalMinistry: 'કૃષિ અને ખેડૂત કલ્યાણ મંત્રાલય',
+    footerRegistry: 'Dadra and Nagar Haveli and Daman and Diu Farmer Registry',
+    sampleFarmer: { regName: 'રમેશભાઈ', engName: 'Rameshbhai Patel', address: 'Silvassa, D&NH, 396230', regLabel: 'નામ' },
+    portalUrl: 'https://dnfr.agristack.gov.in/farmer-registry-dn/#/',
+    displayPortal: 'www.dnfr.agristack.gov.in',
+    helpline: '1800-180-1551',
+    status: 'Active'
+  },
+  {
+    code: 'AN',
+    name: 'Andaman & Nicobar',
+    regionalName: 'अंडमान और निकोबार',
+    lang: 'Hindi / English',
+    regionalBharat: 'भारत सरकार',
+    regionalMinistry: 'कृषि एवं किसान कल्याण मंत्रालय',
+    footerRegistry: 'Andaman and Nicobar Islands Farmer Registry',
+    sampleFarmer: { regName: 'अशोक कुमार', engName: 'Ashok Kumar', address: 'Port Blair, ANDAMAN & NICOBAR, 744101', regLabel: 'नाम' },
+    portalUrl: 'https://anfr.agristack.gov.in/farmer-registry-an/#/',
+    displayPortal: 'www.anfr.agristack.gov.in',
+    helpline: '1800-180-1551',
+    status: 'Active'
+  },
+  {
+    code: 'LD',
+    name: 'Lakshadweep',
+    regionalName: 'ലക്ഷദ്വീപ്',
+    lang: 'Malayalam',
+    regionalBharat: 'ഭാരത സർക്കാർ',
+    regionalMinistry: 'കൃഷി, കർഷകക്ഷേമ മന്ത്രാലയം',
+    footerRegistry: 'Lakshadweep Farmer Registry',
+    sampleFarmer: { regName: 'മുഹമ്മദ് കോയ', engName: 'Mohammed Koya', address: 'Kavaratti, LAKSHADWEEP, 682555', regLabel: 'പേര്' },
+    portalUrl: 'https://ldfr.agristack.gov.in/farmer-registry-ld/#/',
+    displayPortal: 'www.ldfr.agristack.gov.in',
+    helpline: '1800-180-1551',
+    status: 'Active'
+  }
+];
+
+// App State
+let currentFlipped = false;
+let currentSelectedAmount = 1000;
+let userWalletBalance = 1000.00;
 
 document.addEventListener('DOMContentLoaded', () => {
-  // 1. Dynamic Year
-  const yearSpan = document.getElementById('currentYear');
-  if (yearSpan) {
-    yearSpan.textContent = new Date().getFullYear();
-  }
+  initMobileMenu();
+  populateStateSelector();
+  renderPortalsGrid();
+  updateWalletDisplay();
+  initFaqAccordions();
+  initSmoothScroll();
+});
 
-  // 2. Mobile Menu Toggle
+/* ==========================================================================
+   State Selector & 3D Interactive Card Preview
+   ========================================================================== */
+function populateStateSelector() {
+  const select = document.getElementById('stateSelector');
+  if (!select) return;
+
+  select.innerHTML = '';
+  STATES_DATA.forEach(state => {
+    const opt = document.createElement('option');
+    opt.value = state.code;
+    opt.textContent = `${state.name} (${state.regionalName})`;
+    if (state.code === 'PB') opt.selected = true;
+    select.appendChild(opt);
+  });
+}
+
+function onStateChange(stateCode) {
+  const state = STATES_DATA.find(s => s.code === stateCode) || STATES_DATA[0];
+
+  // Update Front Elements
+  const regBharat = document.getElementById('previewRegionalBharat');
+  if (regBharat) regBharat.textContent = state.regionalBharat;
+
+  const regName = document.getElementById('previewRegName');
+  if (regName) regName.textContent = state.sampleFarmer.regName;
+
+  const regLabel = document.getElementById('previewRegLabel');
+  if (regLabel) regLabel.textContent = state.sampleFarmer.regLabel;
+
+  const engName = document.getElementById('previewEngName');
+  if (engName) engName.textContent = state.sampleFarmer.engName;
+
+  const footerReg = document.getElementById('previewFooterRegistry');
+  if (footerReg) footerReg.textContent = state.footerRegistry;
+
+  // Update Back Elements
+  const regMinistry = document.getElementById('previewRegionalMinistry');
+  if (regMinistry) regMinistry.textContent = state.regionalMinistry;
+
+  const address = document.getElementById('previewAddress');
+  if (address) address.textContent = state.sampleFarmer.address;
+
+  const portalUrl = document.getElementById('previewPortalUrl');
+  if (portalUrl) portalUrl.textContent = state.displayPortal;
+
+  // Subtle pulse animation
+  const card = document.getElementById('card3D');
+  if (card) {
+    card.classList.add('pulse-anim');
+    setTimeout(() => card.classList.remove('pulse-anim'), 400);
+  }
+}
+
+function toggleCardFlip() {
+  const card = document.getElementById('card3D');
+  if (!card) return;
+  currentFlipped = !currentFlipped;
+  if (currentFlipped) {
+    card.classList.add('flipped');
+  } else {
+    card.classList.remove('flipped');
+  }
+}
+
+/* ==========================================================================
+   Nationwide 36 States Portals Directory
+   ========================================================================== */
+function renderPortalsGrid() {
+  const grid = document.getElementById('statesGrid');
+  if (!grid) return;
+
+  grid.innerHTML = '';
+  STATES_DATA.forEach(state => {
+    const card = document.createElement('div');
+    card.className = 'state-portal-card';
+    card.innerHTML = `
+      <div class="portal-card-header">
+        <div class="state-badge">${state.code}</div>
+        <div class="state-title-wrap">
+          <h3 class="state-name">${state.name}</h3>
+          <span class="state-regional">${state.regionalName}</span>
+        </div>
+      </div>
+      <div class="portal-details">
+        <div class="detail-line"><i class="fa-solid fa-language"></i> <span>Language:</span> <strong>${state.lang}</strong></div>
+        <div class="detail-line"><i class="fa-solid fa-headset"></i> <span>Helpline:</span> <strong>${state.helpline}</strong></div>
+        <div class="detail-line"><i class="fa-solid fa-link"></i> <span>Portal:</span> <span class="url-text">${state.displayPortal}</span></div>
+      </div>
+      <div class="portal-actions">
+        <button class="btn btn-outline btn-xs" onclick="previewState('${state.code}')">
+          <i class="fa-solid fa-eye"></i> Preview Card
+        </button>
+        <a href="${state.portalUrl}" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-xs">
+          <i class="fa-solid fa-arrow-up-right-from-square"></i> Open Portal
+        </a>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+function previewState(stateCode) {
+  const select = document.getElementById('stateSelector');
+  if (select) {
+    select.value = stateCode;
+    onStateChange(stateCode);
+    scrollToSection('card-preview');
+  }
+}
+
+/* ==========================================================================
+   Prepaid Digital Wallet Management
+   ========================================================================== */
+function selectRechargeAmount(amount) {
+  currentSelectedAmount = amount;
+  const chips = document.querySelectorAll('.recharge-chips .chip');
+  chips.forEach(chip => {
+    chip.classList.remove('active');
+    if (chip.textContent.includes(amount.toLocaleString('en-IN'))) {
+      chip.classList.add('active');
+    }
+  });
+}
+
+function updateWalletDisplay() {
+  const mainBal = document.getElementById('mainWalletBalance');
+  const navBal = document.getElementById('navWalletBalanceText');
+  if (mainBal) mainBal.textContent = `₹${userWalletBalance.toLocaleString('en-IN', { minimumFractionDigits: 2 })}`;
+  if (navBal) navBal.textContent = `Wallet: ₹${userWalletBalance.toLocaleString('en-IN', { minimumFractionDigits: 2 })}`;
+}
+
+function initiateRecharge() {
+  // Redirect to checkout or open recharge confirmation modal
+  window.location.href = `checkout.html?amount=${currentSelectedAmount}`;
+}
+
+function openWalletModal() {
+  scrollToSection('wallet');
+}
+
+/* ==========================================================================
+   Interactive Navigation & Helpers
+   ========================================================================== */
+function initMobileMenu() {
   const mobileToggle = document.getElementById('mobileToggle');
   const navMenu = document.getElementById('navMenu');
 
@@ -21,619 +679,43 @@ document.addEventListener('DOMContentLoaded', () => {
       navMenu.classList.toggle('open');
     });
 
-    // Close menu when clicking on nav links
-    navMenu.querySelectorAll('a').forEach(link => {
+    navMenu.querySelectorAll('.nav-link').forEach(link => {
       link.addEventListener('click', () => {
         navMenu.classList.remove('open');
       });
     });
-
-    // Close mobile menu when clicking outside
-    document.addEventListener('click', (e) => {
-      if (!navMenu.contains(e.target) && !mobileToggle.contains(e.target) && navMenu.classList.contains('open')) {
-        navMenu.classList.remove('open');
-      }
-    });
   }
+}
 
-  // 3. FAQ Accordion
-  const faqItems = document.querySelectorAll('.faq-item');
-  faqItems.forEach(item => {
-    const questionBtn = item.querySelector('.faq-question');
-    if (questionBtn) {
-      questionBtn.addEventListener('click', () => {
-        const isActive = item.classList.contains('active');
-        faqItems.forEach(i => i.classList.remove('active'));
-        if (!isActive) {
-          item.classList.add('active');
-        }
-      });
-    }
-  });
+function initFaqAccordions() {
+  // Handled via inline onclick or querySelector
+}
 
-  // 4. Legal Policies Accordion
-  const legalItems = document.querySelectorAll('.legal-accordion-item');
-  legalItems.forEach(item => {
-    const trigger = item.querySelector('.legal-accordion-trigger');
-    if (trigger) {
-      trigger.addEventListener('click', () => {
-        const isActive = item.classList.contains('active');
-        legalItems.forEach(i => {
-          i.classList.remove('active');
-          const btn = i.querySelector('.legal-accordion-trigger');
-          if (btn) btn.setAttribute('aria-expanded', 'false');
-        });
-        if (!isActive) {
-          item.classList.add('active');
-          trigger.setAttribute('aria-expanded', 'true');
-        }
-      });
-    }
-  });
-
-  // Open first legal section by default
-  if (legalItems.length > 0) {
-    legalItems[0].classList.add('active');
-    const firstTrigger = legalItems[0].querySelector('.legal-accordion-trigger');
-    if (firstTrigger) firstTrigger.setAttribute('aria-expanded', 'true');
+function toggleFaq(btn) {
+  const item = btn.closest('.faq-item');
+  if (!item) return;
+  const isActive = item.classList.contains('active');
+  document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+  if (!isActive) {
+    item.classList.add('active');
   }
+}
 
-  // 5. Policy Read Buttons (Modals)
-  const readPolicyBtns = document.querySelectorAll('.legal-read-btn');
-  readPolicyBtns.forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      e.preventDefault();
-      const policyId = btn.getAttribute('data-policy');
-      openPolicyModal(policyId);
-    });
-  });
-
-  // 6. Modal Close Handlers
-  const policyModal = document.getElementById('policyModal');
-  if (policyModal) {
-    policyModal.addEventListener('click', (e) => {
-      if (e.target === policyModal) closePolicyModal();
-    });
+function scrollToSection(id) {
+  const el = document.getElementById(id);
+  if (el) {
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
+}
 
-  const rechargeModal = document.getElementById('rechargeModal');
-  if (rechargeModal) {
-    rechargeModal.addEventListener('click', (e) => {
-      if (e.target === rechargeModal) closeRechargeModal();
-    });
-  }
-
-  const rechargeSuccessModal = document.getElementById('rechargeSuccessModal');
-  if (rechargeSuccessModal) {
-    rechargeSuccessModal.addEventListener('click', (e) => {
-      if (e.target === rechargeSuccessModal) closeRechargeSuccessModal();
-    });
-  }
-
-  // Handle ESC key for all modals
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
-      closePolicyModal();
-      closeRechargeModal();
-      closeRechargeSuccessModal();
-    }
-  });
-
-  // 7. Copy to Clipboard Buttons
-  const copyButtons = document.querySelectorAll('.copy-btn');
-  copyButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const textToCopy = btn.getAttribute('data-copy');
-      if (textToCopy) {
-        copyToClipboard(textToCopy, btn);
+function initSmoothScroll() {
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      const targetId = this.getAttribute('href').substring(1);
+      if (targetId) {
+        e.preventDefault();
+        scrollToSection(targetId);
       }
     });
   });
-
-  // 8. Active Nav Link Highlighting on Scroll
-  const sections = document.querySelectorAll('section[id]');
-  const navLinks = document.querySelectorAll('.nav-link');
-
-  window.addEventListener('scroll', () => {
-    let current = '';
-    const scrollPosition = window.pageYOffset + 120;
-
-    sections.forEach(section => {
-      const sectionTop = section.offsetTop;
-      const sectionHeight = section.offsetHeight;
-      if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
-        current = section.getAttribute('id');
-      }
-    });
-
-    navLinks.forEach(link => {
-      link.classList.remove('active');
-      if (link.getAttribute('href') === `#${current}`) {
-        link.classList.add('active');
-      }
-    });
-  });
-});
-
-/* ==========================================================================
-   Install Guide Tab Switcher
-   ========================================================================== */
-function switchInstallTab(browser) {
-  const btnFirefox = document.getElementById('tabBtnFirefox');
-  const btnChrome = document.getElementById('tabBtnChrome');
-  const paneFirefox = document.getElementById('paneFirefox');
-  const paneChrome = document.getElementById('paneChrome');
-
-  if (browser === 'firefox') {
-    if (btnFirefox) btnFirefox.classList.add('active');
-    if (btnChrome) btnChrome.classList.remove('active');
-    if (paneFirefox) paneFirefox.classList.add('active');
-    if (paneChrome) paneChrome.classList.remove('active');
-  } else {
-    if (btnChrome) btnChrome.classList.add('active');
-    if (btnFirefox) btnFirefox.classList.remove('active');
-    if (paneChrome) paneChrome.classList.add('active');
-    if (paneFirefox) paneFirefox.classList.remove('active');
-  }
-}
-
-/* ==========================================================================
-   Prepaid Wallet Recharge & Hub Functions
-   ========================================================================== */
-function switchRechargeTab(tab) {
-  const tabRechargeBtn = document.getElementById('tabRechargeBtn');
-  const tabBalanceBtn = document.getElementById('tabBalanceBtn');
-  const paneRecharge = document.getElementById('paneRecharge');
-  const paneBalance = document.getElementById('paneBalance');
-
-  if (tab === 'recharge') {
-    if (tabRechargeBtn) tabRechargeBtn.classList.add('active');
-    if (tabBalanceBtn) tabBalanceBtn.classList.remove('active');
-    if (paneRecharge) paneRecharge.classList.add('active');
-    if (paneBalance) paneBalance.classList.remove('active');
-  } else {
-    if (tabBalanceBtn) tabBalanceBtn.classList.add('active');
-    if (tabRechargeBtn) tabRechargeBtn.classList.remove('active');
-    if (paneBalance) paneBalance.classList.add('active');
-    if (paneRecharge) paneRecharge.classList.remove('active');
-  }
-}
-
-function setHubAmount(val) {
-  const input = document.getElementById('hubRechargeAmount');
-  if (input) input.value = val;
-
-  const chips = document.querySelectorAll('#paneRecharge .amount-chip');
-  chips.forEach(c => {
-    c.classList.remove('active');
-    if (c.textContent.replace(/[^\d]/g, '') === String(val)) {
-      c.classList.add('active');
-    }
-  });
-}
-
-function setModalAmount(val) {
-  const input = document.getElementById('modalRechargeAmount');
-  if (input) input.value = val;
-
-  const chips = document.querySelectorAll('#rechargeModal .amount-chip');
-  chips.forEach(c => {
-    c.classList.remove('active');
-    if (c.textContent.replace(/[^\d]/g, '') === String(val)) {
-      c.classList.add('active');
-    }
-  });
-}
-
-function openRechargeModal(amount = 500, packTitle = 'Value Pro Pack') {
-  const modal = document.getElementById('rechargeModal');
-  const title = document.getElementById('modalRechargeTitle');
-  const alertBox = document.getElementById('modalRechargeAlert');
-
-  if (title) title.textContent = `⚡ Top-Up: ${packTitle}`;
-  if (alertBox) alertBox.style.display = 'none';
-
-  setModalAmount(amount);
-
-  if (modal) {
-    modal.classList.add('active');
-    modal.setAttribute('aria-hidden', 'false');
-    document.body.style.overflow = 'hidden';
-  }
-}
-
-function closeRechargeModal() {
-  const modal = document.getElementById('rechargeModal');
-  if (modal) {
-    modal.classList.remove('active');
-    modal.setAttribute('aria-hidden', 'true');
-    document.body.style.overflow = '';
-  }
-}
-
-function openRechargeSuccessModal(amount, phone) {
-  const modal = document.getElementById('rechargeSuccessModal');
-  const succAmount = document.getElementById('succAmount');
-  const succMobile = document.getElementById('succMobile');
-  const succCards = document.getElementById('succCards');
-
-  const parsedAmount = parseFloat(amount) || 0;
-  const cards = Math.floor(parsedAmount / CARD_FEE);
-
-  if (succAmount) succAmount.textContent = `₹${parsedAmount.toFixed(2)}`;
-  if (succMobile) succMobile.textContent = phone || 'N/A';
-  if (succCards) succCards.textContent = `~${cards} Cards`;
-
-  if (modal) {
-    modal.classList.add('active');
-    modal.setAttribute('aria-hidden', 'false');
-    document.body.style.overflow = 'hidden';
-  }
-}
-
-function closeRechargeSuccessModal() {
-  const modal = document.getElementById('rechargeSuccessModal');
-  if (modal) {
-    modal.classList.remove('active');
-    modal.setAttribute('aria-hidden', 'true');
-    document.body.style.overflow = '';
-  }
-}
-
-/* ==========================================================================
-   Gateway Payment Trigger (Razorpay / Instant Secure Gateway)
-   ========================================================================== */
-async function processCashfreeRecharge(phone, amount, btnElement, alertElement, isModal = false) {
-  if (!phone || phone.trim().length < 6) {
-    showAlert(alertElement, 'Please enter a valid operator mobile number or wallet ID.', 'error');
-    return;
-  }
-
-  const numAmount = parseFloat(amount);
-  if (isNaN(numAmount) || numAmount < 10) {
-    showAlert(alertElement, 'Minimum wallet recharge amount is ₹10.', 'error');
-    return;
-  }
-
-  if (btnElement) {
-    btnElement.disabled = true;
-    btnElement.innerHTML = '<span>⏳ Connecting Secure Payment Gateway...</span>';
-  }
-  showAlert(alertElement, 'Initializing secure payment transaction...', 'info');
-
-  try {
-    const resp = await fetch(`${WALLET_BACKEND_URL}/api/wallet/recharge`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        customer_phone: phone.trim(),
-        wallet_id: phone.trim(),
-        amount: numAmount
-      })
-    });
-
-    const data = await resp.json();
-
-    if (resp.ok && data.status === 'success') {
-      showAlert(alertElement, 'Order created! Opening secure payment...', 'success');
-
-      // Check if Razorpay order is returned and SDK is available
-      if ((data.gateway === 'razorpay' || data.razorpay_order_id) && typeof Razorpay !== 'undefined') {
-        try {
-          const rzpOptions = {
-            key: data.razorpay_key_id || 'rzp_test_TaoTUhlSVh0Dpk',
-            amount: data.amount_paise || Math.round(numAmount * 100),
-            currency: 'INR',
-            name: 'AgriStack Card Helper',
-            description: `Prepaid Wallet Recharge (₹${numAmount})`,
-            order_id: data.razorpay_order_id,
-            prefill: {
-              contact: phone.trim()
-            },
-            theme: {
-              color: '#10B981'
-            },
-            handler: async function(response) {
-              showAlert(alertElement, 'Payment completed! Confirming recharge...', 'info');
-              try {
-                const verifyResp = await fetch(`${WALLET_BACKEND_URL}/api/wallet/verify_recharge`, {
-                  method: 'POST',
-                  headers: { 'Content-Type': 'application/json' },
-                  body: JSON.stringify({
-                    order_id: data.order_id,
-                    razorpay_payment_id: response.razorpay_payment_id,
-                    razorpay_order_id: response.razorpay_order_id,
-                    razorpay_signature: response.razorpay_signature
-                  })
-                });
-                const verifyData = await verifyResp.json();
-                if (isModal) closeRechargeModal();
-                openRechargeSuccessModal(numAmount, phone);
-              } catch(vErr) {
-                if (isModal) closeRechargeModal();
-                openRechargeSuccessModal(numAmount, phone);
-              }
-            },
-            modal: {
-              ondismiss: function() {
-                showAlert(alertElement, 'Payment checkout was cancelled.', 'info');
-              }
-            }
-          };
-          const rzp = new Razorpay(rzpOptions);
-          rzp.open();
-          return;
-        } catch(rzpErr) {
-          console.warn("Razorpay launch failed, redirecting to checkout:", rzpErr);
-        }
-      }
-
-      // Check if Cashfree JS SDK is loaded (if fallback)
-      if (data.payment_session_id && typeof Cashfree !== 'undefined') {
-        try {
-          const cashfree = Cashfree({ mode: "production" });
-          cashfree.checkout({
-            paymentSessionId: data.payment_session_id,
-            redirectTarget: "_modal"
-          }).then((result) => {
-            if (result.error) {
-              showAlert(alertElement, `Payment: ${result.error.message || 'Cancelled'}`, 'error');
-            }
-            if (result.paymentDetails) {
-              if (isModal) closeRechargeModal();
-              openRechargeSuccessModal(numAmount, phone);
-            }
-          });
-          return;
-        } catch (sdkErr) {
-          console.warn("Cashfree SDK modal launch failed, redirecting to checkout:", sdkErr);
-        }
-      }
-
-      // Fallback redirect to checkout URL
-      if (data.checkout_url) {
-        window.location.href = data.checkout_url.startsWith('http')
-          ? data.checkout_url
-          : `${WALLET_BACKEND_URL}${data.checkout_url}`;
-        return;
-      }
-
-      // If simulated / instant confirm:
-      if (isModal) closeRechargeModal();
-      openRechargeSuccessModal(numAmount, phone);
-
-    } else {
-      const errMsg = data.error || 'Unable to connect to payment gateway. Please check your connection or contact support.';
-      showAlert(alertElement, errMsg, 'error');
-    }
-  } catch (err) {
-    console.warn("Wallet recharge network error:", err);
-    showAlert(alertElement, 'Server connecting... If using in-extension, please recharge directly in the toolbar popup.', 'error');
-  } finally {
-    if (btnElement) {
-      btnElement.disabled = false;
-      btnElement.innerHTML = '<span>🔒 Proceed to Payment</span>';
-    }
-  }
-}
-
-function submitModalRecharge() {
-  const phone = document.getElementById('modalWalletId').value;
-  const amount = document.getElementById('modalRechargeAmount').value;
-  const btn = document.getElementById('btnModalPay');
-  const alertBox = document.getElementById('modalRechargeAlert');
-  processCashfreeRecharge(phone, amount, btn, alertBox, true);
-}
-
-function submitWebsiteWalletRecharge() {
-  const phone = document.getElementById('hubCustomerPhone').value;
-  const amount = document.getElementById('hubRechargeAmount').value;
-  const btn = document.getElementById('btnHubPay');
-  const alertBox = document.getElementById('hubRechargeAlert');
-  processCashfreeRecharge(phone, amount, btn, alertBox, false);
-}
-
-async function checkWebsiteWalletBalance() {
-  const phoneInput = document.getElementById('hubCheckPhone');
-  const btn = document.getElementById('btnHubCheck');
-  const alertBox = document.getElementById('hubBalanceAlert');
-  const resultCard = document.getElementById('hubBalanceResult');
-  const dispAmount = document.getElementById('dispBalAmount');
-  const dispCards = document.getElementById('dispBalCards');
-
-  const phone = phoneInput ? phoneInput.value.trim() : '';
-  if (!phone) {
-    showAlert(alertBox, 'Please enter your registered mobile number or wallet ID.', 'error');
-    return;
-  }
-
-  if (btn) {
-    btn.disabled = true;
-    btn.innerHTML = '<span>⏳ Querying Live Wallet...</span>';
-  }
-  if (resultCard) resultCard.style.display = 'none';
-  showAlert(alertBox, 'Fetching real-time wallet balance...', 'info');
-
-  try {
-    const resp = await fetch(`${WALLET_BACKEND_URL}/api/wallet/status?wallet_id=${encodeURIComponent(phone)}`);
-    const data = await resp.json();
-
-    if (resp.ok && data.status === 'success') {
-      alertBox.style.display = 'none';
-      if (dispAmount) dispAmount.textContent = data.formatted_balance || `₹${Number(data.balance || 0).toFixed(2)}`;
-      if (dispCards) dispCards.textContent = `${data.cards_remaining || 0} cards remaining (@ ₹${data.card_fee || CARD_FEE} / card)`;
-      if (resultCard) resultCard.style.display = 'block';
-    } else {
-      showAlert(alertBox, data.error || 'Wallet not found for this mobile number. You can recharge above to initialize it.', 'error');
-    }
-  } catch (err) {
-    console.warn("Wallet status error:", err);
-    showAlert(alertBox, 'Could not query balance at this moment. You can view your balance live anytime inside the browser extension.', 'error');
-  } finally {
-    if (btn) {
-      btn.disabled = false;
-      btn.innerHTML = '<span>🔍 Check Live Wallet Balance</span>';
-    }
-  }
-}
-
-function showAlert(element, message, type = 'info') {
-  if (!element) return;
-  element.style.display = 'block';
-  element.className = `recharge-status-alert ${type}`;
-  element.textContent = message;
-}
-
-/* ==========================================================================
-   Clipboard Helpers
-   ========================================================================== */
-function copyToClipboard(text, btnElement) {
-  if (navigator.clipboard && navigator.clipboard.writeText) {
-    navigator.clipboard.writeText(text).then(() => {
-      showCopyFeedback(btnElement);
-    }).catch(() => {
-      fallbackCopy(text, btnElement);
-    });
-  } else {
-    fallbackCopy(text, btnElement);
-  }
-}
-
-function fallbackCopy(text, btnElement) {
-  const textarea = document.createElement('textarea');
-  textarea.value = text;
-  textarea.style.position = 'fixed';
-  textarea.style.opacity = '0';
-  document.body.appendChild(textarea);
-  textarea.select();
-  try {
-    document.execCommand('copy');
-    showCopyFeedback(btnElement);
-  } catch (err) {
-    console.warn('Fallback copy failed:', err);
-  }
-  document.body.removeChild(textarea);
-}
-
-function showCopyFeedback(btnElement) {
-  if (!btnElement) return;
-  const originalText = btnElement.textContent;
-  btnElement.textContent = 'Copied!';
-  btnElement.style.color = '#22C55E';
-  setTimeout(() => {
-    btnElement.textContent = originalText;
-    btnElement.style.color = '';
-  }, 2000);
-}
-
-/* ==========================================================================
-   Contact Form Inquiry Submission
-   ========================================================================== */
-function handleContactSubmit() {
-  const name = document.getElementById('senderName').value.trim();
-  const email = document.getElementById('senderEmail').value.trim();
-  const toast = document.getElementById('toastMessage');
-  const sendBtn = document.getElementById('sendInquiryBtn');
-
-  if (!name || !email) {
-    alert('Please enter your name and email address.');
-    return;
-  }
-
-  if (sendBtn) {
-    sendBtn.disabled = true;
-    sendBtn.innerHTML = '<span>⏳ Sending Support Message...</span>';
-  }
-
-  setTimeout(() => {
-    if (toast) {
-      toast.style.display = 'block';
-    }
-    if (sendBtn) {
-      sendBtn.disabled = false;
-      sendBtn.innerHTML = '<span>📩 Send Support Message</span>';
-    }
-    document.getElementById('contactForm').reset();
-  }, 800);
-}
-
-/* ==========================================================================
-   Legal Policies Modal Reader
-   ========================================================================== */
-const POLICIES = {
-  terms: {
-    title: 'Terms & Conditions',
-    content: `
-      <h4>1. Agreement to Terms</h4>
-      <p>By downloading, installing, or using the AgriStack Card Generator Helper browser extension and its associated prepaid wallet service, you agree to be bound by these Terms and Conditions. If you do not agree, do not install or use the tool.</p>
-
-      <h4>2. Description of Digital Service</h4>
-      <p>AgriStack Card Generator Helper is an automated browser productivity extension designed to format and organize publicly available, legally accessible farmer identity records from official Punjab Farmer Registry and AgriStack portals into calibrated 300 DPI print-ready PDF identity cards with verified QR codes.</p>
-
-      <h4>3. Prepaid Wallet & Pay-Per-Card Pricing</h4>
-      <p>The browser extension is 100% free to download and install. Usage is billed on a prepaid wallet model at a flat rate of ₹22 per generated card PDF. Users maintain a prepaid balance which is deducted in real-time upon card generation. All transactions are billed in Indian Rupees (INR) and processed securely via authorized payment gateways.</p>
-    `
-  },
-  privacy: {
-    title: 'Privacy Policy',
-    content: `
-      <h4>1. 100% Client-Side In-Browser Processing</h4>
-      <p>We prioritize your privacy and data sovereignty. AgriStack Card Generator Helper performs all DOM scanning, data parsing, Gurmukhi HarfBuzz typography shaping, photo rendering, and QR code creation locally inside your browser sandbox.</p>
-
-      <h4>2. No Server Storage of Farmer Data</h4>
-      <p>No sensitive personal farmer records (names, Aadhaar details, mobile numbers, land records, or photos) are ever transmitted to or stored on our servers. All identity data remains solely in browser volatile memory.</p>
-
-      <h4>3. Payment Data Security</h4>
-      <p>Payment transactions for wallet top-ups are handled through RBI-compliant, 256-bit SSL encrypted payment channels. We do not store credit/debit card numbers, UPI PINs, or banking credentials.</p>
-    `
-  },
-  refund: {
-    title: 'Refund & Cancellation Policy',
-    content: `
-      <h4>1. Prepaid Wallet Balance Refunds</h4>
-      <p>We believe in 100% customer satisfaction. If you recharge your prepaid wallet and decide you no longer wish to use the service, you may request a full refund of your unused, unspent wallet balance within 7 days of the recharge transaction date.</p>
-
-      <h4>2. Per-Card Generation Deductions</h4>
-      <p>Fees deducted for successfully generated and downloaded 300 DPI PDF cards (₹22 per card) are non-refundable once the digital PDF file has been downloaded to your computer.</p>
-
-      <h4>3. How to Request a Refund</h4>
-      <p>To request a refund for an unspent wallet balance, contact our support team at <strong>igxrry@gmail.com</strong> or via WhatsApp at <strong>+91 70099 80800</strong> with your registered mobile number and transaction receipt.</p>
-    `
-  },
-  shipping: {
-    title: 'Shipping & Delivery Policy',
-    content: `
-      <h4>1. Instant Digital Delivery</h4>
-      <p>AgriStack Card Generator Helper is a 100% digital software product. No physical media (CDs, flash drives, or printed cards) are shipped by mail.</p>
-
-      <h4>2. Delivery Timelines</h4>
-      <p>Browser extension download packages (.ZIP) and Firefox Add-on installations are available immediately upon request. Wallet balance top-ups are credited to your account instantaneously upon successful bank confirmation.</p>
-    `
-  }
-};
-
-function openPolicyModal(policyKey) {
-  const modal = document.getElementById('policyModal');
-  const title = document.getElementById('modalTitle');
-  const body = document.getElementById('modalBody');
-
-  if (POLICIES[policyKey]) {
-    if (title) title.textContent = POLICIES[policyKey].title;
-    if (body) body.innerHTML = POLICIES[policyKey].content;
-  }
-
-  if (modal) {
-    modal.classList.add('active');
-    modal.setAttribute('aria-hidden', 'false');
-    document.body.style.overflow = 'hidden';
-  }
-}
-
-function closePolicyModal() {
-  const modal = document.getElementById('policyModal');
-  if (modal) {
-    modal.classList.remove('active');
-    modal.setAttribute('aria-hidden', 'true');
-    document.body.style.overflow = '';
-  }
 }

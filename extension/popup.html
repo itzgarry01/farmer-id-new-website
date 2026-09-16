@@ -3,31 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AgriStack Card Helper</title>
+    <title>AgriStack Card Helper v4.0</title>
     <style>
         :root {
             --primary: #1F8547;
-            --primary-dark: #166536;
-            --primary-light: #EBF8F0;
+            --primary-hover: #166536;
             --bg: #F8FAFC;
             --card-bg: #FFFFFF;
-            --text-main: #0F172A;
+            --text-main: #1E293B;
             --text-sub: #64748B;
             --border: #E2E8F0;
             --accent: #F1F5F9;
-            --wallet-bg: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-
         body {
-            width: 320px;
+            width: 310px;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             background-color: var(--bg);
             color: var(--text-main);
+            margin: 0;
             padding: 14px;
+            box-sizing: border-box;
             user-select: none;
-            -webkit-user-select: none;
         }
 
         .header {
@@ -39,249 +36,30 @@
             border-bottom: 1px solid var(--border);
         }
 
-        .header-title {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
         .header-title h3 {
             margin: 0;
             font-size: 15px;
             color: var(--primary);
-            font-weight: 800;
+            font-weight: 700;
         }
 
-        .status-badge {
+        .badge {
             background: #DCFCE7;
-            color: #166536;
+            color: var(--primary);
             font-size: 10px;
             font-weight: 700;
-            padding: 2px 7px;
-            border-radius: 9999px;
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            transition: all 0.2s;
-        }
-
-        .status-badge.online {
-            background: #DCFCE7;
-            color: #166536;
-        }
-
-        .status-badge.local {
-            background: #E0F2FE;
-            color: #0369A1;
-        }
-
-        .status-badge.paused {
-            background: #FEF3C7;
-            color: #92400E;
-            border: 1px solid #FDE68A;
-        }
-
-        .status-badge.offline {
-            background: #FEE2E2;
-            color: #991B1B;
-            border: 1px solid #FECACA;
-        }
-
-        /* Digital Wallet Card */
-        .wallet-card {
-            background: var(--wallet-bg);
-            color: #FFFFFF;
-            border-radius: 12px;
-            padding: 14px 16px;
-            margin-bottom: 12px;
-            box-shadow: 0 4px 14px rgba(15, 23, 42, 0.15);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .wallet-card::after {
-            content: '';
-            position: absolute;
-            right: -20px;
-            bottom: -20px;
-            width: 80px;
-            height: 80px;
-            background: radial-gradient(circle, rgba(31, 133, 71, 0.3) 0%, transparent 70%);
-            border-radius: 50%;
-        }
-
-        .wallet-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 6px;
-        }
-
-        .wallet-label {
-            font-size: 11px;
-            color: #94A3B8;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .btn-refresh {
-            background: rgba(255, 255, 255, 0.1);
-            border: none;
-            color: #CBD5E1;
-            cursor: pointer;
-            border-radius: 4px;
             padding: 2px 6px;
-            font-size: 11px;
-            transition: all 0.2s;
+            border-radius: 9999px;
         }
 
-        .btn-refresh:hover {
-            background: rgba(255, 255, 255, 0.2);
-            color: #FFFFFF;
-        }
-
-        .wallet-balance-row {
-            display: flex;
-            align-items: baseline;
-            justify-content: space-between;
-            margin-bottom: 10px;
-        }
-
-        .wallet-balance {
-            font-size: 24px;
-            font-weight: 800;
-            color: #4ADE80;
-            letter-spacing: -0.5px;
-        }
-
-        .wallet-remaining {
-            font-size: 11px;
-            color: #CBD5E1;
-            background: rgba(255, 255, 255, 0.12);
-            padding: 2px 8px;
-            border-radius: 20px;
-            font-weight: 600;
-        }
-
-        .btn-recharge-toggle {
-            width: 100%;
-            background: rgba(255, 255, 255, 0.15);
-            color: #FFFFFF;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 7px 10px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 12px;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 5px;
-            transition: all 0.2s;
-        }
-
-        .btn-recharge-toggle:hover {
-            background: rgba(255, 255, 255, 0.25);
-        }
-
-        /* Recharge Drawer */
-        .recharge-drawer {
-            display: none;
-            background: #FFFFFF;
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 12px;
-            margin-bottom: 12px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-            animation: fadeIn 0.2s ease-out;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-4px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .drawer-title {
-            font-size: 12px;
-            font-weight: 700;
-            color: var(--text-main);
-            margin-bottom: 8px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .preset-chips {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 6px;
-            margin-bottom: 10px;
-        }
-
-        .chip-btn {
-            background: var(--accent);
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            padding: 6px 2px;
-            font-size: 11px;
-            font-weight: 700;
-            color: var(--text-main);
-            cursor: pointer;
-            text-align: center;
-            transition: all 0.15s;
-        }
-
-        .chip-btn:hover, .chip-btn.active {
-            background: var(--primary-light);
-            border-color: var(--primary);
-            color: var(--primary);
-        }
-
-        .custom-amount-row {
-            display: flex;
-            gap: 6px;
-            margin-bottom: 10px;
-        }
-
-        .custom-amount-row input {
-            flex: 1;
-            padding: 8px 10px;
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            font-size: 13px;
-            font-weight: 700;
-            color: var(--text-main);
-        }
-
-        .btn-submit-recharge {
-            width: 100%;
-            background: linear-gradient(135deg, #0284C7 0%, #0369A1 100%);
-            color: #FFFFFF;
-            border: none;
-            padding: 9px;
-            border-radius: 6px;
-            font-size: 12px;
-            font-weight: 700;
-            cursor: pointer;
-            box-shadow: 0 2px 5px rgba(2, 132, 199, 0.25);
-            transition: all 0.2s;
-        }
-
-        .btn-submit-recharge:hover {
-            opacity: 0.95;
-            transform: translateY(-1px);
-        }
-
-        /* Form Controls */
         .form-group {
-            margin-bottom: 10px;
+            margin-bottom: 12px;
         }
 
         label {
             display: block;
             font-size: 11px;
-            font-weight: 700;
+            font-weight: 600;
             color: var(--text-sub);
             margin-bottom: 4px;
             text-transform: uppercase;
@@ -291,6 +69,7 @@
         input {
             width: 100%;
             padding: 8px 10px;
+            box-sizing: border-box;
             border: 1px solid var(--border);
             border-radius: 6px;
             font-size: 13px;
@@ -304,30 +83,52 @@
             box-shadow: 0 0 0 2px rgba(31, 133, 71, 0.15);
         }
 
-        /* Action Button */
-        .btn-generate {
+        .info-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 10px 12px;
+            margin-bottom: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+        }
+
+        .price-badge {
+            background: #FEF3C7;
+            color: #92400E;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+
+        .btn-pay {
             width: 100%;
             background: linear-gradient(135deg, #1F8547 0%, #166536 100%);
             color: #FFFFFF;
-            padding: 12px;
+            padding: 11px;
             border: none;
-            border-radius: 8px;
+            border-radius: 6px;
             cursor: pointer;
             font-size: 13px;
-            font-weight: 800;
+            font-weight: 700;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 6px;
             transition: all 0.2s;
-            box-shadow: 0 3px 8px rgba(31, 133, 71, 0.25);
-            margin-bottom: 10px;
+            box-shadow: 0 2px 4px rgba(31, 133, 71, 0.25);
         }
 
-        .btn-generate:hover {
+        .btn-pay:hover {
             opacity: 0.95;
             transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(31, 133, 71, 0.35);
         }
 
         button:disabled {
@@ -338,174 +139,58 @@
             box-shadow: none !important;
         }
 
-        /* Status Box */
         #status {
+            margin-top: 10px;
             font-size: 11px;
             line-height: 1.4;
             color: var(--text-sub);
             text-align: center;
-            padding: 8px 10px;
-            border-radius: 6px;
+            padding: 8px;
+            border-radius: 4px;
             background: var(--accent);
-            border: 1px solid var(--border);
-            margin-bottom: 10px;
-            transition: all 0.2s;
         }
 
         .status-success {
             color: #166536 !important;
             background: #DCFCE7 !important;
-            border-color: #86EFAC !important;
             font-weight: 600;
         }
 
         .status-error {
             color: #991B1B !important;
             background: #FEE2E2 !important;
-            border-color: #FCA5A5 !important;
             font-weight: 600;
-        }
-
-        .status-warning {
-            color: #92400E !important;
-            background: #FEF3C7 !important;
-            border-color: #FCD34D !important;
-            font-weight: 600;
-        }
-
-        /* Activity / History Accordion */
-        .activity-toggle {
-            font-size: 11px;
-            color: var(--text-sub);
-            font-weight: 600;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 6px 0;
-            border-top: 1px solid var(--border);
-        }
-
-        .activity-toggle:hover {
-            color: var(--text-main);
-        }
-
-        .activity-list {
-            display: none;
-            max-height: 130px;
-            overflow-y: auto;
-            margin-top: 6px;
-            padding: 4px;
-            background: #FFFFFF;
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            font-size: 11px;
-        }
-
-        .activity-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 6px 4px;
-            border-bottom: 1px solid #F1F5F9;
-        }
-
-        .activity-item:last-child {
-            border-bottom: none;
-        }
-
-        .txn-plus { color: #166536; font-weight: 700; }
-        .txn-minus { color: #DC2626; font-weight: 700; }
-
-        /* Server Config Drawer */
-        .server-drawer {
-            display: none;
-            margin-top: 8px;
-            padding: 8px;
-            background: #F1F5F9;
-            border-radius: 6px;
-            border: 1px solid var(--border);
         }
     </style>
 </head>
 <body>
-    <!-- Header -->
     <div class="header">
-        <div class="header-title" id="secretAdminTrigger" title="AgriStack Card Helper">
-            <h3>AgriStack Helper</h3>
+        <div class="header-title">
+            <h3>AgriStack Helper <span style="font-size:11px; color:#166536;">v4.0</span></h3>
         </div>
-        <span class="status-badge" id="backendBadge">☁️ Connecting...</span>
+        <span class="badge">Razorpay / UPI</span>
     </div>
 
-    <!-- Prepaid Wallet Card -->
-    <div class="wallet-card">
-        <div class="wallet-top">
-            <span class="wallet-label">Prepaid Balance</span>
-            <button id="refreshBalBtn" class="btn-refresh" title="Refresh Live Balance">🔄 Sync</button>
-        </div>
-        <div class="wallet-balance-row">
-            <div class="wallet-balance" id="walletBalDisplay">₹0.00</div>
-            <div class="wallet-remaining" id="cardsRemainingBadge">0 cards</div>
-        </div>
-        <button id="toggleRechargeBtn" class="btn-recharge-toggle">
-            <span>➕</span> Add Money / Recharge
-        </button>
-    </div>
-
-    <!-- Recharge Drawer -->
-    <div id="rechargeDrawer" class="recharge-drawer">
-        <div class="drawer-title">
-            <span>Recharge via Cashfree PG</span>
-            <span id="closeRechargeBtn" style="cursor:pointer; color:#94A3B8;">✕</span>
-        </div>
-        <div id="customerPhoneNotice" style="display:none; font-size:11px; color:#0369A1; background:#E0F2FE; border:1px solid #BAE6FD; padding:5px 8px; border-radius:6px; margin-bottom:8px; align-items:center; gap:5px;">
-            <span>📱</span> Customer: <strong id="customerPhoneDisplay">+91 ...</strong>
-        </div>
-        <div class="preset-chips">
-            <button class="chip-btn" data-amt="100">+₹100</button>
-            <button class="chip-btn" data-amt="200">+₹200</button>
-            <button class="chip-btn active" data-amt="500">+₹500</button>
-            <button class="chip-btn" data-amt="1000">+₹1000</button>
-        </div>
-        <div class="custom-amount-row">
-            <input type="number" id="rechargeAmountInput" value="500" min="10" placeholder="Amount (₹)">
-        </div>
-        <button id="submitRechargeBtn" class="btn-submit-recharge">
-            💳 Proceed to Pay with Cashfree
-        </button>
-    </div>
-
-    <!-- Aadhaar Mask Input (Optional) -->
     <div class="form-group">
         <label for="aadhaar">Aadhaar Number (Optional)</label>
         <input type="text" id="aadhaar" placeholder="12-digit Aadhaar (e.g. 909999669245)" maxlength="12">
     </div>
 
-    <!-- 1-Click Card Generator Action -->
-    <button id="generateBtn" class="btn-generate">
-        <span>⚡</span> Generate Farmer ID Card (₹22)
+    <div class="info-card">
+        <div class="info-row">
+            <span style="font-weight:600;">Generation Fee</span>
+            <span class="price-badge">₹22 / Card</span>
+        </div>
+        <div style="font-size:10px; color:#64748B; margin-top:4px;">
+            Official Razorpay Gateway (UPI, GPay, PhonePe, Cards)
+        </div>
+    </div>
+
+    <button id="payBtn" class="btn-pay">
+        <span>⚡</span> Pay ₹22 & Generate Card
     </button>
 
-    <!-- Real-time Status Box -->
-    <div id="status">Connecting to server...</div>
-
-    <!-- Recent Activity Accordion -->
-    <div class="activity-toggle" id="toggleActivityBtn">
-        <span>Recent Transactions</span>
-        <span id="activityArrow">▼</span>
-    </div>
-    <div id="activityList" class="activity-list">
-        <div style="text-align:center; color:#94A3B8; padding:8px;">No recent transactions</div>
-    </div>
-
-    <!-- Private Admin Server Config (Accessible only via triple click on title) -->
-    <div id="configDrawer" class="server-drawer">
-        <div style="font-size:11px; font-weight:700; margin-bottom:6px; color:#1E293B;">🔒 Cloud Backend Server</div>
-        <input type="text" id="serverUrlInput" value="https://farmer-wallet-extension.onrender.com" style="width:100%; padding:5px; font-size:10px; border:1px solid #CBD5E1; border-radius:4px; box-sizing:border-box;">
-        <button id="saveServerBtn" style="width:100%; margin-top:6px; padding:6px; font-size:11px; background:#1F8547; color:#fff; border:none; border-radius:4px; cursor:pointer; font-weight:700;">
-            Save Cloud Server
-        </button>
-    </div>
+    <div id="status">Make sure you are on the verified registry details page.</div>
 
     <script src="popup.js"></script>
 </body>
