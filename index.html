@@ -313,11 +313,11 @@
                     <div class="auth-form-row">
                         <div class="auth-input-group">
                             <label for="walletMobileInput"><i class="fa-solid fa-mobile-screen"></i> Operator Mobile:</label>
-                            <input type="tel" id="walletMobileInput" class="wallet-mobile-input" value="7009980800" maxlength="10" placeholder="10-digit mobile">
+                            <input type="tel" id="walletMobileInput" class="wallet-mobile-input" maxlength="10" placeholder="10-digit mobile number">
                         </div>
                         <div class="auth-input-group">
                             <label for="walletPasswordInput"><i class="fa-solid fa-lock"></i> Password / PIN:</label>
-                            <input type="password" id="walletPasswordInput" class="wallet-mobile-input" value="12345" placeholder="Password / PIN">
+                            <input type="password" id="walletPasswordInput" class="wallet-mobile-input" placeholder="Password / PIN">
                         </div>
                         <div class="auth-btn-group">
                             <button class="btn btn-primary btn-sm" id="btnLoginWallet" onclick="loginOperatorWallet()">
@@ -339,11 +339,11 @@
                         <div class="user-meta">
                             <div class="user-phone-wrap">
                                 <span class="phone-label">Active Operator:</span>
-                                <strong id="loggedOperatorMobile" class="logged-mobile-text">+91 7009980800</strong>
+                                <strong id="loggedOperatorMobile" class="logged-mobile-text">Not Logged In</strong>
                             </div>
                             <div class="user-status-label">
                                 <span class="status-indicator active"></span>
-                                <span id="walletAuthStatus">Verified Operator Account</span>
+                                <span id="walletAuthStatus">Enter Mobile & Login to Sync</span>
                             </div>
                         </div>
                     </div>
@@ -790,7 +790,7 @@
             <div class="modal-body">
                 <div class="modal-form-group">
                     <label for="modalMobileInput"><i class="fa-solid fa-mobile-screen"></i> Operator Mobile Number:</label>
-                    <input type="tel" id="modalMobileInput" class="modal-input" value="7009980800" maxlength="10" placeholder="10-digit mobile number">
+                    <input type="tel" id="modalMobileInput" class="modal-input" maxlength="10" placeholder="10-digit mobile number">
                 </div>
 
                 <div class="modal-form-group">

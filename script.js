@@ -518,16 +518,40 @@ const STATES_DATA = [
 // App State
 let currentFlipped = false;
 let currentSelectedAmount = 1000;
-let userWalletBalance = 1000.00;
-let currentMobile = '7009980800';
+let userWalletBalance = 0.00;
+let currentMobile = localStorage.getItem('agristack_operator_mobile') || '';
 
 document.addEventListener('DOMContentLoaded', () => {
   initMobileMenu();
   populateStateSelector();
   renderPortalsGrid();
+  initMobileInputSync();
   loadStoredWallet();
   initSmoothScroll();
 });
+
+function initMobileInputSync() {
+  const wInput = document.getElementById('walletMobileInput');
+  const mInput = document.getElementById('modalMobileInput');
+
+  if (wInput) {
+    wInput.addEventListener('input', (e) => {
+      const val = e.target.value.replace(/\D/g, '').slice(0, 10);
+      e.target.value = val;
+      currentMobile = val;
+      if (mInput) mInput.value = val;
+    });
+  }
+
+  if (mInput) {
+    mInput.addEventListener('input', (e) => {
+      const val = e.target.value.replace(/\D/g, '').slice(0, 10);
+      e.target.value = val;
+      currentMobile = val;
+      if (wInput) wInput.value = val;
+    });
+  }
+}
 
 /* ==========================================================================
    State Selector & 3D Interactive Card Preview
@@ -651,23 +675,33 @@ function renderPortalsGrid() {
    Operator Wallet Login & Direct Recharge (MongoDB Atlas Integration)
    ========================================================================== */
 function loadStoredWallet() {
-  const storedMobile = localStorage.getItem('agristack_operator_mobile') || '7009980800';
+  const storedMobile = localStorage.getItem('agristack_operator_mobile') || '';
   const storedBal = localStorage.getItem('agristack_operator_bal');
 
-  currentMobile = storedMobile;
-  const input = document.getElementById('walletMobileInput');
-  if (input) input.value = currentMobile;
-  const modalInput = document.getElementById('modalMobileInput');
-  if (modalInput) modalInput.value = currentMobile;
-  const loggedMobile = document.getElementById('loggedOperatorMobile');
-  if (loggedMobile) loggedMobile.textContent = `+91 ${currentMobile}`;
+  if (storedMobile && storedMobile.length === 10) {
+    currentMobile = storedMobile;
+    const input = document.getElementById('walletMobileInput');
+    if (input) input.value = currentMobile;
+    const modalInput = document.getElementById('modalMobileInput');
+    if (modalInput) modalInput.value = currentMobile;
+    const loggedMobile = document.getElementById('loggedOperatorMobile');
+    if (loggedMobile) loggedMobile.textContent = `+91 ${currentMobile}`;
+    const statusLabel = document.getElementById('walletAuthStatus');
+    if (statusLabel) statusLabel.textContent = 'Verified Operator Account';
 
-  if (storedBal) {
-    userWalletBalance = parseFloat(storedBal);
+    if (storedBal) {
+      userWalletBalance = parseFloat(storedBal);
+    }
+    updateWalletDisplay();
+    fetchLiveWalletBalance(false);
+  } else {
+    currentMobile = '';
+    const loggedMobile = document.getElementById('loggedOperatorMobile');
+    if (loggedMobile) loggedMobile.textContent = 'Not Logged In';
+    const statusLabel = document.getElementById('walletAuthStatus');
+    if (statusLabel) statusLabel.textContent = 'Enter Mobile & Login to Sync';
+    updateWalletDisplay();
   }
-
-  updateWalletDisplay();
-  fetchLiveWalletBalance(false);
 }
 
 async function loginOperatorWallet() {
@@ -675,7 +709,7 @@ async function loginOperatorWallet() {
   const pwdInput = document.getElementById('walletPasswordInput');
   const btn = document.getElementById('btnLoginWallet');
 
-  const mobile = mobileInput ? mobileInput.value.trim() : '';
+  const mobile = mobileInput ? mobileInput.value.replace(/\D/g, '').trim() : '';
   const password = pwdInput ? pwdInput.value.trim() : '';
 
   if (!mobile || mobile.length !== 10) {
@@ -707,6 +741,8 @@ async function loginOperatorWallet() {
       localStorage.setItem('agristack_wallet_token', data.wallet_token || '');
       localStorage.setItem('agristack_operator_bal', String(userWalletBalance));
 
+      const modalInput = document.getElementById('modalMobileInput');
+      if (modalInput) modalInput.value = currentMobile;
       const loggedMobile = document.getElementById('loggedOperatorMobile');
       if (loggedMobile) loggedMobile.textContent = `+91 ${currentMobile}`;
       const statusLabel = document.getElementById('walletAuthStatus');
@@ -918,9 +954,19 @@ function updateGatewayAmountText() {
 function openDirectRechargeModal(amount = 1000, packTitle = 'Cyber Cafe Pack') {
   const modal = document.getElementById('rechargeModal');
   const mobileInput = document.getElementById('modalMobileInput');
+  const walletInput = document.getElementById('walletMobileInput');
   const title = document.getElementById('modalRechargeTitle');
   
-  if (mobileInput) mobileInput.value = currentMobile;
+  // Dynamically resolve active mobile from wallet input, stored state, or localStorage
+  if (walletInput && walletInput.value.replace(/\D/g, '').length === 10) {
+    currentMobile = walletInput.value.replace(/\D/g, '');
+  } else if (!currentMobile || currentMobile.length !== 10) {
+    currentMobile = (localStorage.getItem('agristack_operator_mobile') || '').replace(/\D/g, '');
+  }
+  
+  if (mobileInput) {
+    mobileInput.value = currentMobile;
+  }
   if (title) title.textContent = `⚡ Top-Up: ${packTitle}`;
 
   setModalAmount(amount);
@@ -949,12 +995,19 @@ async function launchCashfreeRecharge() {
   const btn = document.getElementById('btnLaunchGateway');
 
   const amount = parseFloat(amountInput ? amountInput.value : currentSelectedAmount);
-  const mobile = mobileInput ? mobileInput.value.trim() : currentMobile;
+  const rawMobile = mobileInput ? mobileInput.value : (currentMobile || '');
+  const mobile = rawMobile.replace(/\D/g, '').trim();
 
   if (!mobile || mobile.length !== 10) {
-    alert('Please enter a valid 10-digit operator mobile number.');
+    alert('Please enter a valid 10-digit operator mobile number to proceed with recharge.');
+    if (mobileInput) mobileInput.focus();
     return;
   }
+
+  currentMobile = mobile;
+  localStorage.setItem('agristack_operator_mobile', currentMobile);
+  const loggedMobile = document.getElementById('loggedOperatorMobile');
+  if (loggedMobile) loggedMobile.textContent = `+91 ${currentMobile}`;
 
   if (!amount || amount < 100) {
     alert('Minimum recharge amount for Payment Gateway is ₹100.');
@@ -986,7 +1039,7 @@ async function launchCashfreeRecharge() {
       if (!win) {
         window.location.href = checkoutUrl;
       } else {
-        alert(`⚡ Secure Cashfree Checkout opened!\nComplete payment to automatically credit ₹${amount.toLocaleString('en-IN')} to operator wallet +91 ${mobile}.`);
+        alert(`⚡ Secure Cashfree Checkout opened for Operator +91 ${mobile}!\nComplete payment to automatically credit ₹${amount.toLocaleString('en-IN')} to your operator wallet.`);
       }
 
       // Start background polling for payment completion
@@ -1007,14 +1060,16 @@ async function launchCashfreeRecharge() {
           const vData = await verifyRes.json();
           if (vData.status === 'success' && vData.order_status === 'PAID') {
             clearInterval(pollTimer);
-            userWalletBalance = vData.new_balance;
-            localStorage.setItem('agristack_operator_bal', String(userWalletBalance));
-            updateWalletDisplay();
-            if (Array.isArray(vData.recent_transactions)) {
-              renderTransactionLedger(vData.recent_transactions);
+            if (vData.wallet_id === currentMobile || vData.wallet_id === mobile) {
+              userWalletBalance = vData.new_balance;
+              localStorage.setItem('agristack_operator_bal', String(userWalletBalance));
+              updateWalletDisplay();
+              if (Array.isArray(vData.recent_transactions)) {
+                renderTransactionLedger(vData.recent_transactions);
+              }
             }
             closeRechargeModal();
-            alert(`🎉 Payment Successful! ₹${amount} credited to operator wallet +91 ${mobile}.`);
+            alert(`🎉 Payment Successful! ₹${amount} credited to operator wallet +91 ${mobile}. New balance: ₹${vData.new_balance.toFixed(2)}.`);
           }
         } catch (e) {}
       }, 3000);

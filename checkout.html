@@ -283,8 +283,15 @@
             });
         }
 
-        function handlePayment() {
-            const mobile = document.getElementById('mobileInput').value.trim();
+        const WALLET_API_BASE = 'https://farmer-wallet-extension.onrender.com';
+        const storedMobile = localStorage.getItem('agristack_operator_mobile') || '';
+        if (storedMobile) {
+            const mInput = document.getElementById('mobileInput');
+            if (mInput) mInput.value = storedMobile;
+        }
+
+        async function handlePayment() {
+            const mobile = document.getElementById('mobileInput').value.replace(/\D/g, '').trim();
             if (!mobile || mobile.length !== 10) {
                 alert('Please enter a valid 10-digit mobile number.');
                 return;
@@ -294,15 +301,33 @@
             btn.disabled = true;
             btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Processing Secure Payment...';
 
-            setTimeout(() => {
-                const currentBal = parseFloat(localStorage.getItem('agristack_operator_bal') || '1000');
-                const newBal = currentBal + selectedAmount;
-                localStorage.setItem('agristack_operator_bal', String(newBal));
-                localStorage.setItem('agristack_operator_mobile', mobile);
+            try {
+                const res = await fetch(`${WALLET_API_BASE}/api/wallet/recharge`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        wallet_id: mobile,
+                        amount: selectedAmount,
+                        customer_phone: mobile
+                    })
+                });
 
-                alert(`🎉 Payment of ₹${selectedAmount.toLocaleString('en-IN')} successful! Your updated balance is ₹${newBal.toLocaleString('en-IN')}.`);
-                window.location.href = 'index.html#wallet';
-            }, 1200);
+                const data = await res.json();
+                if (res.ok && data.status === 'success') {
+                    const checkoutUrl = data.full_checkout_url || `${WALLET_API_BASE}${data.checkout_url}`;
+                    localStorage.setItem('agristack_operator_mobile', mobile);
+                    window.location.href = checkoutUrl;
+                } else {
+                    alert(`Gateway Error: ${data.error || 'Could not initiate checkout'}`);
+                    btn.disabled = false;
+                    btn.innerHTML = '<i class="fa-solid fa-bolt"></i> Pay & Add Balance Instantly';
+                }
+            } catch (err) {
+                console.error('Payment error:', err);
+                alert('Could not connect to payment gateway. Please check your internet connection.');
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fa-solid fa-bolt"></i> Pay & Add Balance Instantly';
+            }
         }
     </script>
 </body>
