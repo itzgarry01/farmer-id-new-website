@@ -37,7 +37,6 @@
                 <ul class="nav-links" id="navMenu">
                     <li><a href="#hero" class="nav-btn">Overview</a></li>
                     <li><a href="#card-preview" class="nav-btn">3D Demo</a></li>
-                    <li><a href="#wallet" class="nav-btn">Wallet</a></li>
                     <li><a href="#products" class="nav-btn">Pricing</a></li>
                     <li><a href="#portals" class="nav-btn">36 States</a></li>
                     <li><a href="#install" class="nav-btn">Guide</a></li>
@@ -289,124 +288,12 @@
             </div>
         </section>
 
-        <!-- Interactive Digital Wallet Section -->
-        <section class="wallet-section container" id="wallet">
-            <div class="section-header text-center">
-                <div class="badge-tag"><i class="fa-solid fa-wallet"></i> Instant Operator Wallet</div>
-                <h2 class="section-title">Prepaid Operator Balance & Instant Top-Up</h2>
-                <p class="section-desc">Manage your printing balance seamlessly. Login with your 10-digit mobile number to view live balance, track card deductions, and recharge instantly via UPI QR or Cards.</p>
-            </div>
-
-            <div class="wallet-dashboard-card">
-                <!-- User Login & Balance Bar -->
-                <div class="wallet-auth-bar" id="walletAuthSection">
-                    <div class="auth-form-row">
-                        <div class="auth-input-group">
-                            <label for="walletMobileInput"><i class="fa-solid fa-mobile-screen"></i> Operator Mobile:</label>
-                            <input type="tel" id="walletMobileInput" class="wallet-mobile-input" maxlength="10" placeholder="10-digit mobile number">
-                        </div>
-                        <div class="auth-input-group">
-                            <label for="walletPasswordInput"><i class="fa-solid fa-lock"></i> Password / PIN:</label>
-                            <input type="password" id="walletPasswordInput" class="wallet-mobile-input" placeholder="Password / PIN">
-                        </div>
-                        <div class="auth-btn-group">
-                            <button class="btn btn-primary btn-sm" id="btnLoginWallet" onclick="loginOperatorWallet()">
-                                <i class="fa-solid fa-right-to-bracket"></i> Login
-                            </button>
-                            <button class="btn btn-outline btn-sm" id="btnRegisterWallet" onclick="registerOperatorWallet()">
-                                <i class="fa-solid fa-user-plus"></i> Register
-                            </button>
-                            <button class="btn btn-secondary btn-sm" onclick="fetchLiveWalletBalance()">
-                                <i class="fa-solid fa-rotate"></i> Sync Balance
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="wallet-top-bar mt-3">
-                    <div class="user-profile-badge">
-                        <div class="avatar-circle"><i class="fa-solid fa-user-shield"></i></div>
-                        <div class="user-meta">
-                            <div class="user-phone-wrap">
-                                <span class="phone-label">Active Operator:</span>
-                                <strong id="loggedOperatorMobile" class="logged-mobile-text">Not Logged In</strong>
-                            </div>
-                            <div class="user-status-label">
-                                <span class="status-indicator active"></span>
-                                <span id="walletAuthStatus">Enter Mobile & Login to Sync</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="wallet-balance-box">
-                        <div class="bal-title">Available Balance</div>
-                        <div class="bal-amount" id="mainWalletBalance">₹105.00</div>
-                        <div class="bal-cards-tag">Est. <strong id="mainCardsAvailable">7 Cards</strong> Available (₹15/card)</div>
-                    </div>
-                </div>
-
-                <!-- Quick Recharge Row -->
-                <div class="wallet-action-row">
-                    <div class="recharge-options-group">
-                        <div class="rec-title"><i class="fa-solid fa-bolt"></i> Quick Top-Up Packs:</div>
-                        <div class="recharge-chips">
-                            <button class="chip" onclick="openDirectRechargeModal(100, 'Starter Pack')">₹100 <small>(~4 Cards)</small></button>
-                            <button class="chip" onclick="openDirectRechargeModal(250, 'Standard Pack')">₹250 <small>(~11 Cards)</small></button>
-                            <button class="chip" onclick="openDirectRechargeModal(500, 'Value Pro Pack')">₹500 <small>(~22 Cards)</small></button>
-                            <button class="chip popular active" onclick="openDirectRechargeModal(1000, 'Cyber Cafe Pack')">₹1,000 <small>(~45 Cards)</small> <span class="pop-tag">Best Value</span></button>
-                            <button class="chip" onclick="openDirectRechargeModal(2000, 'Bulk CSC Center')">₹2,000 <small>(~90 Cards)</small></button>
-                        </div>
-                    </div>
-                    <button class="btn btn-primary btn-recharge" onclick="openDirectRechargeModal(1000, 'Cyber Cafe Pack')">
-                        <i class="fa-solid fa-bolt"></i> Quick Add Funds
-                    </button>
-                </div>
-
-                <!-- Real-Time Activity Ledger -->
-                <div class="wallet-ledger">
-                    <div class="ledger-header">
-                        <h4><i class="fa-solid fa-receipt"></i> Recent Card Activity & Deductions</h4>
-                        <span class="ledger-note"><i class="fa-solid fa-bolt"></i> Live Ledger Sync</span>
-                    </div>
-                    <div class="ledger-table-wrap">
-                        <table class="ledger-table">
-                            <thead>
-                                <tr>
-                                    <th>Reference / Txn ID</th>
-                                    <th>Description</th>
-                                    <th>Amount</th>
-                                    <th>Status</th>
-                                    <th>Time</th>
-                                </tr>
-                            </thead>
-                            <tbody id="walletTxnBody">
-                                <tr>
-                                    <td><code>UPI_TOPUP_LIVE</code></td>
-                                    <td>Direct Operator Top-Up (UPI/QR)</td>
-                                    <td class="credit">+₹100.00</td>
-                                    <td><span class="badge success">Completed</span></td>
-                                    <td>Just now</td>
-                                </tr>
-                                <tr>
-                                    <td><code>CARD_GEN_86881808582</code></td>
-                                    <td>Punjab PVC Farmer Card Generated</td>
-                                    <td class="debit">-₹15.00</td>
-                                    <td><span class="badge success">Deducted</span></td>
-                                    <td>2 mins ago</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </section>
-
         <!-- Visible 5-Tier Pricing Packs Section (#products & #pricing) -->
         <section class="pricing-section container" id="products">
             <div class="section-header text-center">
                 <div class="badge-tag"><i class="fa-solid fa-tags"></i> Pricing & Recharge Packs</div>
                 <h2 class="section-title">Transparent Operator Top-Up Plans</h2>
-                <p class="section-desc">Zero subscription fees or monthly lock-ins. Select any pack below to recharge your wallet balance instantly via UPI or QR.</p>
+                <p class="section-desc">Zero subscription fees or monthly lock-ins. Install the AgriStack extension to top up your balance and print cards directly inside government portals.</p>
             </div>
 
             <div class="pricing-grid">
@@ -426,9 +313,9 @@
                         <li><i class="fa-solid fa-check"></i> Instant Automated Deduction</li>
                         <li><i class="fa-solid fa-check"></i> Valid Forever with No Expiry</li>
                     </ul>
-                    <button class="btn btn-secondary btn-block" onclick="openDirectRechargeModal(100, 'Starter Pack')">
-                        <i class="fa-solid fa-bolt"></i> Recharge ₹100
-                    </button>
+                    <a href="#install" class="btn btn-secondary btn-block">
+                        <i class="fa-solid fa-download"></i> Get Extension
+                    </a>
                 </div>
 
                 <!-- Tier 2: Standard Pack -->
@@ -447,9 +334,9 @@
                         <li><i class="fa-solid fa-check"></i> High Priority PDF Generation</li>
                         <li><i class="fa-solid fa-check"></i> 100% Client-Side Privacy</li>
                     </ul>
-                    <button class="btn btn-secondary btn-block" onclick="openDirectRechargeModal(250, 'Standard Pack')">
-                        <i class="fa-solid fa-bolt"></i> Recharge ₹250
-                    </button>
+                    <a href="#install" class="btn btn-secondary btn-block">
+                        <i class="fa-solid fa-download"></i> Get Extension
+                    </a>
                 </div>
 
                 <!-- Tier 3: Value Pro Pack -->
@@ -468,9 +355,9 @@
                         <li><i class="fa-solid fa-check"></i> HarfBuzz Indic Complex Shaping</li>
                         <li><i class="fa-solid fa-check"></i> Direct WhatsApp Support</li>
                     </ul>
-                    <button class="btn btn-secondary btn-block" onclick="openDirectRechargeModal(500, 'Value Pro Pack')">
-                        <i class="fa-solid fa-bolt"></i> Recharge ₹500
-                    </button>
+                    <a href="#install" class="btn btn-secondary btn-block">
+                        <i class="fa-solid fa-download"></i> Get Extension
+                    </a>
                 </div>
 
                 <!-- Tier 4: Cyber Cafe Pack (Featured) -->
@@ -489,9 +376,9 @@
                         <li><i class="fa-solid fa-check"></i> Compact Low-Density QR</li>
                         <li><i class="fa-solid fa-check"></i> Fast Track Operator Assistance</li>
                     </ul>
-                    <button class="btn btn-primary btn-block" onclick="openDirectRechargeModal(1000, 'Cyber Cafe Pack')">
-                        <i class="fa-solid fa-bolt"></i> Recharge ₹1,000
-                    </button>
+                    <a href="#install" class="btn btn-primary btn-block">
+                        <i class="fa-solid fa-download"></i> Get Extension
+                    </a>
                 </div>
 
                 <!-- Tier 5: Bulk CSC Center -->
@@ -510,9 +397,9 @@
                         <li><i class="fa-solid fa-check"></i> Multi-Device Extension Access</li>
                         <li><i class="fa-solid fa-check"></i> Dedicated Priority Support</li>
                     </ul>
-                    <button class="btn btn-secondary btn-block" onclick="openDirectRechargeModal(2000, 'Bulk CSC Center')">
-                        <i class="fa-solid fa-bolt"></i> Recharge ₹2,000
-                    </button>
+                    <a href="#install" class="btn btn-secondary btn-block">
+                        <i class="fa-solid fa-download"></i> Get Extension
+                    </a>
                 </div>
             </div>
         </section>
@@ -766,62 +653,6 @@
         </section>
     </main>
 
-    <!-- Direct Wallet Recharge Modal with Real Payment Gateway -->
-    <div class="modal-backdrop" id="rechargeModal">
-        <div class="modal-card">
-            <div class="modal-header">
-                <div class="modal-title-group">
-                    <i class="fa-solid fa-wallet"></i>
-                    <h3 id="modalRechargeTitle">⚡ Operator Wallet Top-Up</h3>
-                </div>
-                <button class="modal-close" onclick="closeRechargeModal()">&times;</button>
-            </div>
-
-            <div class="modal-body">
-                <div class="modal-form-group">
-                    <label for="modalMobileInput"><i class="fa-solid fa-mobile-screen"></i> Operator Mobile Number:</label>
-                    <input type="tel" id="modalMobileInput" class="modal-input" maxlength="10" placeholder="10-digit mobile number">
-                </div>
-
-                <div class="modal-form-group">
-                    <label><i class="fa-solid fa-tags"></i> Select Recharge Pack (INR):</label>
-                    <div class="modal-chips">
-                        <button class="chip" onclick="setModalAmount(100)">₹100</button>
-                        <button class="chip" onclick="setModalAmount(250)">₹250</button>
-                        <button class="chip" onclick="setModalAmount(500)">₹500</button>
-                        <button class="chip popular active" onclick="setModalAmount(1000)">₹1,000</button>
-                        <button class="chip" onclick="setModalAmount(2000)">₹2,000</button>
-                    </div>
-                    <div class="amount-input-wrap mt-2">
-                        <span class="amount-prefix">₹</span>
-                        <input type="number" id="modalRechargeAmount" class="modal-input pl-amount" value="1000" min="50" step="50" oninput="updateGatewayAmountText()">
-                    </div>
-                </div>
-
-                <!-- Cashfree Payment Gateway Card -->
-                <div class="gateway-info-box mt-2">
-                    <div class="gateway-icon-badge">
-                        <i class="fa-solid fa-shield-halved"></i>
-                    </div>
-                    <h4>Instant Secure Gateway Checkout</h4>
-                    <p>Pay securely via UPI (GPay, PhonePe, Paytm), Debit/Credit Cards, NetBanking, or Wallets with instant automated balance addition.</p>
-                    
-                    <div class="gateway-perks">
-                        <span><i class="fa-solid fa-circle-check"></i> Instant Balance Credit</span>
-                        <span><i class="fa-solid fa-lock"></i> 256-Bit SSL Encrypted</span>
-                        <span><i class="fa-solid fa-building-columns"></i> All Indian Banks & UPI</span>
-                    </div>
-
-                    <div id="modalPaymentStatus" class="modal-status-box" style="display: none;"></div>
-
-                    <button class="btn-gateway-checkout" id="btnLaunchGateway" onclick="launchCashfreeRecharge()">
-                        <i class="fa-solid fa-arrow-up-right-from-square"></i> Proceed to Gateway Checkout (<span id="btnGatewayAmtText">₹1,000</span>)
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- Studio Footer (artist.garry inspired) -->
     <footer class="site-footer">
         <div class="container">
@@ -831,13 +662,12 @@
                         <i class="fa-solid fa-seedling"></i>
                         <span>AgriStack Helper Tools</span>
                     </div>
-                    <p class="footer-sub">Official PVC Identity Card Automation & Prepaid Operator Hub for 36 Indian States.</p>
+                    <p class="footer-sub">Official PVC Identity Card Automation & Extension Platform for 36 Indian States.</p>
                 </div>
 
                 <div class="footer-links-group">
                     <a href="#hero">Overview</a>
                     <a href="#card-preview">3D Preview</a>
-                    <a href="#wallet">Wallet Hub</a>
                     <a href="#products">Pricing Packs</a>
                     <a href="#portals">36 Portals</a>
                     <a href="#contact">Contact</a>
