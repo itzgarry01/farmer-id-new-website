@@ -309,28 +309,50 @@
 
             <div class="wallet-dashboard-card">
                 <!-- User Login & Balance Bar -->
-                <div class="wallet-top-bar">
+                <div class="wallet-auth-bar" id="walletAuthSection">
+                    <div class="auth-form-row">
+                        <div class="auth-input-group">
+                            <label for="walletMobileInput"><i class="fa-solid fa-mobile-screen"></i> Operator Mobile:</label>
+                            <input type="tel" id="walletMobileInput" class="wallet-mobile-input" value="7009980800" maxlength="10" placeholder="10-digit mobile">
+                        </div>
+                        <div class="auth-input-group">
+                            <label for="walletPasswordInput"><i class="fa-solid fa-lock"></i> Password / PIN:</label>
+                            <input type="password" id="walletPasswordInput" class="wallet-mobile-input" value="12345" placeholder="Password / PIN">
+                        </div>
+                        <div class="auth-btn-group">
+                            <button class="btn btn-primary btn-sm" id="btnLoginWallet" onclick="loginOperatorWallet()">
+                                <i class="fa-solid fa-right-to-bracket"></i> Login
+                            </button>
+                            <button class="btn btn-outline btn-sm" id="btnRegisterWallet" onclick="registerOperatorWallet()">
+                                <i class="fa-solid fa-user-plus"></i> Register
+                            </button>
+                            <button class="btn btn-secondary btn-sm" onclick="fetchLiveWalletBalance()">
+                                <i class="fa-solid fa-rotate"></i> Sync MongoDB
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="wallet-top-bar mt-3">
                     <div class="user-profile-badge">
                         <div class="avatar-circle"><i class="fa-solid fa-user-shield"></i></div>
                         <div class="user-meta">
                             <div class="user-phone-wrap">
-                                <span class="phone-label">Operator Mobile:</span>
-                                <input type="tel" id="walletMobileInput" class="wallet-mobile-input" value="7009980800" maxlength="10" placeholder="10-digit mobile">
-                                <button class="btn btn-outline btn-xs" onclick="fetchLiveWalletBalance()">
-                                    <i class="fa-solid fa-rotate"></i> Sync Balance
-                                </button>
+                                <span class="phone-label">Active Operator:</span>
+                                <strong id="loggedOperatorMobile" class="logged-mobile-text">+91 7009980800</strong>
+                                <span class="badge success" id="dbConnBadge"><i class="fa-solid fa-database"></i> MongoDB Cloud</span>
                             </div>
                             <div class="user-status-label">
-                                <span class="status-indicator"></span>
-                                <span id="walletAuthStatus">Verified Operator Account</span>
+                                <span class="status-indicator active"></span>
+                                <span id="walletAuthStatus">Authenticated & Ready for Card Generation</span>
                             </div>
                         </div>
                     </div>
 
                     <div class="wallet-balance-box">
                         <div class="bal-title">Available Balance</div>
-                        <div class="bal-amount" id="mainWalletBalance">₹1,000.00</div>
-                        <div class="bal-cards-tag">Est. <strong id="mainCardsAvailable">66 Cards</strong> Available (₹15/card)</div>
+                        <div class="bal-amount" id="mainWalletBalance">₹105.00</div>
+                        <div class="bal-cards-tag">Est. <strong id="mainCardsAvailable">7 Cards</strong> Available (₹15/card)</div>
                     </div>
                 </div>
 
@@ -339,10 +361,11 @@
                     <div class="recharge-options-group">
                         <div class="rec-title"><i class="fa-solid fa-bolt"></i> Quick Top-Up Packs:</div>
                         <div class="recharge-chips">
-                            <button class="chip" onclick="selectRechargeAmount(100)">₹100 <small>(6 Cards)</small></button>
-                            <button class="chip" onclick="selectRechargeAmount(250)">₹250 <small>(16 Cards)</small></button>
-                            <button class="chip" onclick="selectRechargeAmount(500)">₹500 <small>(33 Cards)</small></button>
-                            <button class="chip popular active" onclick="selectRechargeAmount(1000)">₹1,000 <small>(66 Cards)</small> <span class="pop-tag">Best Value</span></button>
+                            <button class="chip" onclick="selectRechargeAmount(100)">₹100 <small>(~6 Cards)</small></button>
+                            <button class="chip" onclick="selectRechargeAmount(250)">₹250 <small>(~16 Cards)</small></button>
+                            <button class="chip" onclick="selectRechargeAmount(500)">₹500 <small>(~33 Cards)</small></button>
+                            <button class="chip popular active" onclick="selectRechargeAmount(1000)">₹1,000 <small>(~66 Cards)</small> <span class="pop-tag">Best Value</span></button>
+                            <button class="chip" onclick="selectRechargeAmount(2000)">₹2,000 <small>(~133 Cards)</small></button>
                         </div>
                     </div>
                     <button class="btn btn-primary btn-recharge" onclick="openDirectRechargeModal(1000, 'Cyber Cafe Pack')">
@@ -354,7 +377,7 @@
                 <div class="wallet-ledger">
                     <div class="ledger-header">
                         <h4><i class="fa-solid fa-receipt"></i> Recent Card Activity & Deductions</h4>
-                        <span class="ledger-note">Live synced with Cloud Database</span>
+                        <span class="ledger-note"><i class="fa-solid fa-cloud"></i> Synced with MongoDB Atlas database</span>
                     </div>
                     <div class="ledger-table-wrap">
                         <table class="ledger-table">
@@ -369,9 +392,9 @@
                             </thead>
                             <tbody id="walletTxnBody">
                                 <tr>
-                                    <td><code>OPR_WELCOME_BONUS</code></td>
-                                    <td>Operator Welcome Wallet Credit</td>
-                                    <td class="credit">+₹1,000.00</td>
+                                    <td><code>UPI_TOPUP_LIVE</code></td>
+                                    <td>Direct Operator Top-Up (UPI/QR)</td>
+                                    <td class="credit">+₹100.00</td>
                                     <td><span class="badge success">Completed</span></td>
                                     <td>Just now</td>
                                 </tr>
