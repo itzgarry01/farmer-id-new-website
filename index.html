@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Cinzel:wght@600;700&family=Noto+Sans+Devanagari:wght@600;700&family=Noto+Sans+Gurmukhi:wght@600;700&family=Noto+Sans+Telugu:wght@600;700&family=Noto+Sans+Tamil:wght@600;700&family=Noto+Sans+Gujarati:wght@600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body class="dark-theme">
@@ -30,8 +30,8 @@
             </a>
 
             <div class="nav-menu" id="navMenu">
-                <a href="#features" class="nav-link">Features</a>
-                <a href="#card-preview" class="nav-link">Live Preview</a>
+                <a href="#features" class="nav-link">Overview</a>
+                <a href="#card-preview" class="nav-link">3D Preview</a>
                 <a href="#wallet" class="nav-link">Digital Wallet</a>
                 <a href="#portals" class="nav-link">36 States</a>
                 <a href="#install" class="nav-link">Install Guide</a>
@@ -40,13 +40,13 @@
             </div>
 
             <div class="nav-actions">
-                <button class="btn btn-outline btn-sm" id="navWalletBtn" onclick="openWalletModal()">
+                <button class="btn btn-outline btn-sm" id="navWalletBtn" onclick="scrollToSection('wallet')">
                     <i class="fa-solid fa-wallet"></i>
-                    <span id="navWalletBalanceText">Wallet: ₹1000.00</span>
+                    <span id="navWalletBalanceText">Wallet: ₹1,000.00</span>
                 </button>
                 <a href="agristack-card-helper-v5.0.zip" download class="btn btn-primary btn-sm">
                     <i class="fa-solid fa-download"></i>
-                    <span>Download Extension</span>
+                    <span>Download</span>
                 </a>
                 <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle Navigation">
                     <i class="fa-solid fa-bars"></i>
@@ -55,8 +55,8 @@
         </nav>
     </header>
 
-    <!-- Hero Section -->
-    <section class="hero-section container">
+    <!-- Hero / Features Section -->
+    <section class="hero-section container" id="features">
         <div class="hero-grid">
             <div class="hero-content">
                 <div class="hero-pill">
